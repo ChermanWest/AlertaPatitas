@@ -1,23 +1,23 @@
-// State management
+// Gestión de estado
 let materials = [];
 let materialCounter = 0;
 
-// Constants
+// Constantes
 const IVA_RATE = 0.16;
 
-// Initialize the application
+// Inicializar la aplicación
 document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
     addInitialMaterial();
 });
 
-// Initialize event listeners
+// Inicializar los escuchadores de eventos
 function initializeEventListeners() {
     document.getElementById('addMaterialBtn').addEventListener('click', addMaterial);
     document.getElementById('sendQuotationBtn').addEventListener('click', sendQuotation);
 }
 
-// Add a new material row
+// Añadir una nueva fila de material
 function addMaterial() {
     materialCounter++;
     const materialId = `material-${materialCounter}`;
@@ -67,7 +67,7 @@ function addMaterial() {
     
     document.getElementById('materialsContainer').appendChild(materialItem);
     
-    // Add event listeners for calculation
+    // Añadir escuchadores para recalcular totales
     const inputs = materialItem.querySelectorAll('.material-quantity, .material-price');
     inputs.forEach(input => {
         input.addEventListener('input', calculateTotals);
@@ -77,12 +77,12 @@ function addMaterial() {
     calculateTotals();
 }
 
-// Add initial material on page load
+// Añadir material inicial al cargar la página
 function addInitialMaterial() {
     addMaterial();
 }
 
-// Remove a material
+// Eliminar un material
 function removeMaterial(materialId) {
     const materialElement = document.getElementById(materialId);
     if (materialElement) {
@@ -92,11 +92,11 @@ function removeMaterial(materialId) {
     }
 }
 
-// Calculate all totals
+// Calcular todos los totales
 function calculateTotals() {
     let subtotal = 0;
     
-    // Calculate each material total
+    // Calcular el total de cada material
     materials.forEach(materialId => {
         const materialElement = document.getElementById(materialId);
         if (materialElement) {
@@ -109,17 +109,17 @@ function calculateTotals() {
         }
     });
     
-    // Calculate IVA and total
+    // Calcular IVA y total
     const iva = subtotal * IVA_RATE;
     const total = subtotal + iva;
     
-    // Update summary
+    // Actualizar resumen
     document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
     document.getElementById('iva').textContent = `$${iva.toFixed(2)}`;
     document.getElementById('total').textContent = `$${total.toFixed(2)}`;
 }
 
-// Validate client form
+// Validar formulario del cliente
 function validateClientForm() {
     const clientName = document.getElementById('clientName').value.trim();
     const clientEmail = document.getElementById('clientEmail').value.trim();
@@ -130,7 +130,7 @@ function validateClientForm() {
         return false;
     }
     
-    // Basic email validation
+    // Validación básica de correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(clientEmail)) {
         showMessage('Por favor, ingrese un correo electrónico válido.', 'error');
@@ -140,7 +140,7 @@ function validateClientForm() {
     return true;
 }
 
-// Validate materials
+// Validar materiales
 function validateMaterials() {
     if (materials.length === 0) {
         showMessage('Por favor, agregue al menos un material.', 'error');
@@ -174,9 +174,9 @@ function validateMaterials() {
     return true;
 }
 
-// Collect all form data
+// Recopilar todos los datos del formulario
 function collectFormData() {
-    // Client data
+    // Datos del cliente
     const clientData = {
         name: document.getElementById('clientName').value.trim(),
         email: document.getElementById('clientEmail').value.trim(),
@@ -184,7 +184,7 @@ function collectFormData() {
         address: document.getElementById('clientAddress').value.trim()
     };
     
-    // Materials data
+    // Datos de los materiales
     const materialsData = [];
     materials.forEach(materialId => {
         const materialElement = document.getElementById(materialId);
@@ -205,7 +205,7 @@ function collectFormData() {
         }
     });
     
-    // Calculate totals
+    // Calcular totales
     const subtotal = materialsData.reduce((sum, item) => sum + item.total, 0);
     const iva = subtotal * IVA_RATE;
     const total = subtotal + iva;
@@ -221,7 +221,7 @@ function collectFormData() {
     };
 }
 
-// Generate email body
+// Generar cuerpo del correo
 function generateEmailBody(data) {
     let body = `COTIZACIÓN DE MATERIALES DE CONSTRUCCIÓN\n`;
     body += `${'='.repeat(50)}\n\n`;
@@ -259,9 +259,9 @@ function generateEmailBody(data) {
     return body;
 }
 
-// Send quotation
+// Enviar cotización
 function sendQuotation() {
-    // Validate recipient email
+    // Validar correo del destinatario
     const recipientEmail = document.getElementById('recipientEmail').value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
@@ -270,38 +270,38 @@ function sendQuotation() {
         return;
     }
     
-    // Validate form
+    // Validar formulario
     if (!validateClientForm() || !validateMaterials()) {
         return;
     }
     
-    // Collect data
+    // Recopilar datos
     const data = collectFormData();
     
-    // Generate email content
+    // Generar contenido del correo
     const emailSubject = encodeURIComponent(`Cotización de Materiales - ${data.client.name}`);
     const emailBody = encodeURIComponent(generateEmailBody(data));
     
-    // Create mailto link
+    // Crear enlace mailto
     const mailtoLink = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
     
-    // Open email client
+    // Abrir cliente de correo
     window.location.href = mailtoLink;
     
-    // Show success message
+    // Mostrar mensaje de éxito
     showMessage('Abriendo su cliente de correo electrónico para enviar la cotización...', 'success');
     
-    // Log data for debugging (in production, this would be sent to a backend)
+    // Registrar datos para depuración (en producción esto se enviaría a un backend)
     console.log('Quotation Data:', data);
 }
 
-// Show status message
+// Mostrar mensaje de estado
 function showMessage(message, type) {
     const statusElement = document.getElementById('statusMessage');
     statusElement.textContent = message;
     statusElement.className = `status-message ${type}`;
     
-    // Auto-hide after 5 seconds for success messages
+    // Ocultar automáticamente después de 5 segundos para mensajes de éxito
     if (type === 'success') {
         setTimeout(() => {
             statusElement.className = 'status-message';
@@ -309,5 +309,5 @@ function showMessage(message, type) {
     }
 }
 
-// Make removeMaterial available globally
+// Hacer `removeMaterial` disponible globalmente
 window.removeMaterial = removeMaterial;
