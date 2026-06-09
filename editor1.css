@@ -305,6 +305,7 @@
 .symbol22 {
   height: 29.9px;
   display: flex;
+  margin-left: 8px;
   align-items: flex-start;
   padding: var(--padding-0) var(--padding-0) 3.9px;
   box-sizing: border-box;
@@ -716,7 +717,7 @@
   font-size: var(--fs-14);
   background-color: transparent;
   position: absolute;
-  top: 11px;
+  top: 10px;
   left: 20.2px;
   color: var(--color-black);
   text-align: left;
@@ -725,13 +726,20 @@
   padding: var(--padding-01);
 }
 .container9 {
+  width: 217px;
+  height: 26px;
+  border: 1px solid var(--color-black);
+ 
+  background-color: transparent;
+  color: var(--color-black);
+  font-family: var(--font-onest);
+  font-size: var(--fs-14);
+  outline: 0;
+  box-sizing: border-box;
+  padding: 2px 2px;
   position: absolute;
   top: 9px;
   left: 13.2px;
-  width: 217px;
-  height: var(--height-18);
-  overflow: hidden;
-  opacity: 0.45;
 }
 .image-thumbnails {
   align-self: stretch;

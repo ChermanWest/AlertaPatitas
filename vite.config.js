@@ -4,6 +4,12 @@ export default defineConfig({
   root: './',
   server: {
     port: 5173,
-    open: true
+    host: true,
+    open: true,
+    hmr: true,
+    watch: {
+      usePolling: true,
+      interval: 100
+    }
   }
 })
