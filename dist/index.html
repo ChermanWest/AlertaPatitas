@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./editor1.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Font Awesome 5 Pro:wght@400&display=swap"
@@ -30,6 +28,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Public Sans:wght@400;500&display=swap"
     />
+    <link rel="stylesheet" crossorigin href="/assets/index-CRSqCMIN.css">
   </head>
   <body>
     <div class="editor">
@@ -54,7 +53,7 @@
                           class="mask-group-icon8"
                           loading="lazy"
                           alt=""
-                          src="./public/Mask-group@2x.png"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIgAAABuCAYAAAD8p1vNAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAACXlJREFUeAHtnf112zYQwM99/b/JBEUmiDNBmAmSTBBmgqQTWJ7A9gSWJ6gzgdQJnE5AdgJ7gytOgCyKBkkAxBeV+73HZ0skRYk83BcOAADDMAzDMAzDMAzDMAzDMAzDMAzDMMyvBCK+ggXwGzC5OJdCcgUMY0IKx3dUXADD9JGCcY0HKmCYLlIoNh0BeZSbgAJhHyQfr3r/3wLDEBTBoJkKGIYEYUBANlAYvwOTBO1jCP3y48BhJDjV2dnZFpjTR2uKW+2E2sK+yKkjH/I3uTXoRwMFwSYmMNqPqIBh+kjhqDEMDRaaF2FmgP5mxURxEQ0zA1R+R2gqyAxnUgNAwiH/XEN4PgGzTFBlQy8wrFnpkz2iOQPGGlRFPjWoRFcFaRAycfYfMGWiNQVFJxt0S3iFooaMcB7EQE9TnMNxz2tqziEjLCBmKN1dioP4FjLCPkgPqT2oxT5AOTxJH+Q1ZILD3Je0eisF8oH+hEywgPSQrfVJ/rmBsvgAmWABMbOGssjmqLKAGNBa5B7K4T1kgp3UAXSoS86qgDJ4rQU3KaxBBtAP453cvkIZTmsWM8MaxBId/lag1D1pFwFptculFNoVMMtFp+XPdWo+dFo+S30Ia5BIoOqJFRCW5H4I+yDxiNF/U0NiTl5AMMM8HNpfiXHdj5CYkxYQVFMrPGboMhcQhyq1wCcXEExUrY2qDHClX6YOEWNe7zucKqhK9IjGRlB0NODVUYXHpYBJu+7l9f7GeBQ7VcRs5A976PzQZuqH6mOcWyMej09JXtfZ+50xaPAUhQRf5gY2vf0CVR6BbO2FPqYGR7DXgiExmIYGEwhJ6ooyiuG7ThYJwgMcMpND57jS1TotJAQ9NJ4nQm4beb0PMjfSwimAfkMEHlxaCh4PYCJNktTrl9f7hGkhrZy1bjUY6O+8NWjxoFGZp64ZqyAx8porzEOU6CZ1mOs7vkPARHinhYF8mq4g/YT0CMjDFUaYUjO1gLTgz7ehHfLGfAGDcOSon5Bkqx+VkPYKOjlvagHZgj9GE6Nbzdqw6w5+TWiC3uS+VxBweHY/G24Nn3c7cGwz8T2iJc4w7lhdFxpcYq4E/ZJITffHohK0sc+pe9ck1bvR5wl9DJ0fvJVhOQJCNLg0IZFfeI3u1J3zBY4/BJOm2UdPV3gQECJ4EQ6WJSBEgzPC4KX05u6iEVSRylQh8aXhvX30tI+E9s4rJepCr7iQwzEeQ4BKqHmZ1aUICJkGimL6kUqfy4GsYjfcvei9/o5h8yUtlAfdM9Ki5fcE4/Ek9rbY+C0NDvgU+NI57pu5YB16eFjmo1ScciU5NIiPPbQ553Io76Hfbztv9XMV5JfUEIYcyTkXVljqGjU4PEf5XCZnJ8ZjrfGIL3uWg4zox3mhfEqshCS1BvkC4WnB7Jj26bZsMkV9bbMrM4CZaG21hfKx0iTJBARVPF5DeC4tu7v7ql8YjgmVQPsXlkE55gaHs55zsJ74HpXqnxrM9AgBwHAzLqcir5DgcXIqFA06ZgnRrit+dm0FLscP6WIUkugmBlXoGWPY4GePSqprmE5kVTATQ9S0BKjxxPARh0GlOWIU8HonfNCu4muDM8Ne9OtSKIF41WmoVCuFspQs2mAcVjATPF6SdIwNenboYfkJsyHCD6tAv5WVfL54kCgDlSA3ltel42pwBFX541JpMERPN6obHXOQUBcBAUH3pN0tujvFOWZmDsXOb/Se/gHVzaIPEZAA6fgFn6qC7gK40crNepgBquzskivO33lFMamFAyL0b6CfMyZAdZ0Ly+P/gWXTOgtIBuEgYtRY+LZsAfarZJfecTfGrujbR4OkFg4iRup6TvZwF6lZHLeF5bLTfk5DL1Fl2wSkp3U5GA+rNdCEc6QpnvT2A9T8p5QQEjCPC3md9djQCvJV5DH94aZL4d7paIyTLrelsvyOFFVdYTpWFt8p9kj/GDz3SbmYGOuOsQhM2nJUQkSVYSnL6mwGSS2lZ7fLs/awEhB98yvIQzs1Qg6V6ZuqV42BTZSyREf1edCZrQbJ2R082gK1cKwgPTdScNcWx7WwLKhBbvcvJgUEVVhbQT4GnSVUvY8rSM+9vIm2pmxpGuSoOs9Gg+TUHu1QK9WCew1pIVNHFWyfHc/JyU+H79BCLzS3CXMryMePkX0pfQ66yR98Zgugc3A81G31vtC/ZV8be+7w2Xf9boRRDYIqHS0gH1vTm5g+H3MzcyqJsXOpEdCqEi2EowU148EnsL9P+3OOmDIxuTuaXtxYbVpWkBYBnqBK2omRQ1rdamnZsRD+SguqYbmG+3emTsjSBcQ04q3MQT/DTN3DnVDQw5EbaZI56+W1oISjBjfaoaVGpgQk75qtvSXJMd7QiZhMFTkdaQ0dHdmM8zFBwlWDO4PXmxKQ2E5gC8MzAbWG93Jpjzn+x1gjezL5Nro1u/olJBzfwJ31WD6nBAFZD+wzPZQK8tCCP2MmZtDnkA9tFzmBXafZWm5/gLuv1IK/tkoyY3Cjr7Mx7OvPwuxaIhgS38LlqfExVnkcVAXQY+WLvvdm0scsZX4Qmz6NKVsei+2MEHfqAWzBAnl9EiQyOSZzvAa/Mc+XWkuNUoqArA3vtb3X7yEPc2ZLFBP7W7BERzk1HJudXWYX3E3vje0CiVMC0kJcdi1Tx9/biWNzhNytZYfcEGJsp00LNpxDGu2zLuJ+A+Pz3Jtw6UfKrkG6YeygmcF8c5H7O3AKMbJvCzPRpk84nEIC+dXh+OwCsu78P+atx46mTFzO1B7EWEFRqEIi23vj1Z+UM8z9S37ZZ6HQ6raF9N/DxN1Z/EWMQ6TVbSE/yquzcVBAdGgX48HQl/ygPfM+3d7brllJKSB32hkMgRjZF0pAthP7ySGtZ3Y2mkFVqLzGcIzOIY7meP4Wj9eAiUnQaSpGrhNkoprOdTama2CqaS/xICgNzqPqbgPXyjmedQWBwPEkWWhBpOfTvW8N5pqCG9XDpekTNjif2vD5tlMzxKCCQOB4djN4y8bDFOV0/4KZZOc163RB6xYOX2xfVER//4SD3e3/NUHJr3XvPXJcqdOpBX8E+BHSTouRfcEdVJ1LegOBCT5iviRQqdlXnW1ffvcWzKV4ol9iMOPaNI6oNuyiHtzXwJQPKj/hEx5MZrCJ/XHYX7sHZplgAMdO+x5jwz9rWBAnbWJSoB3bj6BMlsls9Xlzdirr3DLToFtYnnN8sxesQWaiNYjQ2z6Ke9Xb9ixOe/wPDDbyAUZxlusAAAAASUVORK5CYII="
                         />
                       </div>
                       <div class="logo-details">
@@ -66,7 +65,7 @@
                         class="vector-icon6"
                         loading="lazy"
                         alt=""
-                        src="./public/Vector.svg"
+                        src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M8.52797%200.187829C8.55018%200.201666%208.57355%200.217822%208.59459%200.232538C9.40707%200.951601%209.25277%202.20975%208.7419%203.09162C8.31754%203.91636%207.29347%204.68208%206.31849%204.32922C6.17821%204.27632%206.05546%204.18658%205.95609%204.08065C5.15998%203.11326%205.52939%201.64254%206.36642%200.749547C6.85391%200.139293%207.82888%20-0.25164%208.52797%200.187829ZM12.4068%202.61577C12.9703%202.98027%2013.0217%203.81942%2012.7412%204.40663C12.1964%205.57744%2010.7889%206.58667%209.42811%206.23093C9.30653%206.1891%209.19664%206.12444%209.10078%206.04325C8.42508%205.45281%208.68344%204.42401%209.18378%203.77217C9.82558%202.89869%2011.0145%202.16273%2012.1333%202.49133C12.2361%202.52241%2012.3273%202.5642%2012.4068%202.61577ZM3.91028%201.69677C4.86188%202.35967%204.86889%203.73853%204.33815%204.69742C4.01666%205.42596%203.05571%206.07689%202.25842%205.66452C1.20863%205.00365%201.2554%203.45941%201.88668%202.49154C2.25843%201.82259%203.17028%201.29333%203.91028%201.69677ZM12.4395%207.21249C12.8639%207.4669%2013.1071%207.96651%2012.9539%208.46783C12.5424%209.80923%2010.8158%2010.7728%209.4363%2010.2646C8.87048%2010.0399%208.68929%209.38831%208.88218%208.85532C9.29718%207.71707%2010.6357%206.918%2011.8702%207.04182C12.0795%207.05135%2012.2747%207.11262%2012.4395%207.21249ZM6.59671%206.49905C7.42322%207.00619%207.97735%207.92768%208.08724%208.86342C8.17024%209.9257%208.06854%2011.0399%207.62898%2012.0478C7.4057%2012.8294%206.37694%2013.2582%205.66617%2012.8317C4.79992%2012.3348%204.46557%2011.3192%203.65075%2010.7605C3.00779%2010.2154%202.10996%2010.1857%201.29865%2010.0297C0.590212%209.92273%20-0.107702%209.37159%200.0138779%208.62404C0.203261%207.90299%200.964308%207.47581%201.59676%207.11893C2.73657%206.60939%203.94535%206.07955%205.21258%206.10033C5.72579%206.10277%206.19339%206.2513%206.59671%206.49905Z'%20fill='%23372121'/%3e%3c/svg%3e"
                       />
                     </div>
                   </div>
@@ -146,7 +145,7 @@
                           <img
                             class="list-icon"
                             alt=""
-                            src="./public/List.svg"
+                            src="data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5.33333%204H14M5.33333%208H14M5.33333%2012H14M2%204H2.00667M2%208H2.00667M2%2012H2.00667'%20stroke='%231E1E1E'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                           />
                         </div>
                       </div>
@@ -163,7 +162,7 @@
                           <img
                             class="list-icon"
                             alt=""
-                            src="./public/List.svg"
+                            src="data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5.33333%204H14M5.33333%208H14M5.33333%2012H14M2%204H2.00667M2%208H2.00667M2%2012H2.00667'%20stroke='%231E1E1E'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                           />
                         </div>
                       </div>
@@ -180,7 +179,7 @@
                           <img
                             class="list-icon"
                             alt=""
-                            src="./public/List.svg"
+                            src="data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5.33333%204H14M5.33333%208H14M5.33333%2012H14M2%204H2.00667M2%208H2.00667M2%2012H2.00667'%20stroke='%231E1E1E'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                           />
                         </div>
                       </div>
@@ -221,21 +220,21 @@
                         class="merged-asset-1-icon2"
                         loading="lazy"
                         alt=""
-                        src="./public/merged-asset-1@2x.png"
+                        src="/assets/merged-asset-1@2x-DjJxcxao.png"
                       />
 
                       <img
                         class="thumbnail-pair-icon"
                         loading="lazy"
                         alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
+                        src="/assets/Thumbnail-Pair@2x-mrZqxJ62.png"
                       />
 
                       <img
                         class="thumbnail-pair-icon"
                         loading="lazy"
                         alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
+                        src="/assets/Thumbnail-Pair@2x-mrZqxJ62.png"
                       />
                     </div>
                   </div>
@@ -253,7 +252,7 @@
                       <img
                         class="imagen-5-icon"
                         alt=""
-                        src="./public/imagen-51.svg"
+                        src="/assets/imagen-51-DFj-WmGD.svg"
                       />
 
                       <div class="background48">
@@ -276,7 +275,7 @@
                         <img
                           class="imagen-5-icon2"
                           alt=""
-                          src="./public/imagen-51.svg"
+                          src="/assets/imagen-51-DFj-WmGD.svg"
                         />
 
                         <div class="container10">
@@ -292,7 +291,7 @@
                             class="chevron-down-icon"
                             loading="lazy"
                             alt=""
-                            src="./public/Chevron-down.svg"
+                            src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5%207.5L10%2012.5L15%207.5'%20stroke='%231E1E1E'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                           />
                         </div>
                       </div>
@@ -304,7 +303,7 @@
                         <img
                           class="imagen-4-icon2"
                           alt=""
-                          src="./public/imagen-4.svg"
+                          src="/assets/imagen-4-D-i9_ptN.svg"
                         />
 
                         <div class="background52">
@@ -321,7 +320,7 @@
                               class="chevron-down-icon"
                               loading="lazy"
                               alt=""
-                              src="./public/Chevron-down.svg"
+                              src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5%207.5L10%2012.5L15%207.5'%20stroke='%231E1E1E'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                             />
                           </div>
                         </div>
@@ -346,7 +345,7 @@
                       <img
                         class="inner-publish-child"
                         alt=""
-                        src="./public/Group-1.svg"
+                        src="data:image/svg+xml,%3csvg%20width='22'%20height='22'%20viewBox='0%200%2022%2022'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_2151_73'%20style='mask-type:alpha'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='22'%20height='22'%3e%3cg%20clip-path='url(%23clip0_2151_73)'%3e%3cg%20clip-path='url(%23clip1_2151_73)'%3e%3cpath%20d='M10.9992%200.111938C10.9992%201.06921%2011.9479%202.50169%2012.9069%203.70472C14.1418%205.25361%2015.6157%206.6067%2017.3068%207.63979C18.5737%208.41336%2020.1122%209.15595%2021.348%209.15595M10.9992%2018.2224C10.9992%2017.2651%2011.9479%2015.8326%2012.9069%2014.6296C14.1418%2013.0808%2015.6157%2011.7276%2017.3068%2010.6945C18.5737%209.92094%2020.1122%209.17835%2021.348%209.17835M21.348%209.16717H0.650391'%20stroke='white'%20stroke-width='1.83333'/%3e%3c/g%3e%3c/g%3e%3c/mask%3e%3cg%20mask='url(%23mask0_2151_73)'%3e%3cpath%20d='M0%20-1.5H22V20.5H0V-1.5Z'%20fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_2151_73'%3e%3crect%20width='22'%20height='22'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_2151_73'%3e%3crect%20width='22'%20height='18.3333'%20fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
                       />
                     </div>
                   </button>
@@ -370,7 +369,7 @@
         class="imagen-6-icon"
         loading="lazy"
         alt=""
-        src="./public/imagen-6@2x.png"
+        src="/assets/imagen-6@2x-lmQtQ0mu.png"
       />
 
       <div class="mask-group"></div>
@@ -378,7 +377,7 @@
         class="background-rect-icon"
         loading="lazy"
         alt=""
-        src="./public/Background-Rect@2x.png"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAABBJREFUeAEBBQD6/wAAAAAAAAUAAWR4lTgAAAAASUVORK5CYII="
       />
 
       <footer class="background55"></footer>

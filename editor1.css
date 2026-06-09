@@ -530,12 +530,7 @@
   display: inline-block;
   max-width: 344px;
 }
-.form2 {
-  align-self: stretch;
-  display: flex;
-  align-items: flex-start;
-  color: var(--color-black);
-}
+
 .input3 {
   flex: 1;
   border-radius: var(--br-50);
