@@ -1,11 +1,11 @@
 
   # alerta patitas
 
-  This is a code bundle for alerta patitas. The original project is available at https://www.figma.com/design/fijjLy9zfCWE4vsF8M6i6W/alerta-patitas.
+ codigo inspirado en el proyecto de figma https://www.figma.com/design/fijjLy9zfCWE4vsF8M6i6W/alerta-patitas.
 
   ## Running the code
 
-  Run `npm i` to install the dependencies.
+  Run `npm i` para instalar dependencias de vite
 
-  Run `npm run dev` to start the development server.
+  Run `npm run dev` se utiliza este comando para mover la pagia web en su modo de desarrollo
   
