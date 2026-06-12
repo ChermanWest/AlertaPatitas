@@ -155,11 +155,12 @@
                       <div class="edad-aproximado">EDAD (aproximado):</div>
                       <div class="form2">
                         <div class="input4">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Adulto"
-                          />
+                           <select class="age-field-group" aria-label="EDAD (aproximado)">
+                            <option value="infante" selected>Infante</option>
+                            <option value="joven">Joven</option>
+                            <option value="adulto">Adulto</option>
+                            <option value="viejo">Viejo</option>
+                          </select>
                           <img
                             class="list-icon"
                             alt=""
@@ -171,12 +172,11 @@
                     <div class="age-field-group">
                       <div class="edad-aproximado">SEXO:</div>
                       <div class="form2">
-                        <div class="input4">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Macho"
-                          />
+                        <div class="input5">
+                           <select class="sex-field-group" aria-label="SEXO">
+                            <option value="macho" selected>Macho</option>
+                            <option value="hembra">Hembra</option>
+                          </select>
                           <img
                             class="list-icon"
                             alt=""
@@ -185,14 +185,19 @@
                         </div>
                       </div>
                     </div>
-                    <div class="age-field-group">
-                      <div class="tamao2">TAMAÑO</div>
+                    <div class="size-field-group">
+                      <div class="tamaño">TAMAÑO</div>
                       <div class="form2">
                         <div class="input6">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Mediano"
+                           <select class="size-field-group" aria-label="TAMAÑO">
+                            <option value="pequeño" selected>Pequeño</option>
+                            <option value="mediano">Mediano</option>
+                            <option value="grande">Grande</option>
+                          </select>
+                          <img
+                            class="list-icon"
+                            alt=""
+                            src="./public/List.svg"
                           />
                         </div>
                       </div>

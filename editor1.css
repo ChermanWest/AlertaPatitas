@@ -532,24 +532,61 @@
 }
 
 .input3 {
-  flex: 1;
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--padding-14) var(--padding-24) var(--padding-13);
-  box-sizing: border-box;
-  gap: var(--gap-8);
-  max-width: var(--max-w-277);
-}
-.list-icon {
-  height: var(--height-16);
-  width: var(--width-16);
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-snow);
+  border: 0.5px solid var(--color-gainsboro-300);
+  border-radius: var(--br-8);
+  transition: border-color 0.15s, box-shadow 0.15s;
   position: relative;
 }
+
+.input3:hover {
+  border-color: var(--color-chocolate-100);
+}
+
+.input3:focus-within {
+  border-color: var(--color-chocolate-100);
+  box-shadow: 0 0 0 3px rgba(248, 114, 31, 0.15);
+}
+
+/* El select en sí */
+.input3 .pet-type-select {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-200);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+}
+
+.input3 .list-icon {
+  height: 20px;
+  width: 20px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
 .age-field-group {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+.size-field-group {
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -563,37 +600,139 @@
 }
 .edad-aproximado,
 .input4,
-.tamao2 {
+.tamaño {
   display: flex;
   align-items: center;
 }
 .input4 {
-  flex: 1;
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
-  justify-content: center;
-  padding: var(--padding-14) var(--padding-22) var(--padding-13);
-  box-sizing: border-box;
-  gap: var(--gap-8);
-  max-width: var(--max-w-277);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-snow);
+  border: 0.5px solid var(--color-gainsboro-300);
+  border-radius: var(--br-8);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
 }
-.tamao2 {
+
+.input4:hover {
+  border-color: var(--color-chocolate-100);
+}
+
+.input4:focus-within {
+  border-color: var(--color-chocolate-100);
+  box-shadow: 0 0 0 3px rgba(248, 114, 31, 0.15);
+}
+
+/* El select de edad */
+.input4 .age-field-group {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-200);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+}
+
+/* Input 5 - SEXO */
+.input5 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-snow);
+  border: 0.5px solid var(--color-gainsboro-300);
+  border-radius: var(--br-8);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+
+.input5:hover {
+  border-color: var(--color-chocolate-100);
+}
+
+.input5:focus-within {
+  border-color: var(--color-chocolate-100);
+  box-shadow: 0 0 0 3px rgba(248, 114, 31, 0.15);
+}
+
+/* El select de sexo */
+.input5 .sex-field-group {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-200);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+}
+
+.tamaño {
   width: 100%;
   position: relative;
-  max-width: 328px;
+  max-width: 332px;
 }
 .input6 {
-  flex: 1;
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
   display: flex;
-  align-items: flex-start;
-  padding: var(--padding-11) var(--padding-18) var(--padding-16);
-  box-sizing: border-box;
-  max-width: var(--max-w-277);
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-snow);
+  border: 0.5px solid var(--color-gainsboro-300);
+  border-radius: var(--br-8);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
 }
+
+.input6:hover {
+  border-color: var(--color-chocolate-100);
+}
+
+.input6:focus-within {
+  border-color: var(--color-chocolate-100);
+  box-shadow: 0 0 0 3px rgba(248, 114, 31, 0.15);
+}
+
+/* El select de tamaño */
+.input6 .size-field-group {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-gray-200);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+}
+
 .background46,
 .center-image-section {
   width: 100%;
@@ -1231,6 +1370,15 @@
   flex-shrink: 0;
   z-index: 5;
 }
+
+/* Estilos para form2 - mover a la izquierda */
+.form2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
 @media screen and (max-width: 1410px) {
   .description-section2 {
     max-width: 100%;
