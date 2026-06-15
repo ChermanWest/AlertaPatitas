@@ -355,101 +355,84 @@
   color: var(--color-gray-400);
   font-family: var(--font-onest);
 }
+/* Estilos generales para el contenedor */
 .search-type-selector {
-  width: 100%;
-  align-items: flex-end;
-  max-width: 396px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.search-type-selector2,
+
 .tipo-de-busqueda {
-  width: 100%;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.toggle-wrapper {
   display: flex;
   align-items: center;
+  gap: 12px; /* Espacio entre el texto y el switch */
 }
-.search-type-selector2 {
-  flex-direction: column;
-  gap: 1px;
-  max-width: var(--max-w-277);
+
+.opcion {
+  font-size: 16px;
+  color: #555;
 }
-.tipo-de-busqueda {
-  position: relative;
-  max-width: 155px;
+
+/* ----------------------------------
+   CÓDIGO DEL SWITCH (INTERRUPTOR)
+----------------------------------- */
+
+/* Ocultar el checkbox original de HTML */
+.switch-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
-.buscando-parent,
-.input2 {
-  display: flex;
-  align-items: flex-start;
-}
-.input2 {
-  width: 100%;
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
-  justify-content: flex-end;
-  padding: 7px var(--padding-28) var(--padding-6);
-  box-sizing: border-box;
-  max-width: var(--max-w-277);
-}
-.buscando-parent {
-  height: var(--height-32);
-}
-.buscando3 {
+
+/* Contenedor del switch (La píldora base) */
+.switch-container {
   position: relative;
   display: inline-block;
-  min-width: 69px;
-}
-.switch {
-  height: var(--height-32);
   width: 52px;
-  border-radius: var(--br-100);
-  background-color: var(--Schemes-Tertiary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-2) var(--padding-4);
-  box-sizing: border-box;
+  height: 32px; /* Altura que tenías en tu variable */
 }
-.handle {
-  align-self: stretch;
-  flex: 1;
-  position: relative;
-}
-.target {
+
+/* El fondo deslizable */
+.slider {
   position: absolute;
-  top: calc(50% - 24px);
-  right: -12px;
-  padding: var(--padding-4);
-  flex-shrink: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Color cuando está en "Buscando" */
+  transition: .4s;
+  border-radius: 34px; /* Hace los bordes redondos */
 }
-.handle-shape,
-.state-layer,
-.target {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+/* La bolita del switch */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%; /* Hace que sea un círculo perfecto */
 }
-.state-layer {
-  border-radius: var(--br-100);
-  flex-direction: column;
-  padding: var(--padding-8);
+
+/* Cuando el checkbox está activado (Extraviado) */
+.switch-container input:checked + .slider {
+  background-color: #ff6b6b; /* Color de alerta/extraviado. Cambialo por tu var(--Schemes-Tertiary) si quieres */
 }
-.handle-shape {
-  border-radius: var(--br-24);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
-  padding: var(--padding-11);
-}
-.container8 {
-  height: var(--height-2);
-  width: var(--width-2);
-  position: relative;
-  border-radius: 23px;
-}
-.encontrado {
-  position: relative;
-  line-height: 127.51%;
-  display: inline-block;
-  min-width: 86px;
+
+/* Mover la bolita a la derecha cuando se activa */
+.switch-container input:checked + .slider:before {
+  transform: translateX(20px);
 }
 .main-content-row-1,
 .pet-name-row2 {
