@@ -346,11 +346,13 @@
   flex-shrink: 0;
 }
 .pet-info-panel3 {
-  width: 732.9px;
+  width: 100%;
+  max-width: 732.9px; /* opcional, si quieres limitar el ancho máximo */
   align-items: center;
+  margin: 0 auto;
   padding: 8.9px var(--padding-12) 8.9px var(--padding-30);
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
   font-size: var(--fs-14);
   color: var(--color-gray-400);
   font-family: var(--font-onest);
