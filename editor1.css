@@ -37,15 +37,17 @@
   margin: 0 !important;
   position: absolute;
   top: 0;
-  left: -2px;
+  left: -2px; /* ⚠️ considera cambiarlo a left: 0 */
   border-radius: var(--br-120);
   border: var(--border-1);
-  overflow-x: auto;
+  overflow: hidden; /* ✅ cambia de auto → hidden */
   flex-shrink: 0;
   gap: var(--gap-11_7);
   opacity: var(--opacity-0);
   z-index: 2;
 }
+
+
 .symbol18 {
   position: relative;
   line-height: var(--lh-16);
@@ -89,7 +91,7 @@
 .background43 {
   flex: 1;
   border-radius: var(--br-32);
-  overflow: hidden;
+  overflow: hidden; /* ✅ cambia de auto → hidden */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -101,6 +103,7 @@
   background-repeat: no-repeat;
   background-position: top;
   max-width: 1376px;
+  width: 100%; /* ✅ agrega esto para contener el ancho */
   z-index: 1;
   font-size: var(--fs-56);
   color: var(--Schemes-On-Primary);
@@ -108,11 +111,12 @@
 }
 .background44 {
   width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   position: absolute;
   margin: 0 !important;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
   background-color: var(--color-gray-400);
   opacity: 0.5;
@@ -345,11 +349,13 @@
   flex-shrink: 0;
 }
 .pet-info-panel3 {
-  width: 732.9px;
+  width: 100%;
+  max-width: 732.9px; /* opcional, si quieres limitar el ancho máximo */
   align-items: center;
+  margin: 0 auto;
   padding: 8.9px var(--padding-12) 8.9px var(--padding-30);
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
   font-size: var(--fs-14);
   color: var(--color-gray-400);
   font-family: var(--font-onest);
@@ -462,14 +468,17 @@
   flex-shrink: 0;
 }
 .form-main-row2 {
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-content: flex-start;
   gap: 88px;
   max-width: 1284.2px;
 }
 .form-main-row-column-0 {
-  height: 568px;
-  flex: 1;
+  height: auto;
+  flex: 0 0 802px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   position: relative;
   min-width: 802px;
   max-width: 802px;
@@ -479,10 +488,11 @@
   font-family: var(--font-onest);
 }
 .left-pet-details {
-  position: absolute;
-  top: 0;
-  left: 0.2px;
+  position: relative;
+  top: auto;
+  left: auto;
   width: 364px;
+  flex: 0 0 364px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -723,15 +733,18 @@
   box-sizing: border-box;
 }
 .center-image-section {
-  position: absolute;
-  top: 7px;
-  left: 0.2px;
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 438px;
   flex-direction: column;
-  padding: var(--padding-0) var(--padding-0) var(--padding-0) 191px;
+  padding: var(--padding-0);
   isolation: isolate;
   gap: var(--gap-16);
   max-width: 100%;
-  height: 100%;
+  height: auto;
+  flex: 0 0 438px;
+  align-items: flex-start;
 }
 .background46 {
   height: 424px;
