@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Font Awesome 5 Pro:wght@400&display=swap"
@@ -28,7 +28,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Public Sans:wght@400;500&display=swap"
     />
-    <link rel="stylesheet" crossorigin href="/assets/index-CRSqCMIN.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-JNCIsYs_.css">
   </head>
   <body>
     <div class="editor">
@@ -96,26 +96,19 @@
       <main class="main-content">
         <section class="pet-info-panel3">
           <div class="search-type-selector">
-            <div class="search-type-selector2">
-              <div class="tipo-de-busqueda">TIPO DE BUSQUEDA</div>
-              <div class="input2">
-                <div class="buscando-parent">
-                  <div class="buscando3">Buscando</div>
-                  <div class="switch">
-                    <div class="handle">
-                      <div class="target">
-                        <div class="state-layer">
-                          <div class="handle-shape">
-                            <div class="container8"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="encontrado">Extraviado</div>
-                </div>
-              </div>
+            <div class="tipo-de-busqueda">TIPO DE BÚSQUEDA</div>
+            
+            <div class="toggle-wrapper">
+              <span class="opcion">Buscando</span>
+              
+              <label class="switch-container">
+                <input type="checkbox" id="estado-mascota">
+                <span class="slider"></span>
+              </label>
+              
+              <span class="opcion">Extraviado</span>
             </div>
+        
           </div>
         </section>
         <div class="main-content-row-1">
@@ -154,11 +147,12 @@
                       <div class="edad-aproximado">EDAD (aproximado):</div>
                       <div class="form2">
                         <div class="input4">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Adulto"
-                          />
+                           <select class="age-field-group" aria-label="EDAD (aproximado)">
+                            <option value="infante" selected>Infante</option>
+                            <option value="joven">Joven</option>
+                            <option value="adulto">Adulto</option>
+                            <option value="viejo">Viejo</option>
+                          </select>
                           <img
                             class="list-icon"
                             alt=""
@@ -170,12 +164,11 @@
                     <div class="age-field-group">
                       <div class="edad-aproximado">SEXO:</div>
                       <div class="form2">
-                        <div class="input4">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Macho"
-                          />
+                        <div class="input5">
+                           <select class="sex-field-group" aria-label="SEXO">
+                            <option value="macho" selected>Macho</option>
+                            <option value="hembra">Hembra</option>
+                          </select>
                           <img
                             class="list-icon"
                             alt=""
@@ -184,14 +177,19 @@
                         </div>
                       </div>
                     </div>
-                    <div class="age-field-group">
-                      <div class="tamao2">TAMAÑO</div>
+                    <div class="size-field-group">
+                      <div class="tamaño">TAMAÑO</div>
                       <div class="form2">
                         <div class="input6">
-                          <input
-                            class="field-text-input"
-                            type="text"
-                            placeholder="Mediano"
+                           <select class="size-field-group" aria-label="TAMAÑO">
+                            <option value="pequeño" selected>Pequeño</option>
+                            <option value="mediano">Mediano</option>
+                            <option value="grande">Grande</option>
+                          </select>
+                          <img
+                            class="list-icon"
+                            alt=""
+                            src="data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5.33333%204H14M5.33333%208H14M5.33333%2012H14M2%204H2.00667M2%208H2.00667M2%2012H2.00667'%20stroke='%231E1E1E'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
                           />
                         </div>
                       </div>
