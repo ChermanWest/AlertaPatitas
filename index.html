@@ -135,6 +135,7 @@
                           <select class="pet-type-select" aria-label="Tipo de mascota">
                             <option value="perro" selected>Perro</option>
                             <option value="gato">Gato</option>
+                            <option value="otro">Otro</option>
                           </select>
                           <img
                             class="list-icon"
@@ -286,20 +287,18 @@
     <img class="icon" alt="Publicar" src="./public/Group-1.svg" />
   </button>
 </section>
-              </div>
-            </div>
-          </div>
-          <section class="description-section">
-            <div class="description-section2">
-              <div class="description-section3">
-                <div class="descripcion">Descripcion:</div>
-                <div class="input11">
-                  <div class="sector-de-extravo">Escribe aqui...</div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+
+<section class="description-section">
+  <div class="description-container">
+    <label for="pet-description" class="descripcion-label">Descripción de la mascota:</label>
+    <textarea 
+      id="pet-description" 
+      class="input-descripcion" 
+      placeholder="Escribe aquí... (Ej: Color del pelaje, tamaño, si llevaba collar, dónde fue vista por última vez)" 
+      rows="6"
+    ></textarea>
+  </div>
+</section>
       </main>
       <img
         class="imagen-6-icon"

@@ -1070,57 +1070,56 @@
   width: var(--width-22);
   position: relative;
 }
+/* Contenedor principal de la sección */
 .description-section {
-  align-self: stretch;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  padding: 40px 20px; /* Da espacio arriba y abajo para que no quede pegado */
+  box-sizing: border-box;
+  font-family: var(--font-onest, sans-serif);
+  z-index: 2;
+  position: relative;
+  /* Eliminamos el margin-top: -270px para que baje a su posición natural */
+}
+
+/* Contenedor interno para alinear el texto y el input */
+.description-container {
+  width: 100%;
+  max-width: 782px; /* Mantiene el ancho máximo que tenías */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: var(--padding-0) var(--padding-30);
-  box-sizing: border-box;
-  max-width: 100%;
-  z-index: 2;
-  margin-top: -270px;
-  position: relative;
-  flex-shrink: 0;
+  gap: 12px; /* Espacio entre el título y la caja de texto */
+}
+
+/* Estilo del texto "Descripción:" */
+.descripcion-label {
+  font-size: var(--fs-14, 16px);
+  color: var(--color-gray-400, #333);
   text-align: left;
-  font-size: var(--fs-14);
-  color: var(--color-gray-400);
-  font-family: var(--font-onest);
+  font-weight: bold;
 }
-.description-section2 {
+
+/* Estilo de la caja de texto real */
+.input-descripcion {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 1088.2px;
-}
-.description-section3 {
-  flex-direction: column;
-  align-items: center;
-  max-width: 782.2px;
-}
-.descripcion,
-.description-section3,
-.input11 {
-  width: 100%;
-  display: flex;
-}
-.descripcion {
-  position: relative;
-  align-items: center;
-  max-width: 750px;
-  z-index: 2;
-}
-.input11 {
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
-  align-items: flex-start;
-  padding: var(--padding-11) var(--padding-18) 234px;
+  border-radius: 20px; /* Un borde redondeado más amigable */
+  background-color: var(--Schemes-On-Primary, #fff);
+  border: 1px solid #ccc; /* Un borde sutil para que el usuario sepa dónde escribir */
+  padding: 18px;
+  font-size: 14px;
+  color: var(--color-gray-500, #555);
+  font-family: var(--font-onest, sans-serif);
+  resize: vertical; /* Permite al usuario hacer la caja más alta si necesita escribir mucho */
+  min-height: 180px; /* Altura mínima sin usar padding excesivo */
   box-sizing: border-box;
-  max-width: 782.2px;
-  z-index: 1;
-  color: var(--color-gray-500);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sombra suave opcional */
+}
+
+/* Efecto al hacer clic en la caja de texto */
+.input-descripcion:focus {
+  outline: 2px solid #a8a8a8; /* Cambia el color al de tu paleta si tienes uno principal */
+  border-color: transparent;
 }
 .imagen-6-icon {
   width: 61px;
