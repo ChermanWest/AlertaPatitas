@@ -197,45 +197,24 @@
                       </div>
                     </div>
                   </div>
-                  <div class="center-image-section">
-                    <div class="background46">
-                      <button class="button12">
-                        <div class="symbol24"></div>
+                 <div class="center-image-section">
+                   <div class="background46" id="main-image-container">
+                      <button class="button12" id="prev-btn" type="button">
+                        <div class="symbol24"> <- </div>
                       </button>
-                      <button class="button13">
-                        <div class="symbol25"></div>
+                      <button class="button13" id="next-btn" type="button">
+                        <div class="symbol25">-></div>
                       </button>
                     </div>
-                    <div class="form6">
-                      <div class="input7">
-                        <input
-                          class="container9"
-                          placeholder="Copito"
-                          type="text"
-                        />
+                    
+                    <div class="image-thumbnails" id="thumbnails-container">
                       </div>
-                    </div>
-                    <div class="image-thumbnails">
-                      <img
-                        class="merged-asset-1-icon2"
-                        loading="lazy"
-                        alt=""
-                        src="./public/merged-asset-1@2x.png"
-                      />
-
-                      <img
-                        class="thumbnail-pair-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
-                      />
-
-                      <img
-                        class="thumbnail-pair-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
-                      />
+                  
+                    <div class="upload-section">
+                      <label for="file-upload" class="upload-label">
+                        <span>📷 Añadir fotos de la mascota</span>
+                      </label>
+                      <input type="file" id="file-upload" accept="image/*" multiple style="display: none;" />
                     </div>
                   </div>
                 </section>
