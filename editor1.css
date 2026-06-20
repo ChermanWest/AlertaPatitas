@@ -734,45 +734,104 @@
   height: 424px;
   border-radius: var(--br-16);
   overflow: hidden;
-  background-color: #e8e0d0;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
 }
 
 /* Slides */
+#slidesContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateX(60px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease; /* Simplificado para un fade cruzado suave */
   pointer-events: none;
 }
 
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Cambiado a contain para que no se recorte el perrito */
   display: block;
 }
 
 .slide.active {
   opacity: 1;
-  transform: translateX(0);
   pointer-events: auto;
 }
 
-.slide.exit-right {
-  opacity: 0;
-  transform: translateX(60px);
+/* Botones de navegación */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: var(--primary-orange);
+  font-size: 20px;
 }
 
-.slide.exit-left {
-  opacity: 0;
-  transform: translateX(-60px);
+.nav-btn--prev { left: 16px; }
+.nav-btn--next { right: 16px; }
+
+.nav-btn:hover {
+  background-color: #f9f9f9;
 }
 
-.slide.enter-from-left {
-  transform: translateX(-60px);
+/* Miniaturas */
+.image-thumbnails {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
 }
+
+.thumbnail-wrapper {
+  width: 30%;
+  height: 100px;
+  border-radius: 12px;
+  border: 2px solid #ccc; /* Borde gris por defecto */
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+.thumbnail-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-wrapper.active {
+  border-color: var(--primary-orange); /* Borde naranja para la activa */
+}
+
+/* Estilo de los botones de subida */
+.upload-btn {
+  border-style: dashed;
+}
+
+.upload-btn:hover {
+  background-color: #f0f0f0;
+}
+/*fin galería */
 
 /* Botones de navegación */
 .nav-btn {
