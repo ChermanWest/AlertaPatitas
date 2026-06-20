@@ -144,7 +144,7 @@ body {
   align-items: center;
   gap: 28px;
   font-size: var(--fs-16);
-  color: var(--color-gray-400);
+  color: #fff;
 }
 
 .nav-list3 span { cursor: pointer; }
