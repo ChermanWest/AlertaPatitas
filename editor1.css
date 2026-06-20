@@ -804,11 +804,7 @@
   background-color: var(--Schemes-On-Primary);
   border-radius: 99px;
 }
-.form6,
-.symbol25 {
-  display: flex;
-  flex-shrink: 0;
-}
+
 .symbol25 {
   width: 15.9px;
   position: relative;
@@ -820,15 +816,7 @@
   align-items: center;
   justify-content: center;
 }
-.form6 {
-  width: 397px;
-  margin: 0 !important;
-  position: absolute;
-  top: 11px;
-  left: 0;
-  align-items: flex-start;
-  z-index: 1;
-}
+
 .input7 {
   height: 45px;
   width: 277px;
@@ -838,22 +826,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
-.copito {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  font-family: var(--font-onest);
-  font-size: var(--fs-14);
-  background-color: transparent;
-  position: absolute;
-  top: 10px;
-  left: 20.2px;
-  color: var(--color-black);
-  text-align: left;
-  display: flex;
-  align-items: center;
-  padding: var(--padding-01);
-}
+
 .container9 {
   width: 217px;
   height: 26px;
