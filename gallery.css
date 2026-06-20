@@ -848,6 +848,7 @@
   overflow: hidden;
   background-color: #e8e0d0;
 }
+<<<<<<< HEAD:gallery.css
 
 /* Slides */
 .slide {
@@ -864,6 +865,8 @@
   width: 100%;
   height: 100%;
 =======
+=======
+>>>>>>> parent of ce4e755 (f):editor1.css
 .form6,
 .symbol25 {
   display: flex;
