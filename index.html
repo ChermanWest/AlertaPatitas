@@ -1,328 +1,374 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketplace — Publicar mascota</title>
+  <link rel="stylesheet" href="gallery.css" />
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700&family=Fredoka:wght@600&family=Oleo+Script&display=swap" rel="stylesheet" />
+</head>
+<body>
 
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./editor1.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Font Awesome 5 Pro:wght@400&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oleo Script:wght@400&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Public Sans:wght@400;500&display=swap"
-    />
-  </head>
-  <body>
-    <div class="editor">
-      <section class="container7">
-        <div class="symbol-container">
-          <div class="symbol18"></div>
-          <div class="drag3">DRAG</div>
-          <div class="symbol19"></div>
-        </div>
-        <button class="placeholder"></button>
-        <div class="background43">
-          <div class="background44"></div>
-          <section class="header-header3">
-            <header class="background45"></header>
-            <div class="header-header-row-12">
-              <div class="div23">
-                <div class="logo-content">
-                  <div class="logo33">
-                    <div class="logo3svg3">
-                      <div class="frame10">
-                        <img
-                          class="mask-group-icon8"
-                          loading="lazy"
-                          alt=""
-                          src="./public/Mask-group@2x.png"
-                        />
-                      </div>
-                      <div class="logo-details">
-                        <div class="div24">Alerta Patitas</div>
-                      </div>
-                      <img class="vector-icon5" loading="lazy" alt="" />
+<!-- ═══════════════════════════════════════════════
+     EDITOR (contenedor raíz)
+════════════════════════════════════════════════ -->
+<div class="editor">
 
-                      <img
-                        class="vector-icon6"
-                        loading="lazy"
-                        alt=""
-                        src="./public/Vector.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
+  <!-- ─────────────────────────────────────────────
+       HEADER
+  ───────────────────────────────────────────── -->
+  <header class="header-header3">
+
+    <!-- Barra superior de color -->
+    <div class="background45"></div>
+
+    <!-- Fila principal del header -->
+    <div class="header-header-row-12">
+
+      <!-- Logo pill dorado -->
+      <div class="div23">
+        <div class="logo-content">
+          <div class="logo33">
+            <div class="logo3svg3">
+              <div class="frame10">
+                <img class="mask-group-icon8" src="./public/mask-group@2x.png" alt="Logo" />
               </div>
-              <div class="nav-list3">
-                <div class="nav-item">
-                  <div class="inicio3">Inicio</div>
-                  <div class="symbol20">
-                    <div class="symbol21">⌄</div>
-                  </div>
-                </div>
-              </div>
-              <div class="acerca-de-nosotros5">
-                <div class="acerca-de-nosotros6">Acerca de nosotros</div>
-              </div>
-              <div class="paginas4">
-                <div class="inicio3">Paginas </div>
-              </div>
-              <div class="symbol22">
-                <div class="symbol21">⌄</div>
+              <div class="logo-details">
+                <span class="div24">MiMascota</span>
               </div>
             </div>
-          </section>
-          <h1 class="heading-1">Crea tu Busqueda</h1>
-        </div>
-      </section>
-      <main class="main-content">
-        <section class="pet-info-panel3">
-          <div class="search-type-selector">
-            <div class="tipo-de-busqueda">TIPO DE BÚSQUEDA</div>
-            
-            <div class="toggle-wrapper">
-              <span class="opcion">Buscando</span>
-              
-              <label class="switch-container">
-                <input type="checkbox" id="estado-mascota">
-                <span class="slider"></span>
-              </label>
-              
-              <span class="opcion">Extraviado</span>
-            </div>
-        
           </div>
-        </section>
-        <div class="main-content-row-1">
-          <div class="pet-name-row2">
-            <div class="form-main-row">
-              <div class="form-main-row2">
-                <section class="form-main-row-column-0">
-                  <div class="left-pet-details">
-                    <div class="name-field-group">
-                      <div class="nombre">NOMBRE:</div>
-                      <div class="input-name-wrapper">
-                        <input
-                          class="nombre-input"
-                          type="text"
-                          placeholder="Nombre"
-                        />
-                      </div>
-                    </div>
-                    <div class="pet-type-field-group">
-                      <div class="tipo-de-mascota">TIPO DE MASCOTA:</div>
-                      <div class="form2">
-                        <div class="input3">
-                          <select class="pet-type-select" aria-label="Tipo de mascota">
-                            <option value="perro" selected>Perro</option>
-                            <option value="gato">Gato</option>
-                            <option value="otro">Otro</option>
-                          </select>
-                          <img
-                            class="list-icon"
-                            alt=""
-                            src="./public/List.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="age-field-group">
-                      <div class="edad-aproximado">EDAD (aproximado):</div>
-                      <div class="form2">
-                        <div class="input4">
-                           <select class="age-field-group" aria-label="EDAD (aproximado)">
-                            <option value="infante" selected>Infante</option>
-                            <option value="joven">Joven</option>
-                            <option value="adulto">Adulto</option>
-                            <option value="viejo">Viejo</option>
-                          </select>
-                          <img
-                            class="list-icon"
-                            alt=""
-                            src="./public/List.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="age-field-group">
-                      <div class="edad-aproximado">SEXO:</div>
-                      <div class="form2">
-                        <div class="input5">
-                           <select class="sex-field-group" aria-label="SEXO">
-                            <option value="macho" selected>Macho</option>
-                            <option value="hembra">Hembra</option>
-                          </select>
-                          <img
-                            class="list-icon"
-                            alt=""
-                            src="./public/List.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="size-field-group">
-                      <div class="tamaño">TAMAÑO</div>
-                      <div class="form2">
-                        <div class="input6">
-                           <select class="size-field-group" aria-label="TAMAÑO">
-                            <option value="pequeño" selected>Pequeño</option>
-                            <option value="mediano">Mediano</option>
-                            <option value="grande">Grande</option>
-                          </select>
-                          <img
-                            class="list-icon"
-                            alt=""
-                            src="./public/List.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="center-image-section">
-                    <div class="background46">
-                      <button class="button12">
-                        <div class="symbol24"></div>
-                      </button>
-                      <button class="button13">
-                        <div class="symbol25"></div>
-                      </button>
-                    </div>
-                    <div class="image-thumbnails">
-                      <img
-                        class="merged-asset-1-icon2"
-                        loading="lazy"
-                        alt=""
-                        src="./public/merged-asset-1@2x.png"
-                      />
-
-                      <img
-                        class="thumbnail-pair-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
-                      />
-
-                      <img
-                        class="thumbnail-pair-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/Thumbnail-Pair@2x.png"
-                      />
-                    </div>
-                  </div>
-                </section>
-<section class="report-container">
-  <h2 class="report-title">SECTOR DE EXTRAVÍO</h2>
-
-  <div class="location-options">
-    <button class="btn btn-location">
-      <img class="icon" alt="Ubicación" src="./public/imagen-51.svg" />
-      <span>SELECCIÓN ÚLTIMA UBICACIÓN DE AVISTAMIENTO</span>
-    </button>
-
-    <button class="btn btn-location">
-      <span>INGRESAR DIRECCIÓN/SECTOR MANUALMENTE</span>
-    </button>
-  </div>
-
-  <div class="accordion">
-    <div class="accordion-header">
-      <div class="accordion-info">
-        <img class="icon" alt="Ubicación" src="./public/imagen-51.svg" />
-        <span>11 de Septiembre (El Roble)</span>
+        </div>
       </div>
-      <img class="icon-chevron" alt="Abrir" src="./public/Chevron-down.svg" />
+
+      <!-- Navegación -->
+      <nav class="nav-list3" aria-label="Navegación principal">
+        <div class="nav-item">
+          <a class="inicio3" href="#">Inicio</a>
+          <div class="symbol20">&#xf107;</div><!-- chevron FA -->
+        </div>
+
+        <div class="nav-item acerca-de-nosotros5">
+          <span class="acerca-de-nosotros6">Acerca de nosotros</span>
+          <div class="symbol21">&#xf107;</div>
+        </div>
+
+        <div class="nav-item paginas4">
+          <span class="inicio3">Páginas</span>
+          <div class="symbol22">&#xf107;</div>
+        </div>
+      </nav>
+
     </div>
+  </header>
+  <!-- /HEADER -->
+
+
+  <!-- ─────────────────────────────────────────────
+       HERO — Imagen de fondo con título
+  ───────────────────────────────────────────── -->
+  <div class="background43">
+    <!-- Overlay oscuro semitransparente -->
+    <div class="background44"></div>
+
+    <!-- Cursor/placeholder drag -->
+    <div class="symbol-container">
+      <span class="symbol18">&#xf256;</span><!-- mano FA -->
+      <span class="drag3">Arrastrar</span>
+      <span class="symbol19">&#xf256;</span>
+    </div>
+
+    <!-- Imagen decorativa -->
+    <img class="imagen-6-icon" src="./public/imagen-6@2x.png" alt="" aria-hidden="true" />
+
+    <!-- Título principal -->
+    <div class="main-content">
+      <h1 class="heading-1">Publicar mascota</h1>
+    </div>
+
+    <!-- Máscara / rectángulo decorativo -->
+    <img class="mask-group" src="./public/mask-group1@2x.png" alt="" aria-hidden="true" />
+    <img class="background-rect-icon" src="./public/background-rect@2x.png" alt="" aria-hidden="true" />
   </div>
+  <!-- /HERO -->
 
-  <div class="contact-card">
-    <div class="contact-header">
-      <img class="icon" alt="Contacto" src="./public/imagen-4.svg" />
-      <h3>DATOS DE CONTACTO</h3>
-    </div>
 
-    <div class="accordion">
-      <div class="accordion-header">
-        <span class="accordion-title">Title</span>
-        <img class="icon-chevron" alt="Abrir" src="./public/Chevron-down.svg" />
+  <!-- ─────────────────────────────────────────────
+       PANEL DE TIPO DE BÚSQUEDA (Buscando / Extraviado)
+  ───────────────────────────────────────────── -->
+  <div class="pet-info-panel3">
+    <div class="search-type-selector">
+      <span class="tipo-de-busqueda">Tipo de búsqueda:</span>
+      <div class="toggle-wrapper">
+        <span class="opcion">Buscando</span>
+
+        <label class="switch-container" aria-label="Cambiar entre Buscando y Extraviado">
+          <input type="checkbox" id="searchTypeToggle" />
+          <span class="slider"></span>
+        </label>
+
+        <span class="opcion">Extraviado</span>
       </div>
     </div>
-
-    <div class="input-group">
-      <textarea class="text-area" placeholder="Escribe aquí los datos personales..."></textarea>
-      <button class="btn btn-save">Guardar</button>
-    </div>
   </div>
+  <!-- /PANEL BÚSQUEDA -->
 
-  <button class="btn btn-publish">
-    <span>PUBLICAR</span>
-    <img class="icon" alt="Publicar" src="./public/Group-1.svg" />
-  </button>
-</section>
 
-<section class="description-section">
-  <div class="description-container">
-    <label for="pet-description" class="descripcion-label">Descripción de la mascota:</label>
-    <textarea 
-      id="pet-description" 
-      class="input-descripcion" 
-      placeholder="Escribe aquí... (Ej: Color del pelaje, tamaño, si llevaba collar, dónde fue vista por última vez)" 
-      rows="6"
-    ></textarea>
-  </div>
-</section>
-      </main>
-      <img
-        class="imagen-6-icon"
-        loading="lazy"
-        alt=""
-        src="./public/imagen-6@2x.png"
-      />
+  <!-- ─────────────────────────────────────────────
+       FILA PRINCIPAL DEL FORMULARIO
+  ───────────────────────────────────────────── -->
+  <div class="main-content-row-1">
 
-      <div class="mask-group"></div>
-      <img
-        class="background-rect-icon"
-        loading="lazy"
-        alt=""
-        src="./public/Background-Rect@2x.png"
-      />
-
-      <footer class="background55"></footer>
+    <!-- Sub-fila: nombre de mascota -->
+    <div class="pet-name-row2">
+      <!-- (reservado para el nombre de mascota sobre el formulario si se usa) -->
     </div>
 
-    <script>
-      var addressInputContainer = document.getElementById("addressInputContainer");
-      if (addressInputContainer) {
-        addressInputContainer.addEventListener("click", function (e) {
-          window.location.href = "./repositorio-de-busqueda1.html";
-        });
-      }
-      
-      var container = document.getElementById("container");
-      if (container) {
-        container.addEventListener("click", function (e) {
-          window.location.href = "./repositorio-de-busqueda1.html";
-        });
-      }
-      </script>
-  </body>
+    <!-- Fila de columnas -->
+    <div class="form-main-row">
+      <div class="form-main-row2">
+
+        <!-- ══════════════════════════════════════
+             COLUMNA IZQUIERDA: Datos + Galería
+        ══════════════════════════════════════ -->
+        <div class="form-main-row-column-0">
+
+          <!-- ── Detalles de la mascota ── -->
+          <div class="left-pet-details">
+
+            <!-- NOMBRE -->
+            <div class="name-field-group">
+              <label class="nombre-label" for="petName">NOMBRE:</label>
+              <div class="nombre">
+                <input
+                  type="text"
+                  id="petName"
+                  class="nombre-input"
+                  placeholder="Nombre"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <!-- TIPO DE MASCOTA -->
+            <div class="pet-type-field-group">
+              <label class="tipo-de-mascota" for="petType">TIPO DE MASCOTA:</label>
+              <div class="input3">
+                <select class="pet-type-select" id="petType">
+                  <option value="">Seleccionar…</option>
+                  <option value="perro">Perro</option>
+                  <option value="gato">Gato</option>
+                  <option value="ave">Ave</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <img class="list-icon" src="./public/list-icon.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+
+            <!-- EDAD APROXIMADA -->
+            <div class="age-field-group">
+              <label class="edad-aproximado" for="petAge">EDAD (aproximado):</label>
+              <div class="input4">
+                <select class="age-select" id="petAge">
+                  <option value="">Seleccionar…</option>
+                  <option value="0-6m">0 – 6 meses</option>
+                  <option value="6m-1">6 meses – 1 año</option>
+                  <option value="1-3">1 – 3 años</option>
+                  <option value="3-7">3 – 7 años</option>
+                  <option value="7+">7+ años</option>
+                </select>
+                <img class="list-icon" src="./public/list-icon.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+
+            <!-- SEXO -->
+            <div class="age-field-group">
+              <label class="edad-aproximado" for="petSex">SEXO:</label>
+              <div class="input5">
+                <select class="sex-select" id="petSex">
+                  <option value="">Seleccionar…</option>
+                  <option value="macho">Macho</option>
+                  <option value="hembra">Hembra</option>
+                  <option value="desconocido">Desconocido</option>
+                </select>
+                <img class="list-icon" src="./public/list-icon.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+
+            <!-- TAMAÑO -->
+            <div class="size-field-group">
+              <label class="tamaño" for="petSize">TAMAÑO:</label>
+              <div class="input6">
+                <select class="size-select" id="petSize">
+                  <option value="">Seleccionar…</option>
+                  <option value="pequeño">Pequeño</option>
+                  <option value="mediano">Mediano</option>
+                  <option value="grande">Grande</option>
+                </select>
+                <img class="list-icon" src="./public/list-icon.svg" alt="" aria-hidden="true" />
+              </div>
+            </div>
+
+          </div>
+          <!-- /left-pet-details -->
+
+          <!-- ── Galería de fotos ── -->
+          <section class="center-image-section" aria-label="Galería de fotos">
+
+            <!-- Foto principal (carrusel) -->
+            <div class="gallery-main" id="galleryMain">
+
+              <div class="slide active" data-index="0">
+                <img src="./public/Background1@3x.png" alt="Foto de mascota 1" />
+              </div>
+              <div class="slide" data-index="1">
+                <img src="./public/merged-asset-1@2x.png" alt="Foto de mascota 2" />
+              </div>
+              <div class="slide" data-index="2">
+                <img src="./public/Thumbnail-Pair@2x.png" alt="Foto de mascota 3" />
+              </div>
+              <div class="slide" data-index="3">
+                <img src="./public/Thumbnail-Pair@2x.png" alt="Foto de mascota 4" />
+              </div>
+
+              <!-- Botón anterior -->
+              <button class="nav-btn nav-btn--prev" id="btnPrev" aria-label="Foto anterior">
+                <span class="nav-icon" aria-hidden="true">&#8592;</span>
+              </button>
+
+              <!-- Botón siguiente -->
+              <button class="nav-btn nav-btn--next" id="btnNext" aria-label="Foto siguiente">
+                <span class="nav-icon" aria-hidden="true">&#8594;</span>
+              </button>
+
+            </div>
+            <!-- /gallery-main -->
+
+            <!-- Miniaturas -->
+            <div class="image-thumbnails">
+              <img class="thumbnail active" data-index="0"
+                   src="./public/Background1@3x.png"
+                   alt="Miniatura 1" />
+              <img class="thumbnail" data-index="1"
+                   src="./public/merged-asset-1@2x.png"
+                   alt="Miniatura 2" />
+              <img class="thumbnail" data-index="2"
+                   src="./public/Thumbnail-Pair@2x.png"
+                   alt="Miniatura 3" />
+              <img class="thumbnail" data-index="3"
+                   src="./public/Thumbnail-Pair@2x.png"
+                   alt="Miniatura 4" />
+            </div>
+
+          </section>
+          <!-- /center-image-section -->
+
+        </div>
+        <!-- /form-main-row-column-0 -->
+
+
+        <!-- ══════════════════════════════════════
+             COLUMNA DERECHA: Ubicación + Contacto
+        ══════════════════════════════════════ -->
+        <div class="right-location-contact">
+
+          <!-- Opciones de ubicación -->
+          <p class="report-title">¿Dónde fue visto?</p>
+
+          <div class="location-options">
+            <button class="btn btn-location" type="button">
+              <img class="icon" src="./public/location-icon.svg" alt="" aria-hidden="true" />
+              Usar mi ubicación actual
+              <img class="icon-chevron" src="./public/chevron-right.svg" alt="" aria-hidden="true" />
+            </button>
+
+            <button class="btn btn-location" type="button">
+              <img class="icon" src="./public/map-icon.svg" alt="" aria-hidden="true" />
+              Seleccionar en el mapa
+              <img class="icon-chevron" src="./public/chevron-right.svg" alt="" aria-hidden="true" />
+            </button>
+          </div>
+
+          <!-- Acordeón de información extra -->
+          <div class="accordion">
+            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+              <div class="accordion-info">
+                <img class="icon" src="./public/info-icon.svg" alt="" aria-hidden="true" />
+                <span class="accordion-title">Información adicional</span>
+              </div>
+              <img class="icon-chevron" src="./public/chevron-right.svg" alt="" aria-hidden="true" />
+            </div>
+          </div>
+
+          <!-- Tarjeta de contacto -->
+          <div class="contact-card">
+            <div class="contact-header">
+              <img class="icon" src="./public/contact-icon.svg" alt="" aria-hidden="true" />
+              <h3>Datos de contacto</h3>
+            </div>
+
+            <div class="input-group">
+              <textarea
+                class="text-area"
+                placeholder="Escribe tu nombre, teléfono o email para que puedan contactarte…"
+                rows="4"
+                aria-label="Datos de contacto"
+              ></textarea>
+
+              <button class="btn-save" type="button">Guardar</button>
+            </div>
+          </div>
+
+          <!-- Botón publicar -->
+          <button class="btn btn-publish" type="button">
+            <img class="inner-publish-child" src="./public/publish-icon.svg" alt="" aria-hidden="true" />
+            Publicar
+          </button>
+
+        </div>
+        <!-- /right-location-contact -->
+
+      </div>
+      <!-- /form-main-row2 -->
+    </div>
+    <!-- /form-main-row -->
+
+  </div>
+  <!-- /main-content-row-1 -->
+
+
+  <!-- ─────────────────────────────────────────────
+       SECCIÓN DESCRIPCIÓN
+  ───────────────────────────────────────────── -->
+  <div class="description-section">
+    <div class="description-container">
+      <label class="descripcion-label" for="petDescription">Descripción:</label>
+      <textarea
+        class="input-descripcion"
+        id="petDescription"
+        placeholder="Describe a tu mascota: color, características especiales, comportamiento, collar, etc."
+      ></textarea>
+    </div>
+  </div>
+  <!-- /DESCRIPCIÓN -->
+
+
+  <!-- ─────────────────────────────────────────────
+       FOOTER / BARRA INFERIOR
+  ───────────────────────────────────────────── -->
+  <div class="background55"></div>
+
+</div>
+<!-- /EDITOR -->
+
+
+<!-- ─────────────────────────────────────────────
+     SCRIPTS
+───────────────────────────────────────────── -->
+<script src="gallery.js"></script>
+
+</body>
 </html>
