@@ -848,7 +848,6 @@
   overflow: hidden;
   background-color: #e8e0d0;
 }
-<<<<<<< HEAD:gallery.css
 
 /* Slides */
 .slide {
@@ -859,97 +858,10 @@
   transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
 }
-<<<<<<< HEAD:gallery.css
 
 .slide img {
   width: 100%;
   height: 100%;
-=======
-=======
->>>>>>> parent of ce4e755 (f):editor1.css
-.form6,
-.symbol25 {
-  display: flex;
-  flex-shrink: 0;
-}
-.symbol25 {
-  width: 15.9px;
-  position: relative;
-  font-size: var(--fs-18);
-  line-height: var(--lh-18);
-  font-family: var(--font-font-awesome-5-pro);
-  color: var(--color-chocolate-100);
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-}
-.form6 {
-  width: 397px;
-  margin: 0 !important;
-  position: absolute;
-  top: 11px;
-  left: 0;
-  align-items: flex-start;
-  z-index: 1;
-}
-.input7 {
-  height: 45px;
-  width: 277px;
-  position: relative;
-  border-radius: var(--br-50);
-  background-color: var(--Schemes-On-Primary);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.copito {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  font-family: var(--font-onest);
-  font-size: var(--fs-14);
-  background-color: transparent;
-  position: absolute;
-  top: 10px;
-  left: 20.2px;
-  color: var(--color-black);
-  text-align: left;
-  display: flex;
-  align-items: center;
-  padding: var(--padding-01);
-}
-.container9 {
-  width: 217px;
-  height: 26px;
-  border: 1px solid var(--color-black);
- 
-  background-color: transparent;
-  color: var(--color-black);
-  font-family: var(--font-onest);
-  font-size: var(--fs-14);
-  outline: 0;
-  box-sizing: border-box;
-  padding: 2px 2px;
-  position: absolute;
-  top: 9px;
-  left: 13.2px;
-}
-.image-thumbnails {
-  align-self: stretch;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  padding: var(--padding-1) var(--padding-6) var(--padding-1) var(--padding-0);
-  gap: 13px;
-  z-index: 2;
-  flex-shrink: 0;
-}
-.merged-asset-1-icon2,
-.thumbnail-pair-icon {
-  height: 119px;
-  position: relative;
->>>>>>> parent of ce4e755 (f):editor1.css
   object-fit: cover;
   display: block;
 }
