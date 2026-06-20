@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <title>Alerta Patitas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-topbar"></div>
+    <nav class="header-nav">
+
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <div class="logo-icon">🐾</div>
+        <span class="logo-text">Alerta Patitas</span>
+      </a>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li class="nav-item has-dropdown">
+          <span>Inicio</span>
+          <span class="chevron">⌄</span>
+          <div class="dropdown">
+            <a href="#">Inicio</a>
+            <a href="#">Novedades</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#">Acerca de nosotros</a>
+        </li>
+        <li class="nav-item has-dropdown">
+          <span>Páginas</span>
+          <span class="chevron">⌄</span>
+          <div class="dropdown">
+            <a href="#">Repositorio</a>
+            <a href="editor1.html">Crear publicación</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Acciones derecha -->
+      <div class="nav-actions">
+        <button class="btn-heart" aria-label="Favoritos">
+          <span class="heart-icon">♡</span>
+          <span class="badge">0</span>
+        </button>
+
+        <!-- Botón Iniciar Sesión con dropdown -->
+        <div class="login-wrapper">
+          <button class="btn-login">Iniciar Sesión</button>
+          <div class="login-dropdown">
+            <a href="#" class="login-opt login-opt--primary">
+              <span class="lopt-icon">👤</span>
+              <div>
+                <strong>Iniciar Sesión</strong>
+                <small>Accede a tu cuenta</small>
+              </div>
+            </a>
+            <div class="login-divider"></div>
+            <a href="#" class="login-opt">
+              <span class="lopt-icon">📝</span>
+              <div>
+                <strong>Registrarse</strong>
+                <small>Crea una cuenta nueva</small>
+              </div>
+            </a>
+            <div class="login-divider"></div>
+            <a href="editor1.html" class="login-opt login-opt--publish">
+              <span class="lopt-icon">🐾</span>
+              <div>
+                <strong>Crea una publicación</strong>
+                <small>Reporta una mascota</small>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <!-- Texto izquierdo -->
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Alerta Patitas
+          <span class="hero-paw">🐾</span>
+        </h1>
+        <p class="hero-subtitle">La comunidad que ayuda a reencontrar mascotas con sus familias.</p>
+        <p class="hero-body">
+          Si tu mascota se perdió, no estás solo. Publica la información y recibe ayuda de personas
+          cercanas que puedan colaborar en su búsqueda.<br />
+          Cada dato puede ser importante para volver a encontrar a tu compañero.
+        </p>
+        <a href="editor1.html" class="btn-cta">Crea una publicación!</a>
+
+        <!-- Dots carrusel decorativos -->
+        <div class="hero-dots">
+          <span class="dot dot--active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <!-- Imagen derecha -->
+      <div class="hero-img-wrap">
+        <!--
+          REEMPLAZA este div por:
+          <img src="./public/hero-pets.png" alt="Mascotas" class="hero-img" />
+        -->
+        <div class="hero-img-placeholder">
+          <span class="hero-img-icon">🐶🐱🐶</span>
+          <span>Coloca aquí la imagen hero<br/>(hero-pets.png)</span>
+        </div>
+        <!-- Decoraciones -->
+        <span class="deco deco--bone">🦴</span>
+        <span class="deco deco--paw">🐾</span>
+        <span class="deco deco--bow">🎀</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECCIÓN PRINCIPAL: filtros + tarjetas
+  ══════════════════════════════════════════ -->
+  <section class="cases-section">
+    <h2 class="cases-title">Ayuda a la Comunidad con estos Casos</h2>
+
+    <div class="cases-layout">
+
+      <!-- ── FILTROS ── -->
+      <aside class="filters">
+        <h3 class="filters-heading">FILTROS</h3>
+
+        <!-- Mascota -->
+        <div class="filter-group">
+          <p class="filter-label">Mascota</p>
+          <label class="filter-tag">
+            <input type="checkbox" name="mascota" value="perro" checked />
+            <span>Perro</span>
+          </label>
+          <label class="filter-tag">
+            <input type="checkbox" name="mascota" value="gato" />
+            <span>Gato</span>
+          </label>
+          <label class="filter-tag">
+            <input type="checkbox" name="mascota" value="ave" />
+            <span>Ave</span>
+          </label>
+          <label class="filter-tag">
+            <input type="checkbox" name="mascota" value="otros" />
+            <span>Otros</span>
+          </label>
+        </div>
+
+        <!-- Género -->
+        <div class="filter-group">
+          <p class="filter-label">Género</p>
+          <label class="filter-tag">
+            <input type="radio" name="genero" value="macho" checked />
+            <span>Macho</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="genero" value="hembra" />
+            <span>Hembra</span>
+          </label>
+        </div>
+
+        <!-- Edad -->
+        <div class="filter-group">
+          <p class="filter-label">Edad</p>
+          <label class="filter-tag">
+            <input type="radio" name="edad" value="cachorro" />
+            <span>Cachorro</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="edad" value="corta" checked />
+            <span>De corta edad</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="edad" value="adulto" />
+            <span>Adulto</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="edad" value="senior" />
+            <span>Senior</span>
+          </label>
+        </div>
+
+        <!-- Tamaño -->
+        <div class="filter-group">
+          <p class="filter-label">Tamaño</p>
+          <label class="filter-tag">
+            <input type="radio" name="tamaño" value="pequeño" />
+            <span>Pequeño</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="tamaño" value="mediano" checked />
+            <span>Mediano</span>
+          </label>
+          <label class="filter-tag">
+            <input type="radio" name="tamaño" value="grande" />
+            <span>Grande</span>
+          </label>
+        </div>
+
+        <!-- Estado -->
+        <div class="filter-group">
+          <p class="filter-label">Estado</p>
+          <label class="filter-tag filter-tag--lost">
+            <input type="radio" name="estado" value="perdido" checked />
+            <span>Perdido</span>
+          </label>
+          <label class="filter-tag filter-tag--search">
+            <input type="radio" name="estado" value="buscando" />
+            <span>Buscando</span>
+          </label>
+        </div>
+
+        <!-- Área de búsqueda -->
+        <div class="filter-group">
+          <p class="filter-label">Área de búsqueda</p>
+          <div class="range-wrap">
+            <input type="range" min="0" max="50" value="10" class="range-input" />
+            <span class="range-value">10 km</span>
+          </div>
+        </div>
+
+        <button class="btn-filter-apply">Aplicar filtros</button>
+      </aside>
+
+      <!-- ── GRID DE TARJETAS ── -->
+      <!--
+        DATA-ATTRIBUTES por tarjeta (úsalos al agregar nuevas):
+          data-mascota  → perro | gato | ave | otros
+          data-genero   → macho | hembra
+          data-edad     → cachorro | corta | adulto | senior
+          data-tamaño   → pequeño | mediano | grande
+          data-estado   → perdido | buscando
+      -->
+      <div class="cards-grid" id="cardsGrid">
+
+        <!-- TARJETA 1 — Blacky -->
+        <article class="pet-card"
+          data-mascota="perro"
+          data-genero="macho"
+          data-edad="adulto"
+          data-tamaño="mediano"
+          data-estado="buscando">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/blacky.jpg" alt="Blacky" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>blacky.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--search">Buscando</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Blacky – German Castro</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Perro</span>
+              <span class="tag">Macho</span>
+              <span class="tag">Mediano</span>
+              <span class="tag">Adulto</span>
+              <span class="tag tag--state">Buscando</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- TARJETA 2 — Luna -->
+        <article class="pet-card"
+          data-mascota="gato"
+          data-genero="hembra"
+          data-edad="corta"
+          data-tamaño="pequeño"
+          data-estado="perdido">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/luna.jpg" alt="Luna" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>luna.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--lost">Perdido</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Luna – María González</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Gato</span>
+              <span class="tag">Hembra</span>
+              <span class="tag">Pequeño</span>
+              <span class="tag">Corta edad</span>
+              <span class="tag tag--state tag--lost">Perdido</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- TARJETA 3 — Rocky -->
+        <article class="pet-card"
+          data-mascota="perro"
+          data-genero="macho"
+          data-edad="cachorro"
+          data-tamaño="pequeño"
+          data-estado="perdido">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/rocky.jpg" alt="Rocky" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>rocky.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--lost">Perdido</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Rocky – Carlos Pérez</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Perro</span>
+              <span class="tag">Macho</span>
+              <span class="tag">Pequeño</span>
+              <span class="tag">Cachorro</span>
+              <span class="tag tag--state tag--lost">Perdido</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- TARJETA 4 — Mía -->
+        <article class="pet-card"
+          data-mascota="perro"
+          data-genero="hembra"
+          data-edad="adulto"
+          data-tamaño="grande"
+          data-estado="buscando">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/mia.jpg" alt="Mía" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>mia.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--search">Buscando</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Mía – Sofía Ramírez</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Perro</span>
+              <span class="tag">Hembra</span>
+              <span class="tag">Grande</span>
+              <span class="tag">Adulto</span>
+              <span class="tag tag--state">Buscando</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- TARJETA 5 — Pico -->
+        <article class="pet-card"
+          data-mascota="ave"
+          data-genero="macho"
+          data-edad="adulto"
+          data-tamaño="pequeño"
+          data-estado="perdido">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/pico.jpg" alt="Pico" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>pico.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--lost">Perdido</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Pico – Diego Flores</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Ave</span>
+              <span class="tag">Macho</span>
+              <span class="tag">Pequeño</span>
+              <span class="tag">Adulto</span>
+              <span class="tag tag--state tag--lost">Perdido</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- TARJETA 6 — Max -->
+        <article class="pet-card"
+          data-mascota="perro"
+          data-genero="macho"
+          data-edad="senior"
+          data-tamaño="grande"
+          data-estado="buscando">
+          <div class="pet-card-img-wrap">
+            <!-- <img src="./public/max.jpg" alt="Max" class="pet-card-img" /> -->
+            <div class="pet-card-img pet-card-img--placeholder">
+              <span>📷</span>
+              <small>max.jpg</small>
+            </div>
+            <span class="pet-badge pet-badge--search">Buscando</span>
+          </div>
+          <div class="pet-card-body">
+            <h3 class="pet-card-name">Max – Andrea López</h3>
+            <p class="pet-card-tags">
+              <span class="tag">Perro</span>
+              <span class="tag">Macho</span>
+              <span class="tag">Grande</span>
+              <span class="tag">Senior</span>
+              <span class="tag tag--state">Buscando</span>
+            </p>
+          </div>
+        </article>
+
+      </div><!-- /cards-grid -->
+    </div><!-- /cases-layout -->
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-icon">🐾</span>
+        <span class="logo-text">Alerta Patitas</span>
+      </div>
+      <p class="footer-copy">© 2025 Alerta Patitas — Ayudando a reunir familias con sus mascotas.</p>
+    </div>
+  </footer>
+
+  <script src="filters.js"></script>
+</body>
+</html>
