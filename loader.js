@@ -4,7 +4,8 @@
    muestra las fotos almacenadas en Google Drive.
 
    CONFIGURACIÓN:
-   Reemplaza API_URL con la misma URL de tu Apps Script.
+   Reemplaza API_URL con la misma URL de tu Apps Script
+   (debe ser idéntica a la de editor.js).
    ============================================================ */
 
 const API_URL = 'TU_URL_DE_APPS_SCRIPT_AQUI';
@@ -26,12 +27,16 @@ function buildCard(m) {
     ? `<img src="${fotoUrl}" alt="${m.nombre}" class="pet-card-img" loading="lazy" />`
     : `<div class="pet-card-img pet-card-img--placeholder"><span>📷</span></div>`;
 
+  // Acepta tanto "tamano" (nuevo) como "tamaño" (por compatibilidad
+  // con hojas creadas con la versión anterior del script)
+  const tamano = m.tamano || m.tamaño || '';
+
   return `
     <article class="pet-card"
       data-mascota="${m.mascota  || ''}"
       data-genero="${m.sexo     || ''}"
       data-edad="${m.edad      || ''}"
-      data-tamaño="${m.tamaño   || ''}"
+      data-tamano="${tamano}"
       data-estado="${m.estado   || ''}">
       <div class="pet-card-img-wrap">
         ${imgHTML}
@@ -42,7 +47,7 @@ function buildCard(m) {
         <p class="pet-card-tags">
           ${m.mascota ? `<span class="tag">${capitalizar(m.mascota)}</span>` : ''}
           ${m.sexo    ? `<span class="tag">${capitalizar(m.sexo)}</span>`    : ''}
-          ${m.tamaño  ? `<span class="tag">${capitalizar(m.tamaño)}</span>`  : ''}
+          ${tamano    ? `<span class="tag">${capitalizar(tamano)}</span>`    : ''}
           ${m.edad    ? `<span class="tag">${capitalizar(m.edad)}</span>`    : ''}
           <span class="tag ${tagClass}">${badgeText}</span>
         </p>
@@ -102,8 +107,9 @@ async function cargarMascotas() {
   if (!grid) return;
 
   // Si no está configurada la URL, dejar las tarjetas estáticas de ejemplo
-  if (API_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') {
+  if (!API_URL || API_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') {
     console.warn('loader.js: configura API_URL para cargar datos reales.');
+    setGridState(grid, 'error', '⚙️ Falta configurar la URL de Apps Script en loader.js (constante API_URL).');
     return;
   }
 
@@ -117,7 +123,7 @@ async function cargarMascotas() {
     const json = await res.json();
 
     if (!json.ok || !Array.isArray(json.data)) {
-      throw new Error('Respuesta inesperada del servidor');
+      throw new Error(json.error || 'Respuesta inesperada del servidor');
     }
 
     if (json.data.length === 0) {

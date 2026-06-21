@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <style>
+      /* ── Variables ── */
+      :root {
+        --Schemes-On-Primary: #ffffff;
+        --Schemes-Tertiary: #c07c3a;
+        --color-chocolate-100: #8b4513;
+        --color-gold-100: #c8a040;
+        --color-gray-100: ##372121;
+        --color-gray-200: #555555;
+        --color-gray-300: #888888;
+        --color-gray-400: #000000;
+        --color-gray-500: #444444;
+        --color-gainsboro-300: #d9d9d9;
+        --color-gainsboro-400: #e0e0e0;
+        --color-gainsboro: #dcdcdc;
+        --color-whitesmoke-200: #f5f5f5;
+        --color-snow: #fafafa;
+        --color-mediumspringgreen: #3cb371;
+        --font-onest: 'Onest', sans-serif;
+        --font-fredoka: 'Fredoka', sans-serif;
+        --font-oleo-script: 'Oleo Script', cursive;
+        --fs-12: 12px;
+        --fs-14: 14px;
+        --fs-15: 15px;
+        --fs-16: 16px;
+        --fs-45: 45px;
+        --fs-56: 56px;
+        --br-8: 8px;
+        --br-16: 16px;
+        --br-32: 32px;
+        --br-50: 50px;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f6f2ed;
+        font-family: var(--font-onest);
+      }
+
+      /* ── EDITOR ── */
+      .editor {
+        width: 100%;
+        background: #f6f2ed;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 32px;
+      }
+
+      /* ── HERO ── */
+      .container7 {
+        align-self: stretch;
+        position: relative;
+      }
+
+      .background43 {
+        border-radius: 0 0 var(--br-32) var(--br-32);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: linear-gradient(135deg, #8b4513 0%, #c07c3a 100%);
+        width: 100%;
+        min-height: 200px;
+      }
+
+      .background44 {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(80, 40, 10, 0.3);
+        z-index: 0;
+      }
+
+      /* ── HEADER ── */
+      .header-header3 {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 99;
+      }
+
+      .background45 {
+        height: 6px;
+        background-color: var(--color-gold-100);
+      }
+
+      .header-header-row-12 {
+        display: flex;
+        align-items: center;
+        padding: 10px 32px;
+        gap: 24px;
+        background: #372121;
+        border-bottom: 1px solid var(--color-gainsboro);
+      }
+
+      .div23 {
+        height: 44px;
+        border-radius: var(--br-50);
+        background-color: var(--color-gold-100);
+        border: 2px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 22px;
+        font-family: var(--font-oleo-script);
+        font-size: var(--fs-15);
+        color: #fff;
+        white-space: nowrap;
+      }
+
+      .nav-list3 {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 28px;
+        font-size: var(--fs-16);
+        color: #fff ;
+      }
+
+      .nav-list3 span { cursor: pointer; }
+      .nav-list3 span:hover { color: var(--color-chocolate-100); }
+
+      .heading-1 {
+        position: relative;
+        z-index: 2;
+        margin: 40px auto 48px;
+        font-size: var(--fs-56);
+        font-family: var(--font-fredoka);
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      }
+
+      /* ── MAIN CONTENT ── */
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding: 0 32px 60px;
+        width: 100%;
+      }
+
+      /* ── TOGGLE ── */
+      .pet-info-panel3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tipo-de-busqueda {
+        font-weight: 700;
+        font-size: var(--fs-14);
+        color: var(--color-gray-400);
+        letter-spacing: 0.06em;
+      }
+
+      .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .opcion {
+        font-size: var(--fs-16);
+        color: var(--color-gray-300);
+      }
+
+      .switch-container {
+        position: relative;
+        display: inline-block;
+        width: 52px;
+        height: 30px;
+      }
+
+      .switch-container input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background-color: #ccc;
+        transition: 0.35s;
+        border-radius: 34px;
+      }
+
+      .slider::before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.35s;
+        border-radius: 50%;
+      }
+
+      .switch-container input:checked + .slider { background-color: var(--Schemes-Tertiary); }
+      .switch-container input:checked + .slider::before { transform: translateX(22px); }
+
+      /* ════════════════════════════════════════
+         FILA PRINCIPAL: 3 columnas
+         izquierda | centro | derecha
+      ════════════════════════════════════════ */
+      .form-main-row2 {
+        display: grid;
+        grid-template-columns: 240px 1fr 280px;
+        gap: 28px;
+        align-items: start;
+        width: 100%;
+      }
+
+      /* ── COLUMNA IZQUIERDA: datos de la mascota ── */
+      .left-pet-details {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field-label {
+        font-size: var(--fs-14);
+        font-weight: 700;
+        color: var(--color-gray-400);
+        letter-spacing: 0.04em;
+      }
+
+      .input-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 12px;
+        background: var(--color-snow);
+        border: 0.5px solid var(--color-gainsboro-300);
+        border-radius: var(--br-8);
+        transition: border-color 0.15s, box-shadow 0.15s;
+        width: 100%;
+      }
+
+      .input-box:hover { border-color: var(--color-chocolate-100); }
+
+      .input-box:focus-within {
+        border-color: var(--color-chocolate-100);
+        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.14);
+      }
+
+      .input-box input,
+      .input-box select {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        background: transparent;
+        color: var(--color-gray-200);
+        font-family: var(--font-onest);
+        font-size: var(--fs-14);
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      /* ── COLUMNA CENTRAL: galería ── */
+      .center-image-section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .gallery-main {
+        position: relative;
+        width: 100%;
+        height: 340px;
+        border-radius: var(--br-16);
+        overflow: hidden;
+        background-color: #ede8e2;
+        border: 2px dashed var(--color-gainsboro-300);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-gray-300);
+        font-size: var(--fs-14);
+      }
+
+      .gallery-placeholder-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+      }
+
+      .gallery-placeholder-text .gallery-icon {
+        font-size: 52px;
+        opacity: 0.35;
+      }
+
+      #slidesContainer {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: none;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Botones navegación galería */
+      .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(0,0,0,0.18);
+        background-color: rgba(255,255,255,0.88);
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        font-size: 18px;
+        color: var(--color-chocolate-100);
+        transition: background-color 0.2s;
+      }
+
+      .nav-btn:hover { background-color: #fff; }
+      .nav-btn--prev { left: 12px; }
+      .nav-btn--next { right: 12px; }
+
+      /* Miniaturas */
+      .image-thumbnails {
+        display: flex;
+        gap: 12px;
+      }
+
+      .thumbnail-wrapper {
+        flex: 1;
+        height: 88px;
+        border-radius: 10px;
+        border: 2px dashed var(--color-gainsboro-300);
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ede8e2;
+        transition: border-color 0.25s, background-color 0.25s;
+      }
+
+      .thumbnail-wrapper:hover {
+        border-color: var(--color-chocolate-100);
+        background-color: #f5ece4;
+      }
+
+      .thumbnail-wrapper.active {
+        border-color: var(--color-chocolate-100);
+        border-style: solid;
+      }
+
+      .thumbnail-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .thumb-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--color-gray-300);
+        font-size: 11px;
+        pointer-events: none;
+      }
+
+      .thumb-placeholder .thumb-icon { font-size: 22px; opacity: 0.45; }
+
+      #imageUpload { display: none; }
+
+      /* ── COLUMNA DERECHA: ubicación + contacto ── */
+      .report-container {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .report-title {
+        font-size: var(--fs-14);
+        font-weight: 700;
+        color: var(--color-gray-400);
+        margin: 0;
+        text-align: center;
+        letter-spacing: 0.06em;
+      }
+
+      .location-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: var(--br-50);
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: var(--font-onest);
+        font-weight: 700;
+        transition: opacity 0.2s, transform 0.1s;
+        letter-spacing: 0.03em;
+        text-align: center;
+      }
+
+      .btn:active { transform: scale(0.98); }
+      .btn:hover { opacity: 0.87; }
+
+      .btn-location {
+        background-color: var(--color-chocolate-100);
+        color: #fff;
+        gap: 8px;
+      }
+
+      .accordion {
+        width: 100%;
+        border-radius: 12px;
+        background-color: var(--color-whitesmoke-200);
+        border: 1px solid var(--color-gainsboro-400);
+        padding: 12px 14px;
+      }
+
+      .accordion-header {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+        color: var(--color-gray-300);
+        gap: 10px;
+      }
+
+      .accordion-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: var(--fs-14);
+        color: var(--color-gray-400);
+        flex: 1;
+      }
+
+      .accordion-title { font-weight: 600; font-size: var(--fs-14); color: var(--color-gray-400); }
+
+      .icon-chevron { margin-left: auto; font-size: 18px; }
+
+      .contact-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background-color: var(--color-chocolate-100);
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .contact-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+      }
+
+      .contact-header h3 { margin: 0; font-size: var(--fs-14); letter-spacing: 0.04em; }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: #fff;
+        padding: 12px;
+        border-radius: 14px;
+      }
+
+      .text-area {
+        width: 100%;
+        min-height: 72px;
+        border: none;
+        resize: none;
+        font-family: var(--font-onest);
+        font-size: var(--fs-14);
+        color: var(--color-gray-500);
+        outline: none;
+        background: transparent;
+      }
+
+      .btn-save {
+        background-color: var(--color-mediumspringgreen);
+        color: #fff;
+        width: auto;
+        align-self: flex-end;
+        padding: 7px 18px;
+        border-radius: 30px;
+        font-size: var(--fs-12);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-onest);
+        font-weight: 600;
+      }
+
+      .btn-publish {
+        background-color: var(--color-mediumspringgreen);
+        color: #fff;
+        font-weight: 700;
+        gap: 10px;
+        font-size: var(--fs-14);
+      }
+
+      /* ══════════════════════════════
+         DESCRIPCIÓN — fila completa abajo
+      ══════════════════════════════ */
+      .description-section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .descripcion-label {
+        font-size: var(--fs-14);
+        font-weight: 700;
+        color: var(--color-gray-400);
+        letter-spacing: 0.05em;
+      }
+
+      .input-descripcion {
+        width: 100%;
+        border-radius: 14px;
+        background-color: #fff;
+        border: 1px solid var(--color-gainsboro-300);
+        padding: 14px 16px;
+        font-size: var(--fs-14);
+        color: var(--color-gray-500);
+        font-family: var(--font-onest);
+        resize: vertical;
+        min-height: 140px;
+        transition: border-color 0.15s, box-shadow 0.15s;
+      }
+
+      .input-descripcion:focus {
+        outline: none;
+        border-color: var(--color-chocolate-100);
+        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.12);
+      }
+
+      /* ── FOOTER ── */
+      .background55 {
+        height: 80px;
+        background-color: var(--color-gray-200);
+        width: 100%;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media screen and (max-width: 1000px) {
+        .form-main-row2 {
+          grid-template-columns: 200px 1fr 240px;
+          gap: 20px;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .form-main-row2 {
+          grid-template-columns: 1fr;
+        }
+        .heading-1 { font-size: var(--fs-45); }
+        .main-content { padding: 0 20px 40px; }
+      }
+
+      @media screen and (max-width: 480px) {
+        .header-header-row-12 { padding: 8px 16px; }
+        .main-content { padding: 0 14px 32px; }
+      }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Onest:wght@400;500;600;700&family=Oleo+Script:wght@400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="editor">
+
+      <!-- ══ HERO ══ -->
+      <section class="container7">
+        <div class="background43">
+          <div class="background44"></div>
+          <section class="header-header3">
+            <div class="background45"></div>
+            <div class="header-header-row-12">
+              <div class="div23">🐾 Alerta Patitas</div>
+              <nav class="nav-list3">
+                <span>Inicio</span>
+                <span>Acerca de nosotros</span>
+                <span>Páginas ⌄</span>
+              </nav>
+            </div>
+          </section>
+          <h1 class="heading-1">Crea tu Búsqueda</h1>
+        </div>
+      </section>
+
+      <!-- ══ CONTENIDO PRINCIPAL ══ -->
+      <main class="main-content">
+
+        <!-- Toggle tipo de búsqueda -->
+        <section class="pet-info-panel3">
+          <div class="tipo-de-busqueda">TIPO DE BÚSQUEDA</div>
+          <div class="toggle-wrapper">
+            <span class="opcion">Buscando</span>
+            <label class="switch-container">
+              <input type="checkbox" id="estado-mascota" />
+              <span class="slider"></span>
+            </label>
+            <span class="opcion">Extraviado</span>
+          </div>
+        </section>
+
+        <!-- ══ FILA PRINCIPAL: izquierda | centro | derecha ══ -->
+        <div class="form-main-row2">
+
+          <!-- ── IZQUIERDA: datos de la mascota ── -->
+          <div class="left-pet-details">
+            <div class="field-group">
+              <label class="field-label" for="petName">NOMBRE:</label>
+              <div class="input-box">
+                <input type="text" id="petName" placeholder="Nombre de la mascota" autocomplete="off" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="petType">TIPO DE MASCOTA:</label>
+              <div class="input-box">
+                <select id="petType">
+                  <option value="">Seleccionar…</option>
+                  <option value="perro">Perro</option>
+                  <option value="gato">Gato</option>
+                  <option value="ave">Ave</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="petSex">SEXO:</label>
+              <div class="input-box">
+                <select id="petSex">
+                  <option value="">Seleccionar…</option>
+                  <option value="macho">Macho</option>
+                  <option value="hembra">Hembra</option>
+                  <option value="desconocido">Desconocido</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="petSize">TAMAÑO:</label>
+              <div class="input-box">
+                <select id="petSize">
+                  <option value="">Seleccionar…</option>
+                  <option value="pequeno">Pequeño</option>
+                  <option value="mediano">Mediano</option>
+                  <option value="grande">Grande</option>
+                </select>
+              </div>
+            </div>
+          </div><!-- /left-pet-details -->
+
+          <!-- ── CENTRO: galería ── -->
+          <section class="center-image-section" aria-label="Galería de fotos">
+            <div class="gallery-main" id="galleryMain">
+              <div class="gallery-placeholder-text" id="galleryPlaceholder">
+                <span class="gallery-icon">🐾</span>
+                <span>Sube una foto de tu mascota</span>
+              </div>
+              <div id="slidesContainer"></div>
+              <button class="nav-btn nav-btn--prev" id="btnPrev" aria-label="Foto anterior">&#8592;</button>
+              <button class="nav-btn nav-btn--next" id="btnNext" aria-label="Foto siguiente">&#8594;</button>
+            </div>
+
+            <div class="image-thumbnails" id="thumbnailsContainer">
+              <label class="thumbnail-wrapper" id="thumb0" for="imageUpload" title="Subir foto 1">
+                <div class="thumb-placeholder">
+                  <span class="thumb-icon">📷</span>
+                  <span>Foto 1</span>
+                </div>
+              </label>
+              <label class="thumbnail-wrapper" id="thumb1" for="imageUpload" title="Subir foto 2">
+                <div class="thumb-placeholder">
+                  <span class="thumb-icon">📷</span>
+                  <span>Foto 2</span>
+                </div>
+              </label>
+              <label class="thumbnail-wrapper" id="thumb2" for="imageUpload" title="Subir foto 3">
+                <div class="thumb-placeholder">
+                  <span class="thumb-icon">📷</span>
+                  <span>Foto 3</span>
+                </div>
+              </label>
+            </div>
+
+            <input type="file" id="imageUpload" accept="image/*" multiple />
+          </section><!-- /center-image-section -->
+
+          <!-- ── DERECHA: ubicación + contacto ── -->
+          <section class="report-container">
+            <h2 class="report-title">SECTOR DE EXTRAVÍO</h2>
+
+            <div class="location-options">
+              <button class="btn btn-location">
+                📍 ÚLTIMA UBICACIÓN DE AVISTAMIENTO
+              </button>
+              <button class="btn btn-location">
+                ✏️ INGRESAR DIRECCIÓN MANUALMENTE
+              </button>
+            </div>
+
+            <div class="accordion">
+              <div class="accordion-header">
+                <div class="accordion-info">📍 11 de Septiembre (El Roble)</div>
+                <span class="icon-chevron">⌄</span>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-header">
+                <h3>📞 DATOS DE CONTACTO</h3>
+              </div>
+              <div class="accordion">
+                <div class="accordion-header">
+                  <span class="accordion-title">Información de contacto</span>
+                  <span class="icon-chevron">⌄</span>
+                </div>
+              </div>
+              <div class="input-group">
+                <textarea class="text-area" placeholder="Escribe aquí tus datos de contacto…"></textarea>
+                <button class="btn-save">Guardar</button>
+              </div>
+            </div>
+
+            <button class="btn btn-publish">PUBLICAR 🐾</button>
+          </section><!-- /report-container -->
+
+        </div><!-- /form-main-row2 -->
+
+        <!-- ══ DESCRIPCIÓN — fila completa al fondo ══ -->
+        <section class="description-section">
+          <label for="pet-description" class="descripcion-label">DESCRIPCIÓN DE LA MASCOTA:</label>
+          <textarea
+            id="pet-description"
+            class="input-descripcion"
+            placeholder="Ej: Color del pelaje, tamaño, si llevaba collar, dónde fue vista por última vez…"
+            rows="5"
+          ></textarea>
+        </section>
+
+      </main>
+
+      <footer class="background55"></footer>
+    </div>
+
+    <script>
+      const imageUpload      = document.getElementById('imageUpload');
+      const slidesContainer  = document.getElementById('slidesContainer');
+      const galleryPlaceholder = document.getElementById('galleryPlaceholder');
+      const btnPrev          = document.getElementById('btnPrev');
+      const btnNext          = document.getElementById('btnNext');
+      const thumbWrappers    = [
+        document.getElementById('thumb0'),
+        document.getElementById('thumb1'),
+        document.getElementById('thumb2'),
+      ];
+
+      let images = [null, null, null];
+      let currentIndex = 0;
+
+      thumbWrappers.forEach((tw, i) => {
+        tw.addEventListener('click', (e) => {
+          if (images[i]) { e.preventDefault(); showSlide(i); }
+        });
+      });
+
+      imageUpload.addEventListener('change', (e) => {
+        Array.from(e.target.files).slice(0, 3).forEach((file) => {
+          const slot = images.findIndex(img => img === null);
+          if (slot === -1) return;
+          const url = URL.createObjectURL(file);
+          images[slot] = url;
+          updateThumbnail(slot, url);
+        });
+        rebuildSlides();
+        imageUpload.value = '';
+      });
+
+      function updateThumbnail(index, url) {
+        thumbWrappers[index].innerHTML = `<img src="${url}" alt="Foto ${index + 1}" />`;
+      }
+
+      function rebuildSlides() {
+        slidesContainer.innerHTML = '';
+        const filled = images.filter(Boolean);
+        if (filled.length === 0) {
+          slidesContainer.style.display = 'none';
+          galleryPlaceholder.style.display = 'flex';
+          btnPrev.style.display = 'none';
+          btnNext.style.display = 'none';
+          return;
+        }
+        galleryPlaceholder.style.display = 'none';
+        slidesContainer.style.display = 'block';
+        btnPrev.style.display = filled.length > 1 ? 'flex' : 'none';
+        btnNext.style.display = filled.length > 1 ? 'flex' : 'none';
+
+        images.forEach((url, i) => {
+          if (!url) return;
+          const div = document.createElement('div');
+          div.classList.add('slide');
+          div.dataset.index = i;
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = `Foto ${i + 1}`;
+          div.appendChild(img);
+          slidesContainer.appendChild(div);
+        });
+        showSlide(images.findIndex(Boolean));
+      }
+
+      function showSlide(targetIndex) {
+        currentIndex = targetIndex;
+        slidesContainer.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        const target = slidesContainer.querySelector(`[data-index="${targetIndex}"]`);
+        if (target) target.classList.add('active');
+        thumbWrappers.forEach((tw, i) => tw.classList.toggle('active', i === targetIndex));
+      }
+
+      btnPrev.addEventListener('click', () => {
+        const fi = images.map((v,i) => v ? i : null).filter(i => i !== null);
+        showSlide(fi[(fi.indexOf(currentIndex) - 1 + fi.length) % fi.length]);
+      });
+
+      btnNext.addEventListener('click', () => {
+        const fi = images.map((v,i) => v ? i : null).filter(i => i !== null);
+        showSlide(fi[(fi.indexOf(currentIndex) + 1) % fi.length]);
+      });
+    </script>
+     <script src="editor.js"></script>
+     <script src="loader.js"></script>
+  </body>
+</html>
