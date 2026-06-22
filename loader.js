@@ -8,7 +8,7 @@
    (debe ser idéntica a la de editor.js).
    ============================================================ */
 
-const API_URL = 'TU_URL_DE_APPS_SCRIPT_AQUI';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxEtfDFgWwr4vi_NuF4lQD9dREtHiB05Ofl-TdxpZ1KodRJfg/exec';
 // Misma URL que en editor.js
 
 
