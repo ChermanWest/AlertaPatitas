@@ -388,19 +388,13 @@ function PetsSection() {
       return false;
     if (filters.estado && p.estado !== filters.estado)
       return false;
-    // Tamaño: visual label "Macho" maps to Mediano, "Hembra" maps to other sizes
-    if (filters.tamano === "Macho" && p.tamano !== "Mediano")
-      return false;
-    if (filters.tamano === "Hembra" && p.tamano === "Mediano")
-      return false;
-    // Edad: visual label "De corta edad" = young, "Hembra" (mislabeled) = Adulto
-    if (
-      filters.edad === "De corta edad" &&
-      p.edad !== "De corta edad"
-    )
-      return false;
-    if (filters.edad === "Hembra" && p.edad !== "Adulto")
-      return false;
+    // Filtro de Tamaño corregido por Matías
+if (filters.tamano && p.tamano !== filters.tamano)
+  return false;
+
+// Filtro de Edad corregido por Matías
+if (filters.edad && p.edad !== filters.edad)
+  return false;
     return true;
   });
 
