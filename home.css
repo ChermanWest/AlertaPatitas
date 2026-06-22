@@ -453,13 +453,21 @@ button { cursor: pointer; font-family: var(--font-body); }
 .cases-layout {
   display: grid;
   grid-template-columns: 200px 1fr;
+  grid-template-areas: "filters main";
   gap: 32px;
   align-items: start;
+}
+
+.cases-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
 }
 
 
 /* ── FILTROS ── */
 .filters {
+  grid-area: filters;
   background: var(--color-white);
   border-radius: var(--radius-lg);
   padding: 20px 16px;
@@ -897,7 +905,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; min-height: auto; padding: 40px 0; }
   .hero-img-wrap { display: none; }
-  .cases-layout { grid-template-columns: 1fr; }
+  .cases-layout { grid-template-columns: 1fr; grid-template-areas: "filters" "main"; }
   .filters { position: static; }
   .hero-title { font-size: 38px; }
 }

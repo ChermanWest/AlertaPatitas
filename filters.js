@@ -30,7 +30,7 @@
 
   /* ── 2. INYECTAR ELEMENTOS AUXILIARES ── */
 
-  // Contador de resultados (encima del grid)
+  // Contador de resultados (encima del grid, dentro de .cases-main)
   const counter = document.createElement('p');
   counter.className = 'results-count';
   grid.parentNode.insertBefore(counter, grid);

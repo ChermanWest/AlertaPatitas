@@ -246,180 +246,21 @@
         <button class="btn-filter-apply">Aplicar filtros</button>
       </aside>
 
-      <!-- ── GRID DE TARJETAS ── -->
-      <!--
-        DATA-ATTRIBUTES por tarjeta (úsalos al agregar nuevas):
-          data-mascota  → perro | gato | ave | otros
-          data-genero   → macho | hembra
-          data-edad     → cachorro | corta | adulto | senior
-          data-tamaño   → pequeño | mediano | grande
-          data-estado   → perdido | buscando
-      -->
-      <div class="cards-grid" id="cardsGrid">
-
-        <!-- TARJETA 1 — Blacky -->
-        <article class="pet-card"
-          data-mascota="perro"
-          data-genero="macho"
-          data-edad="adulto"
-          data-tamaño="mediano"
-          data-estado="buscando">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/blacky.jpg" alt="Blacky" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>blacky.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--search">Buscando</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Blacky – German Castro</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Perro</span>
-              <span class="tag">Macho</span>
-              <span class="tag">Mediano</span>
-              <span class="tag">Adulto</span>
-              <span class="tag tag--state">Buscando</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TARJETA 2 — Luna -->
-        <article class="pet-card"
-          data-mascota="gato"
-          data-genero="hembra"
-          data-edad="corta"
-          data-tamaño="pequeño"
-          data-estado="perdido">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/luna.jpg" alt="Luna" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>luna.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--lost">Perdido</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Luna – María González</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Gato</span>
-              <span class="tag">Hembra</span>
-              <span class="tag">Pequeño</span>
-              <span class="tag">Corta edad</span>
-              <span class="tag tag--state tag--lost">Perdido</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TARJETA 3 — Rocky -->
-        <article class="pet-card"
-          data-mascota="perro"
-          data-genero="macho"
-          data-edad="cachorro"
-          data-tamaño="pequeño"
-          data-estado="perdido">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/rocky.jpg" alt="Rocky" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>rocky.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--lost">Perdido</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Rocky – Carlos Pérez</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Perro</span>
-              <span class="tag">Macho</span>
-              <span class="tag">Pequeño</span>
-              <span class="tag">Cachorro</span>
-              <span class="tag tag--state tag--lost">Perdido</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TARJETA 4 — Mía -->
-        <article class="pet-card"
-          data-mascota="perro"
-          data-genero="hembra"
-          data-edad="adulto"
-          data-tamaño="grande"
-          data-estado="buscando">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/mia.jpg" alt="Mía" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>mia.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--search">Buscando</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Mía – Sofía Ramírez</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Perro</span>
-              <span class="tag">Hembra</span>
-              <span class="tag">Grande</span>
-              <span class="tag">Adulto</span>
-              <span class="tag tag--state">Buscando</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TARJETA 5 — Pico -->
-        <article class="pet-card"
-          data-mascota="ave"
-          data-genero="macho"
-          data-edad="adulto"
-          data-tamaño="pequeño"
-          data-estado="perdido">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/pico.jpg" alt="Pico" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>pico.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--lost">Perdido</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Pico – Diego Flores</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Ave</span>
-              <span class="tag">Macho</span>
-              <span class="tag">Pequeño</span>
-              <span class="tag">Adulto</span>
-              <span class="tag tag--state tag--lost">Perdido</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TARJETA 6 — Max -->
-        <article class="pet-card"
-          data-mascota="perro"
-          data-genero="macho"
-          data-edad="senior"
-          data-tamaño="grande"
-          data-estado="buscando">
-          <div class="pet-card-img-wrap">
-            <!-- <img src="./public/max.jpg" alt="Max" class="pet-card-img" /> -->
-            <div class="pet-card-img pet-card-img--placeholder">
-              <span>📷</span>
-              <small>max.jpg</small>
-            </div>
-            <span class="pet-badge pet-badge--search">Buscando</span>
-          </div>
-          <div class="pet-card-body">
-            <h3 class="pet-card-name">Max – Andrea López</h3>
-            <p class="pet-card-tags">
-              <span class="tag">Perro</span>
-              <span class="tag">Macho</span>
-              <span class="tag">Grande</span>
-              <span class="tag">Senior</span>
-              <span class="tag tag--state">Buscando</span>
-            </p>
-          </div>
-        </article>
-
-      </div><!-- /cards-grid -->
+      <!-- ── COLUMNA PRINCIPAL: contador + grid de tarjetas ── -->
+      <div class="cases-main">
+        <!-- ── GRID DE TARJETAS ── -->
+        <!--
+          DATA-ATTRIBUTES por tarjeta (úsalos al agregar nuevas):
+            data-mascota  → perro | gato | ave | otros
+            data-genero   → macho | hembra
+            data-edad     → cachorro | corta | adulto | senior
+            data-tamaño   → pequeño | mediano | grande
+            data-estado   → perdido | buscando
+        -->
+        <div class="cards-grid" id="cardsGrid">
+          <!-- Las tarjetas se generan dinámicamente desde Google Sheets vía filters.js -->
+        </div><!-- /cards-grid -->
+      </div><!-- /cases-main -->
     </div><!-- /cases-layout -->
   </section>
 
