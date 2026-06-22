@@ -373,7 +373,7 @@ function PetsSection() {
   });
   const [currentPage, setCurrentPage] = useState(1);
 
-  function toggle(group: keyof Filters, value: string) {
+  function toggle(group, value) {
     setFilters((prev) => ({
       ...prev,
       [group]: prev[group] === value ? null : value,
