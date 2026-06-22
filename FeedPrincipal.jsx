@@ -34,7 +34,7 @@ interface Pet {
   raza: string;
 }
 
-const PETS: Pet[] = [
+const PETS = [
   {
     id: 1,
     nombre: "Blacky - German Castro",
@@ -45,6 +45,26 @@ const PETS: Pet[] = [
     estado: "Buscando",
     raza: "Sin Raza",
   },
+  {
+    id: 2,
+    nombre: "Patitas - Cerca de la UTA",
+    mascota: "Perro",
+    genero: "Hembra",
+    tamano: "Pequeño",
+    edad: "Cachorro",
+    estado: "Perdido",
+    raza: "Quiltro",
+  },
+  {
+    id: 3,
+    nombre: "Michi - Sector Chinchorro",
+    mascota: "Gato",
+    genero: "Macho",
+    tamano: "Pequeño",
+    edad: "Senior",
+    estado: "Buscando",
+    raza: "*",
+  }
 ];
 
 const PETS_PER_PAGE = 6;
@@ -284,7 +304,7 @@ function HeroSection() {
             </div>
           </div>
         </div>
-        {/* Slide indicators */}
+        {/* Indicadores Slides */}
         <div className="absolute bg-[#02000f] h-[10px] left-[75px] rounded-[20px] top-[636px] w-[80px]" />
         <div className="absolute bg-[#999] h-[10px] left-[167px] rounded-[20px] top-[636px] w-[45px]" />
         <div className="absolute bg-[#999] h-[10px] left-[224px] rounded-[20px] top-[636px] w-[45px]" />
@@ -321,7 +341,7 @@ function HeroSection() {
   );
 }
 
-// ─── Pet card ─────────────────────────────────────────────────────────────────
+//  ID Mascosta 
 
 function PetCard({ pet }: { pet: Pet }) {
   const description = `${pet.mascota} • ${pet.genero} • ${pet.tamano} • ${pet.edad} • ${pet.estado} • ${pet.raza}`;
@@ -353,7 +373,7 @@ function PetCard({ pet }: { pet: Pet }) {
   );
 }
 
-// ─── Pets section with filters ────────────────────────────────────────────────
+//  Sección Mascotas por filtros 
 
 interface Filters {
   mascota: string | null;
@@ -388,11 +408,11 @@ function PetsSection() {
       return false;
     if (filters.estado && p.estado !== filters.estado)
       return false;
-    // Filtro de Tamaño corregido por Matías
+    // Filtro de Tamaño corregido 
 if (filters.tamano && p.tamano !== filters.tamano)
   return false;
 
-// Filtro de Edad corregido por Matías
+// Filtro de Edad corregido 
 if (filters.edad && p.edad !== filters.edad)
   return false;
     return true;
@@ -456,7 +476,7 @@ if (filters.edad && p.edad !== filters.edad)
               Mascota
             </p>
           </div>
-          {(["Perro", "Gato", "Otros"] as const).map((opt) => (
+          {(["Perro", "Gato", "Otros"].map((opt) => (
             <div
               key={opt}
               className="content-stretch flex gap-[8px] items-start relative shrink-0 cursor-pointer select-none"
@@ -477,7 +497,7 @@ if (filters.edad && p.edad !== filters.edad)
               Genero
             </p>
           </div>
-          {(["Macho", "Hembra"] as const).map((opt) => (
+          {(["Macho", "Hembra"].map((opt) => (
             <div
               key={opt}
               className="content-stretch flex gap-[8px] items-start relative shrink-0 cursor-pointer select-none"
@@ -498,7 +518,7 @@ if (filters.edad && p.edad !== filters.edad)
               Edad
             </p>
           </div>
-          {(["De corta edad", "Hembra"] as const).map((opt) => (
+          {(["Cachorro", "Adulto", "Senior"].map((opt) => (
             <div
               key={opt}
               className="content-stretch flex gap-[8px] items-start relative shrink-0 cursor-pointer select-none"
@@ -519,7 +539,7 @@ if (filters.edad && p.edad !== filters.edad)
               Tamaño
             </p>
           </div>
-          {(["Macho", "Hembra"] as const).map((opt) => (
+          {(["Pequeño", "Mediano", "Grande"].map((opt) => (
             <div
               key={opt}
               className="content-stretch flex gap-[8px] items-start relative shrink-0 cursor-pointer select-none"
@@ -538,7 +558,7 @@ if (filters.edad && p.edad !== filters.edad)
           <div className="content-stretch flex items-start relative shrink-0">
             <p className="[word-break:break-word] font-['Public_Sans:Medium',sans-serif] font-medium leading-[20px] relative shrink-0 text-[#191c1f] text-[14px] w-[284px]">{`Estado `}</p>
           </div>
-          {(["Perdido", "Buscando"] as const).map((opt) => (
+          {(["Perdido", "Buscando"].map((opt) => (
             <div
               key={opt}
               className="content-stretch flex gap-[8px] items-start relative shrink-0 cursor-pointer select-none"
