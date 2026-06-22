@@ -781,6 +781,52 @@ button { cursor: pointer; font-family: var(--font-body); }
   opacity: 0.7;
 }
 
+/* Estado de carga y de error (mismo patrón visual que empty-state) */
+.cards-loading-state,
+.cards-error-state {
+  display: none;
+  grid-column: 1 / -1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  color: var(--color-gray-300);
+  text-align: center;
+}
+
+.cards-loading-state.visible,
+.cards-error-state.visible {
+  display: flex;
+}
+
+.cards-loading-state .empty-icon,
+.cards-error-state .empty-icon {
+  font-size: 48px;
+  opacity: 0.4;
+}
+
+.cards-loading-state p,
+.cards-error-state p {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cards-loading-state small,
+.cards-error-state small {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.cards-loading-state .empty-icon {
+  animation: pulse-paw 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-paw {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
 /* Botón limpiar filtros */
 .btn-filter-clear {
   width: 100%;

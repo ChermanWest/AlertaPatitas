@@ -18,6 +18,9 @@
 (function () {
   'use strict';
 
+  /* ── 0. CONFIG API (Google Apps Script) ── */
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxEtfDFgWwr4vi_NuF4lQD9dREtHiB05Ofl-TdxpZ1KodRJfg/exec';
+
   /* ── 1. REFERENCIAS AL DOM ── */
   const grid        = document.getElementById('cardsGrid');
   const cards       = () => Array.from(grid.querySelectorAll('.pet-card'));
@@ -47,6 +50,152 @@
   btnClear.className = 'btn-filter-clear';
   btnClear.textContent = 'Limpiar filtros';
   btnApply.insertAdjacentElement('afterend', btnClear);
+
+  /* ── 1b. ESTADO DE CARGA / ERROR ── */
+  const loadingState = document.createElement('div');
+  loadingState.className = 'cards-loading-state';
+  loadingState.innerHTML = `
+    <span class="empty-icon">🐾</span>
+    <p>Cargando mascotas…</p>
+  `;
+  grid.appendChild(loadingState);
+
+  const errorState = document.createElement('div');
+  errorState.className = 'cards-error-state';
+  errorState.innerHTML = `
+    <span class="empty-icon">⚠️</span>
+    <p>No se pudieron cargar las mascotas.</p>
+    <small>Revisa tu conexión e intenta de nuevo.</small>
+  `;
+  grid.appendChild(errorState);
+
+  /* ── 1c. MAPEOS de valores del Sheet → valores que usan los filtros ── */
+  // Tu Sheet puede traer "Macho"/"M"/"macho" etc. Normalizamos todo a minúsculas
+  // y mapeamos variantes comunes a los valores exactos que usa filters.js.
+  const NORMALIZAR = {
+    sexo: {
+      'macho': 'macho', 'm': 'macho', 'male': 'macho',
+      'hembra': 'hembra', 'h': 'hembra', 'f': 'hembra', 'female': 'hembra',
+    },
+    tamano: {
+      'pequeño': 'pequeño', 'pequeno': 'pequeño', 'chico': 'pequeño', 's': 'pequeño',
+      'mediano': 'mediano', 'm': 'mediano',
+      'grande': 'grande', 'l': 'grande',
+    },
+    edad: {
+      'cachorro': 'cachorro', 'cría': 'cachorro', 'cria': 'cachorro',
+      'corta': 'corta', 'corta edad': 'corta', 'joven': 'corta',
+      'adulto': 'adulto',
+      'senior': 'senior', 'mayor': 'senior',
+    },
+    estado: {
+      'perdido': 'perdido',
+      'buscando': 'buscando', 'encontrado': 'buscando',
+    },
+    mascota: {
+      'perro': 'perro', 'gato': 'gato', 'ave': 'ave',
+    },
+  };
+
+  function normalizar(campo, valorCrudo) {
+    const v = String(valorCrudo || '').trim().toLowerCase();
+    const mapa = NORMALIZAR[campo];
+    if (mapa[v]) return mapa[v];
+    if (campo === 'mascota' && v) return 'otros'; // cualquier otra especie cae en "Otros"
+    return v; // si no matchea nada, dejamos el valor crudo (no se filtrará bien, pero no se rompe)
+  }
+
+  /* ── 1d. CONSTRUIR TARJETA HTML desde un registro del Sheet ── */
+  function construirTarjeta(item) {
+    const mascota = normalizar('mascota', item.mascota);
+    const genero  = normalizar('sexo', item.sexo);
+    const edad    = normalizar('edad', item.edad);
+    const tamano  = normalizar('tamano', item.tamano || item['tamaño']);
+    const estado  = normalizar('estado', item.estado);
+
+    const primeraFoto = (item.fotos || '').split('|').map(s => s.trim()).filter(Boolean)[0];
+
+    const article = document.createElement('article');
+    article.className = 'pet-card';
+    article.dataset.mascota = mascota;
+    article.dataset.genero  = genero;
+    article.dataset.edad    = edad;
+    article.dataset.tamaño  = tamano;
+    article.dataset.estado  = estado;
+
+    const estadoLabel = estado === 'buscando' ? 'Buscando' : 'Perdido';
+    const estadoBadgeClass = estado === 'buscando' ? 'pet-badge--search' : 'pet-badge--lost';
+
+    const imgHTML = primeraFoto
+      ? `<img src="${escapeHTML(primeraFoto)}" alt="${escapeHTML(item.nombre || 'Mascota')}" class="pet-card-img" />`
+      : `<div class="pet-card-img pet-card-img--placeholder">
+           <span>📷</span>
+           <small>Sin foto</small>
+         </div>`;
+
+    const mascotaLabel = mascota.charAt(0).toUpperCase() + mascota.slice(1);
+    const generoLabel  = genero === 'hembra' ? 'Hembra' : 'Macho';
+    const tamanoLabel  = tamano.charAt(0).toUpperCase() + tamano.slice(1);
+    const edadLabel    = ({ cachorro: 'Cachorro', corta: 'De corta edad', adulto: 'Adulto', senior: 'Senior' })[edad] || '';
+
+    article.innerHTML = `
+      <div class="pet-card-img-wrap">
+        ${imgHTML}
+        <span class="pet-badge ${estadoBadgeClass}">${estadoLabel}</span>
+      </div>
+      <div class="pet-card-body">
+        <h3 class="pet-card-name">${escapeHTML(item.nombre || 'Sin nombre')}</h3>
+        <p class="pet-card-tags">
+          <span class="tag">${escapeHTML(mascotaLabel)}</span>
+          <span class="tag">${escapeHTML(generoLabel)}</span>
+          <span class="tag">${escapeHTML(tamanoLabel)}</span>
+          ${edadLabel ? `<span class="tag">${escapeHTML(edadLabel)}</span>` : ''}
+          <span class="tag tag--state">${estadoLabel}</span>
+        </p>
+      </div>
+    `;
+
+    return article;
+  }
+
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+
+  /* ── 1e. CARGAR MASCOTAS DESDE LA API Y PINTAR EL GRID ── */
+  async function cargarMascotas() {
+    loadingState.classList.add('visible');
+    errorState.classList.remove('visible');
+
+    try {
+      const res = await fetch(API_URL);
+      const json = await res.json();
+
+      if (!json.ok) {
+        throw new Error(json.error || 'Respuesta no-ok de la API');
+      }
+
+      // Quitar tarjetas existentes (si las hubiera, ej. de prueba en el HTML)
+      cards().forEach(c => c.remove());
+
+      const frag = document.createDocumentFragment();
+      json.data.forEach(item => {
+        frag.appendChild(construirTarjeta(item));
+      });
+      grid.insertBefore(frag, emptyState);
+
+      applyFilters();
+
+    } catch (err) {
+      console.error('Error cargando mascotas:', err);
+      errorState.classList.add('visible');
+      counter.textContent = '';
+    } finally {
+      loadingState.classList.remove('visible');
+    }
+  }
 
   /* ── 3. RANGE: valor en vivo ── */
   if (range) {
@@ -162,7 +311,7 @@
     input.addEventListener('change', applyFilters);
   });
 
-  /* ── 9. EJECUTAR AL CARGAR ── */
-  applyFilters();
+  /* ── 9. EJECUTAR AL CARGAR: traer mascotas desde Google Sheets ── */
+  cargarMascotas();
 
 })();
