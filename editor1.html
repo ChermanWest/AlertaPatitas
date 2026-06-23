@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,7 +13,7 @@
         --color-chocolate-100: #8b4513;
         --color-gold-100: #c8a040;
         --color-gray-100: ##372121;
-        --color-gray-200: #555555;
+        --color-gray-200: #55555;
         --color-gray-300: #888888;
         --color-gray-400: #000000;
         --color-gray-500: #444444;
@@ -499,6 +500,24 @@
 
       .icon-chevron { margin-left: auto; font-size: 18px; }
 
+      .contact-name-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-family: var(--font-onest);
+        font-size: var(--fs-14);
+        font-weight: 500;
+        color: var(--color-gray-400);
+        outline: none;
+        padding: 0;
+        width: 100%;
+      }
+
+      .contact-name-input::placeholder {
+        color: var(--color-gray-300);
+        font-weight: 400;
+      }
+
       .contact-card {
         display: flex;
         flex-direction: column;
@@ -600,7 +619,7 @@
       /* ── FOOTER ── */
       .background55 {
         height: 80px;
-        background-color: var(--color-gray-200);
+        background-color: #000000;
         width: 100%;
       }
 
@@ -664,7 +683,7 @@
               <input type="checkbox" id="estado-mascota" />
               <span class="slider"></span>
             </label>
-            <span class="opcion">Extraviado</span>
+            <span class="opcion">Extraviado/<br> Sin hogar</span>
           </div>
         </section>
 
@@ -713,6 +732,20 @@
                   <option value="pequeno">Pequeño</option>
                   <option value="mediano">Mediano</option>
                   <option value="grande">Grande</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="petAge">EDAD:</label>
+              <div class="input-box">
+                <select id="petAge">
+                  <option value="">Seleccionar…</option>
+                  <option value="cria">Cría</option>
+                  <option value="juvenil">Juvenil</option>
+                  <option value="adulto">Adulto</option>
+                  <option value="senior">Senior</option>
+                  <option value="desconocido">Desconocido</option>
                 </select>
               </div>
             </div>
@@ -780,8 +813,13 @@
               </div>
               <div class="accordion">
                 <div class="accordion-header">
-                  <span class="accordion-title">Información de contacto</span>
-                  <span class="icon-chevron">⌄</span>
+                  <input
+                    type="text"
+                    id="contactName"
+                    class="contact-name-input"
+                    placeholder="(nombre del contacto)"
+                    autocomplete="off"
+                  />
                 </div>
               </div>
               <div class="input-group">
@@ -810,6 +848,7 @@
 
       <footer class="background55"></footer>
     </div>
+    </script>
      <script src="editor.js"></script>
      <script src="loader.js"></script>
   </body>
