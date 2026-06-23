@@ -919,3 +919,68 @@ button { cursor: pointer; font-family: var(--font-body); }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-copy { margin-left: 0; }
 }
+
+/* ============================================================
+   IMÁGENES QUE REEMPLAZAN EMOJIS
+   ============================================================ */
+
+/* Logo icon */
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Ícono corazón (favoritos) */
+.heart-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Íconos del dropdown de login */
+.lopt-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.lopt-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Patita decorativa en el título hero */
+.hero-paw {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.hero-paw-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Decoraciones flotantes del hero (hueso, patita, lazo) */
+.deco-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}

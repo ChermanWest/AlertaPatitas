@@ -12,6 +12,28 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxE
 // Misma URL que en editor.js
 
 
+/* ── Convierte cualquier URL de Google Drive al CDN de Google ──
+   Acepta los formatos:
+     https://drive.google.com/uc?id=ID
+     https://drive.google.com/file/d/ID/view
+   Y devuelve: https://lh3.googleusercontent.com/d/ID
+   Si la URL no es de Drive la devuelve sin cambios.
+────────────────────────────────────────────────────────────── */
+function driveUrlToCdn(url) {
+  if (!url) return url;
+
+  // Formato: /uc?id=ID  o  /uc?export=view&id=ID
+  const ucMatch = url.match(/[?&]id=([\w-]+)/);
+  if (ucMatch) return `https://lh3.googleusercontent.com/d/${ucMatch[1]}`;
+
+  // Formato: /file/d/ID/view
+  const fileMatch = url.match(/\/file\/d\/([\w-]+)/);
+  if (fileMatch) return `https://lh3.googleusercontent.com/d/${fileMatch[1]}`;
+
+  return url; // no es de Drive, devolver tal cual
+}
+
+
 /* ── Construye el HTML de una tarjeta ── */
 function buildCard(m) {
   const perdido    = m.estado === 'perdido' || m.estado === 'extraviado';
@@ -20,8 +42,9 @@ function buildCard(m) {
   const tagClass   = perdido ? 'tag--state tag--lost' : 'tag--state';
 
   // Las fotos vienen separadas por | en la columna "fotos"
+  // Se convierten al CDN de Google para evitar bloqueos de Drive
   const fotos = (m.fotos || '').split('|').filter(Boolean);
-  const fotoUrl = fotos[0] || null;
+  const fotoUrl = fotos[0] ? driveUrlToCdn(fotos[0].trim()) : null;
 
   const imgHTML = fotoUrl
     ? `<img src="${fotoUrl}" alt="${m.nombre}" class="pet-card-img" loading="lazy" />`
