@@ -82,7 +82,7 @@ function pintarHeaderSesion() {
       </div>
       <div class="login-divider"></div>
       <a href="editor1.html" class="login-opt login-opt--publish">
-        <span class="lopt-icon">📋</span>
+        <span class="lopt-icon"></span>
         <div>
           <strong>Crea una publicación</strong>
           <small>Reporta una mascota</small>
@@ -90,7 +90,7 @@ function pintarHeaderSesion() {
       </a>
       <div class="login-divider"></div>
       <a href="#" class="login-opt" id="btnCerrarSesion">
-        <span class="lopt-icon">🚪</span>
+        <span class="lopt-icon"></span>
         <div>
           <strong>Cerrar sesión</strong>
           <small>Salir de tu cuenta</small>
