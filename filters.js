@@ -155,6 +155,13 @@
       </div>
     `;
 
+    // Navegación al hacer click en la tarjeta
+    article.style.cursor = 'pointer';
+    article.addEventListener('click', function () {
+      const datos = encodeURIComponent(JSON.stringify(item));
+      window.location.href = `publicacion.html?datos=${datos}`;
+    });
+
     return article;
   }
 
