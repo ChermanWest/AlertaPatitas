@@ -54,7 +54,14 @@ function buildCard(m) {
   // con hojas creadas con la versión anterior del script)
   const tamano = m.tamano || m.tamaño || '';
 
+  // Link al detalle: se pasan todos los datos (incluye id y
+  // autor_correo) para que publicacion.html pueda mostrar el
+  // botón "Editar" solo al dueño de la publicación.
+  const datosCodificados = encodeURIComponent(JSON.stringify(m));
+  const href = `publicacion.html?datos=${datosCodificados}`;
+
   return `
+    <a class="pet-card-link" href="${href}">
     <article class="pet-card"
       data-mascota="${m.mascota  || ''}"
       data-genero="${m.sexo     || ''}"
@@ -75,7 +82,8 @@ function buildCard(m) {
           <span class="tag ${tagClass}">${badgeText}</span>
         </p>
       </div>
-    </article>`;
+    </article>
+    </a>`;
 }
 
 function capitalizar(str) {

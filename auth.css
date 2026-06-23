@@ -245,6 +245,21 @@
 
 
 /* ============================================================
+   Link envolvente de las tarjetas de mascotas (loader.js)
+   ============================================================ */
+.pet-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.pet-card-link:hover .pet-card {
+  transform: translateY(-2px);
+  transition: transform var(--transition);
+}
+
+
+/* ============================================================
    Botón de sesión activa en el header (cuando hay usuario logueado)
    ============================================================ */
 .btn-login--activo {
