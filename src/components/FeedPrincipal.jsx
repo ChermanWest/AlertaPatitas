@@ -245,7 +245,7 @@ export default function FeedPrincipal() {
           </div>
           <p className="footer-copy">© 2025 Alerta Patitas — Ayudando a reunir familias con sus mascotas.</p>
         </div>
-      </header>
+      </footer>
     </div>
   );
 }

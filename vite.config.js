@@ -1,15 +1,10 @@
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  root: './',
-  server: {
-    port: 5173,
-    host: true,
-    open: true,
-    hmr: true,
-    watch: {
-      usePolling: true,
-      interval: 100
-    }
+  plugins: [react()],
+  root: 'src', // Le dice a Vite que use el index.html de adentro de src
+  build: {
+    outDir: '../dist',
   }
 })
