@@ -110,7 +110,7 @@
     const mascota = normalizar('mascota', item.mascota);
     const genero  = normalizar('sexo', item.sexo);
     const edad    = normalizar('edad', item.edad);
-    const tamano  = normalizar('tamano', item.tamano || item['tamaño']);
+    const tamano  = normalizar('tamano', item.tamano || item['tamano']);
     const estado  = normalizar('estado', item.estado);
 
     const primeraFoto = (item.fotos || '').split('|').map(s => s.trim()).filter(Boolean)[0];
@@ -120,7 +120,7 @@
     article.dataset.mascota = mascota;
     article.dataset.genero  = genero;
     article.dataset.edad    = edad;
-    article.dataset.tamaño  = tamano;
+    article.dataset.tamano  = tamano;
     article.dataset.estado  = estado;
 
     const estadoLabel = estado === 'buscando' ? 'Buscando' : 'Perdido';
@@ -222,14 +222,14 @@
     // Radios — valor seleccionado o null (= sin restricción)
     const generoEl  = document.querySelector('input[name="genero"]:checked');
     const edadEl    = document.querySelector('input[name="edad"]:checked');
-    const tamañoEl  = document.querySelector('input[name="tamaño"]:checked');
+    const tamanoEl  = document.querySelector('input[name="tamano"]:checked');
     const estadoEl  = document.querySelector('input[name="estado"]:checked');
 
     return {
       mascotas,                                 // [] = sin restricción
       genero : generoEl  ? generoEl.value  : null,
       edad   : edadEl    ? edadEl.value    : null,
-      tamaño : tamañoEl  ? tamañoEl.value  : null,
+      tamano : tamanoEl  ? tamanoEl.value  : null,
       estado : estadoEl  ? estadoEl.value  : null,
     };
   }
@@ -250,7 +250,7 @@
     if (filters.edad && d.edad !== filters.edad) return false;
 
     // Tamaño
-    if (filters.tamaño && d.tamaño !== filters.tamaño) return false;
+    if (filters.tamano && d.tamano !== filters.tamano) return false;
 
     // Estado
     if (filters.estado && d.estado !== filters.estado) return false;
@@ -294,7 +294,7 @@
     });
 
     // Quitar selección de todos los radio groups
-    ['genero', 'edad', 'tamaño', 'estado'].forEach(name => {
+    ['genero', 'edad', 'tamano', 'estado'].forEach(name => {
       document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
         i.checked = false;
       });
