@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import FeedPrincipal from './components/FeedPrincipal';
 import FormularioReporte from './components/FormularioReporte';
+import Login from './components/Login'; 
+import Registro from './components/Registro'; // 👈 Importamos tu nuevo componente
 
-// Como el archivo home.css está afuera en la raíz, subimos un nivel con '../'
 import '../home.css'; 
 
 function MainApp() {
@@ -11,24 +12,19 @@ function MainApp() {
 
   return (
     <div className="app-container">
-      {/* Botones flotantes para cambiar de pantalla con un clic en tu video */}
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000, display: 'flex', gap: '10px' }}>
-        <button 
-          onClick={() => setVista('feed')} 
-          style={{ padding: '12px 16px', background: '#8b4513', color: '#fff', border: '2px solid #fff', borderRadius: '50px', cursor: 'pointer', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}
-        >
-          🐾 Ver Feed
-        </button>
-        <button 
-          onClick={() => setVista('formulario')} 
-          style={{ padding: '12px 16px', background: '#3cb371', color: '#fff', border: '2px solid #fff', borderRadius: '50px', cursor: 'pointer', fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}
-        >
-          📝 Ver Formulario
-        </button>
+      {/* Barra de navegación flotante completa para tu video */}
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 10000, display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.95)', padding: '10px', borderRadius: '50px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+        <button onClick={() => setVista('feed')} style={{ padding: '10px 14px', background: '#8b4513', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>🐾 Feed</button>
+        <button onClick={() => setVista('formulario')} style={{ padding: '10px 14px', background: '#3cb371', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>📝 Reportar</button>
+        <button onClick={() => setVista('login')} style={{ padding: '10px 14px', background: '#c8a040', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>🔑 Login</button>
+        <button onClick={() => setVista('registro')} style={{ padding: '10px 14px', background: '#20b2aa', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>✍️ Registro</button>
       </div>
 
-      {/* Renderizado condicional */}
-      {vista === 'feed' ? <FeedPrincipal /> : <FormularioReporte />}
+      {/* Renderizado condicional de las cuatro pantallas */}
+      {vista === 'feed' && <FeedPrincipal />}
+      {vista === 'formulario' && <FormularioReporte />}
+      {vista === 'login' && <Login />}
+      {vista === 'registro' && <Registro />}
     </div>
   );
 }
