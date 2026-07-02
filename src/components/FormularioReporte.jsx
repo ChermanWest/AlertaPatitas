@@ -1,4 +1,5 @@
 import React from 'react';
+import "../../editor1.css";
 
 export default function FormularioReporte() {
   return (
