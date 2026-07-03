@@ -1,20 +1,25 @@
 import React from 'react';
 
-export default function Registro() {
+// Recibimos setVista para controlar la navegación nativa en React
+export default function Registro({ setVista }) {
   return (
     <div className="auth-container">
       <header className="site-header">
         <div className="header-topbar"></div>
         <nav className="header-nav">
-          <a href="#" className="logo">
+          {/* Logo te regresa al Feed */}
+          <a href="#" className="logo" onClick={(e) => { e.preventDefault(); setVista('feed'); }}>
             <div className="logo-icon">
               <img src="dist/Mask-group@2x.png" alt="Logo Alerta Patitas" className="logo-icon-img" />
             </div>
             <span className="logo-text">Alerta Patitas</span>
           </a>
           <ul className="nav-links">
-            <li className="nav-item"><span>Inicio</span></li>
-            <li className="nav-item"><a href="#">Acerca de nosotros</a></li>
+            {/* Inicio te regresa al Feed */}
+            <li className="nav-item" style={{ cursor: 'pointer' }} onClick={() => setVista('feed')}>
+              <span>Inicio</span>
+            </li>
+            <li className="nav-item"><a href="#" onClick={(e) => e.preventDefault()}>Acerca de nosotros</a></li>
           </ul>
         </nav>
       </header>
@@ -25,12 +30,22 @@ export default function Registro() {
 
       <main style={{ display: 'flex', justifyContent: 'center', padding: '40px 20px' }}>
         <div className="login-card" style={{ background: '#fff', padding: '30px', borderRadius: '18px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', width: '100%', maxWidth: '400px' }}>
+          
+          {/* 🔴 PESTAÑAS ARREGLADAS: El botón de Iniciar Sesión ahora es funcional */}
           <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '24px' }}>
-            <button style={{ padding: '8px 16px', background: '#fff', color: '#888', border: '1px solid #ddd', borderRadius: '20px' }}>Iniciar Sesión</button>
-            <button style={{ padding: '8px 16px', background: '#c8a040', color: '#fff', border: 'none', borderRadius: '20px', fontWeight: 'bold' }}>Registrarse</button>
+            <button 
+              type="button"
+              onClick={() => setVista('login')} 
+              style={{ padding: '8px 16px', background: '#fff', color: '#888', border: '1px solid #ddd', borderRadius: '20px', cursor: 'pointer' }}
+            >
+              Iniciar Sesión
+            </button>
+            <button style={{ padding: '8px 16px', background: '#c8a040', color: '#fff', border: 'none', borderRadius: '20px', fontWeight: 'bold' }}>
+              Registrarse
+            </button>
           </div>
 
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <form style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} onSubmit={(e) => e.preventDefault()}>
             <div className="input-box" style={{ background: '#f5f5f5', border: '1px solid #e0e0e0', padding: '10px 14px', borderRadius: '8px' }}>
               <input type="text" placeholder="Nombre o nick" style={{ border: 'none', background: 'transparent', width: '100%', outline: 'none' }} />
             </div>
@@ -46,8 +61,18 @@ export default function Registro() {
             </button>
           </form>
 
+          {/* 🔴 ENLACE INFERIOR ARREGLADO: Te manda a iniciar sesión */}
           <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px' }}>
-            <span style={{ color: '#888' }}>¿Ya tienes cuenta? <a href="#" style={{ color: '#c8a040', fontWeight: 'bold', textDecoration: 'none' }}>Inicia sesión aquí</a></span>
+            <span style={{ color: '#888' }}>
+              ¿Ya tienes cuenta?{' '}
+              <a 
+                href="#" 
+                onClick={(e) => { e.preventDefault(); setVista('login'); }} 
+                style={{ color: '#c8a040', fontWeight: 'bold', textDecoration: 'none', cursor: 'pointer' }}
+              >
+                Inicia sesión aquí
+              </a>
+            </span>
           </div>
         </div>
       </main>
