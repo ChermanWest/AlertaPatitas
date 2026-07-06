@@ -11,8 +11,8 @@
    4. Pégalos abajo
    ============================================================ */
 
-const SUPABASE_URL     = 'https://ffrvurrmhtpajpplbdam.supabase.co/rest/v1/';   // ← reemplaza
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmcnZ1cnJtaHRwYWpwcGxiZGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyMDgxMjEsImV4cCI6MjA5ODc4NDEyMX0.BlThrLK4VT_l4rT5HlNcLW7WNwqN6dT9162ADXTkhbk; // ← reemplaza
+const SUPABASE_URL     = 'https://ffrvurrmhtpajpplbdam.supabase.co';   // ← reemplaza
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmcnZ1cnJtaHRwYWpwcGxiZGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyMDgxMjEsImV4cCI6MjA5ODc4NDEyMX0.BlThrLK4VT_l4rT5HlNcLW7WNwqN6dT9162ADXTkhbk'; // ← reemplaza
 
 /* ── Utilidades HTTP para la API REST de Supabase ── */
 const sb = {
@@ -128,3 +128,5 @@ const sb = {
     return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
   },
 };
+
+globalThis.sb = sb;
