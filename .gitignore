@@ -12,6 +12,7 @@ media/
 # Node
 node_modules/
 dist/
+.vite/
 
 # Editor
 .vscode/
