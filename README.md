@@ -9,3 +9,4 @@
 
   Run `npm run dev` se utiliza este comando para mover la pagia web en su modo de desarrollo
   
+  https://supabase.com/dashboard/org/ciinpzvnmdwgegrdjubk

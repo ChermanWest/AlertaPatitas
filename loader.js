@@ -8,7 +8,7 @@
    (debe ser idéntica a la de editor.js).
    ============================================================ */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxEtfDFgWwr4vi_NuF4lQD9dREtHiB05Ofl-TdxpZ1KodRJfg/exec';
+const API_URL = 'http://127.0.0.1:8000/api/Publicaciones/';
 // Misma URL que en editor.js
 
 
@@ -33,7 +33,6 @@ function driveUrlToCdn(url) {
   return url; // no es de Drive, devolver tal cual
 }
 
-
 /* ── Construye el HTML de una tarjeta ── */
 function buildCard(m) {
   const perdido    = m.estado === 'perdido' || m.estado === 'extraviado';
@@ -43,8 +42,7 @@ function buildCard(m) {
 
   // Las fotos vienen separadas por | en la columna "fotos"
   // Se convierten al CDN de Google para evitar bloqueos de Drive
-  const fotos = (m.fotos || '').split('|').filter(Boolean);
-  const fotoUrl = fotos[0] ? driveUrlToCdn(fotos[0].trim()) : null;
+  const fotoUrl = m.imagen ? `http://127.0.0.1:8000${m.imagen}` : null;
 
   const imgHTML = fotoUrl
     ? `<img src="${fotoUrl}" alt="${m.nombre}" class="pet-card-img" loading="lazy" />`
@@ -52,7 +50,7 @@ function buildCard(m) {
 
   // Acepta tanto "tamano" (nuevo) como "tamaño" (por compatibilidad
   // con hojas creadas con la versión anterior del script)
-  const tamano = m.tamano || m.tamaño || '';
+  const tamano = m.tamano || '';
 
   // Link al detalle: se pasan todos los datos (incluye id y
   // autor_correo) para que publicacion.html pueda mostrar el
@@ -63,7 +61,7 @@ function buildCard(m) {
   return `
     <a class="pet-card-link" href="${href}">
     <article class="pet-card"
-      data-mascota="${m.mascota  || ''}"
+      data-mascota="${m.tipo_mascota || ''}"
       data-genero="${m.sexo     || ''}"
       data-edad="${m.edad      || ''}"
       data-tamano="${tamano}"
@@ -153,17 +151,17 @@ async function cargarMascotas() {
 
     const json = await res.json();
 
-    if (!json.ok || !Array.isArray(json.data)) {
-      throw new Error(json.error || 'Respuesta inesperada del servidor');
+    if (!Array.isArray(json)) {
+      throw new Error('Respuesta inesperada del servidor');
     }
 
-    if (json.data.length === 0) {
+    if (json.length === 0) {
       setGridState(grid, 'vacio', 'Aún no hay publicaciones. ¡Sé el primero!');
       return;
     }
 
     // Renderizar tarjetas
-    grid.innerHTML = json.data.map(buildCard).join('');
+    grid.innerHTML = json.map(buildCard).join('');
 
     // Re-ejecutar filtros sobre las tarjetas nuevas
     if (typeof applyFilters === 'function') applyFilters();
