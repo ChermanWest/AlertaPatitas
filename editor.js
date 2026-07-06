@@ -5,7 +5,7 @@
 
 // ⚠️ PASO OBLIGATORIO: reemplaza esto con la URL de tu
 // despliegue de Apps Script (termina en /exec)
-const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxEtfDFgWwr4vi_NuF4lQD9dREtHiB05Ofl-TdxpZ1KodRJfg/exec';
+const API_URL = 'http://127.0.0.1:8000/api/Publicaciones/';
 
 
 /* ══════════════════════════════════════════════════
