@@ -855,7 +855,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   color: var(--color-chocolate);
 }
 
-/* Tag activo en filtro (visual feedback al marcar) */
+/* Tag activo en filtro  */
 .filter-tag input:checked ~ span {
   color: var(--color-chocolate);
   font-weight: 600;
@@ -937,7 +937,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   display: block;
 }
 
-/* Ícono corazón (favoritos) */
+/* Ícono pata (notificaciones) */
 .heart-icon {
   display: flex;
   align-items: center;

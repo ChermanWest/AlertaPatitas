@@ -9,220 +9,140 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="home.css" />
   <link rel="stylesheet" href="auth.css" />
+  <!-- 1. Cargar el cliente de Supabase PRIMERO -->
+  <script src="supabase.js"></script>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════
-       HEADER (idéntico al de home.html)
-  ══════════════════════════════════════════ -->
   <header class="site-header">
     <div class="header-topbar"></div>
     <nav class="header-nav">
-
       <a href="home.html" class="logo">
         <div class="logo-icon">
           <img src="dist/Mask-group@2x.png" alt="Logo Alerta Patitas" class="logo-icon-img" />
         </div>
         <span class="logo-text">Alerta Patitas</span>
       </a>
-
       <ul class="nav-links">
         <li class="nav-item has-dropdown">
-          <span>Inicio</span>
-          <span class="chevron">⌄</span>
-          <div class="dropdown">
-            <a href="home.html">Inicio</a>
-            <a href="#">Novedades</a>
-          </div>
+          <span>Inicio</span><span class="chevron">⌄</span>
+          <div class="dropdown"><a href="home.html">Inicio</a><a href="#">Novedades</a></div>
         </li>
-        <li class="nav-item">
-          <a href="#">Acerca de nosotros</a>
-        </li>
+        <li class="nav-item"><a href="#">Acerca de nosotros</a></li>
         <li class="nav-item has-dropdown">
-          <span>Páginas</span>
-          <span class="chevron">⌄</span>
-          <div class="dropdown">
-            <a href="#">Repositorio</a>
-            <a href="editor1.html">Crear publicación</a>
-          </div>
+          <span>Páginas</span><span class="chevron">⌄</span>
+          <div class="dropdown"><a href="#">Repositorio</a><a href="editor1.html">Crear publicación</a></div>
         </li>
       </ul>
-
       <div class="nav-actions">
         <button class="btn-heart" aria-label="Favoritos">
-          <span class="heart-icon">
-            <img src="dist/Vector.svg" alt="Favoritos" class="nav-icon-img" />
-          </span>
+          <span class="heart-icon"><img src="dist/Vector.svg" alt="Favoritos" class="nav-icon-img" /></span>
           <span class="badge">0</span>
         </button>
-
         <div class="login-wrapper">
           <button class="btn-login">Iniciar Sesión</button>
           <div class="login-dropdown">
             <a href="login.html" class="login-opt login-opt--primary">
-              <span class="lopt-icon">
-                <img src="dist/log3.png" alt="Iniciar Sesión" class="lopt-icon-img" />
-              </span>
-              <div>
-                <strong>Iniciar Sesión</strong>
-                <small>Accede a tu cuenta</small>
-              </div>
+              <span class="lopt-icon"><img src="dist/log3.png" alt="Iniciar Sesión" class="lopt-icon-img" /></span>
+              <div><strong>Iniciar Sesión</strong><small>Accede a tu cuenta</small></div>
             </a>
             <div class="login-divider"></div>
             <a href="registro.html" class="login-opt">
-              <span class="lopt-icon">
-                <img src="dist/reg1.png" alt="Registrarse" class="lopt-icon-img" />
-              </span>
-              <div>
-                <strong>Registrarse</strong>
-                <small>Crea una cuenta nueva</small>
-              </div>
-            </a>
-            <div class="login-divider"></div>
-            <a href="editor1.html" class="login-opt login-opt--publish">
-              <span class="lopt-icon">
-                <img src="dist/shape1-32-png@2x.png" alt="Crear publicación" class="lopt-icon-img" />
-              </span>
-              <div>
-                <strong>Crea una publicación</strong>
-                <small>Reporta una mascota</small>
-              </div>
+              <span class="lopt-icon"><img src="dist/reg1.png" alt="Registrarse" class="lopt-icon-img" /></span>
+              <div><strong>Registrarse</strong><small>Crea una cuenta nueva</small></div>
             </a>
           </div>
         </div>
       </div>
-
     </nav>
   </header>
 
-
-  <!-- ══════════════════════════════════════════
-       HERO reducido
-  ══════════════════════════════════════════ -->
   <section class="auth-hero">
     <h1 class="auth-hero-title">Iniciar sesión</h1>
   </section>
 
-
-  <!-- ══════════════════════════════════════════
-       TABS + FORMULARIO
-  ══════════════════════════════════════════ -->
   <div class="auth-wrap">
-
     <div class="auth-tabs">
       <span class="auth-tab auth-tab--active">Iniciar Sesión</span>
       <a href="registro.html" class="auth-tab">Registrarse</a>
     </div>
-
     <div class="auth-card">
       <div class="auth-error" id="loginError"></div>
-
-      <form id="loginForm" novalidate>
-        <div class="auth-field">
-          <input type="email" class="auth-input" id="correo" placeholder="Correo electrónico" required />
-        </div>
-        <div class="auth-field">
-          <input type="password" class="auth-input" id="contrasena" placeholder="Contraseña" required />
-        </div>
-
-        <label class="auth-remember">
-          <input type="checkbox" id="recordar" />
-          Recordar cuenta
-        </label>
-
-        <button type="submit" class="btn-auth-submit" id="btnSubmit">Iniciar Sesión</button>
-      </form>
-
+      <div class="auth-field">
+        <input type="email" class="auth-input" id="correo" placeholder="Correo electrónico" required />
+      </div>
+      <div class="auth-field">
+        <input type="password" class="auth-input" id="contrasena" placeholder="Contraseña" required />
+      </div>
+      <label class="auth-remember">
+        <input type="checkbox" id="recordar" /> Recordar cuenta
+      </label>
+      <button class="btn-auth-submit" id="btnSubmit" onclick="handleLogin()">Iniciar Sesión</button>
       <a href="#" class="auth-link-bottom">¿Olvidaste tu contraseña?</a>
       <p class="auth-switch">¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
     </div>
-
   </div>
 
-  <!-- ══════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════ -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-logo">
         <img src="dist/Mask-group@2x.png" alt="Alerta Patitas" class="logo-img" />
         <span class="logo-text">Alerta Patitas</span>
       </div>
-      <p class="footer-copy">© 2025 Alerta Patitas — Ayudando a reunir familias con sus mascotas.</p>
+      <p class="footer-copy">© 2025 Alerta Patitas</p>
     </div>
   </footer>
 
+  <!-- 2. Cargar auth.js DESPUÉS de supabase.js -->
   <script src="auth.js"></script>
   <script>
-    // Si ya recordó la cuenta antes, precarga el correo
+    // Precargar correo recordado
     const correoRecordado = localStorage.getItem('alertaPatitas_correoRecordado');
     if (correoRecordado) {
       document.getElementById('correo').value = correoRecordado;
       document.getElementById('recordar').checked = true;
     }
 
-    const form      = document.getElementById('loginForm');
     const errorBox  = document.getElementById('loginError');
     const btnSubmit = document.getElementById('btnSubmit');
 
-    function mostrarError(msg) {
-      errorBox.textContent = msg;
-      errorBox.classList.add('visible');
-    }
+    function mostrarError(msg) { errorBox.textContent = msg; errorBox.classList.add('visible'); }
+    function ocultarError()    { errorBox.classList.remove('visible'); errorBox.textContent = ''; }
 
-    function ocultarError() {
-      errorBox.classList.remove('visible');
-      errorBox.textContent = '';
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    async function handleLogin() {
       ocultarError();
+      const email    = document.getElementById('correo').value.trim();
+      const password = document.getElementById('contrasena').value;
+      const recordar = document.getElementById('recordar').checked;
 
-      const correo     = document.getElementById('correo').value.trim();
-      const contrasena = document.getElementById('contrasena').value.trim();
-      const recordar   = document.getElementById('recordar').checked;
+      if (!email || !password) { mostrarError('Por favor completa correo y contraseña.'); return; }
 
-      if (!correo || !contrasena) {
-        mostrarError('Por favor completa correo y contraseña.');
-        return;
-      }
-
-      btnSubmit.disabled = true;
+      btnSubmit.disabled    = true;
       btnSubmit.textContent = 'Verificando…';
 
       try {
-        const res = await fetch(AUTH_API_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'login', correo, contrasena })
-        });
+        // loginUsuario() está definido en auth.js (usa Supabase)
+        const usuario = await loginUsuario({ email, password });
 
-        const json = await res.json();
+        guardarSesion(usuario);
 
-        if (!json.ok) {
-          mostrarError(json.error || 'No se pudo iniciar sesión.');
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Iniciar Sesión';
-          return;
-        }
+        if (recordar) localStorage.setItem('alertaPatitas_correoRecordado', email);
+        else          localStorage.removeItem('alertaPatitas_correoRecordado');
 
-        // Guardar sesión
-        guardarSesion(json.usuario);
-
-        if (recordar) {
-          localStorage.setItem('alertaPatitas_correoRecordado', correo);
-        } else {
-          localStorage.removeItem('alertaPatitas_correoRecordado');
-        }
-
-        mostrarPopup(`¡Bienvenido de nuevo, ${json.usuario.nombre}!`, 'home.html');
+        mostrarPopup(`¡Bienvenido de nuevo, ${usuario.nick}!`, 'home.html');
 
       } catch (err) {
-        console.error(err);
-        mostrarError('Error de conexión. Intenta nuevamente.');
-        btnSubmit.disabled = false;
+        mostrarError(err.message || 'No se pudo iniciar sesión.');
+        btnSubmit.disabled    = false;
         btnSubmit.textContent = 'Iniciar Sesión';
       }
+    }
+
+    // Enter en los campos
+    ['correo', 'contrasena'].forEach(id => {
+      document.getElementById(id)?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') handleLogin();
+      });
     });
   </script>
 </body>

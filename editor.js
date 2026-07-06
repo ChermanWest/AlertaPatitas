@@ -1,15 +1,12 @@
 /* ============================================================
-   ALERTA PATITAS — editor.js
-   Formulario + galería + envío a Google Sheets/Drive
+   ALERTA PATITAS — editor.js  (versión Supabase)
+   Formulario + galería + envío a Supabase PostgreSQL + Storage.
+   Requiere: supabase.js cargado antes que este archivo.
    ============================================================ */
-
-// ⚠️ PASO OBLIGATORIO: reemplaza esto con la URL de tu
-// despliegue de Apps Script (termina en /exec)
-const API_URL = 'https://script.google.com/macros/s/AKfycbyOz26XnOoXsUEd47122hxEtfDFgWwr4vi_NuF4lQD9dREtHiB05Ofl-TdxpZ1KodRJfg/exec';
 
 
 /* ══════════════════════════════════════════════════
-   GALERÍA
+   GALERÍA (igual que antes, sin cambios)
 ══════════════════════════════════════════════════ */
 const imageUpload        = document.getElementById('imageUpload');
 const slidesContainer    = document.getElementById('slidesContainer');
@@ -22,7 +19,6 @@ const thumbWrappers      = [
   document.getElementById('thumb2'),
 ];
 
-// Cada slot guarda { url, file } o null
 let images       = [null, null, null];
 let currentIndex = 0;
 
@@ -100,30 +96,29 @@ btnNext.addEventListener('click', () => {
 
 
 /* ══════════════════════════════════════════════════
-   CONVERTIR IMAGEN A BASE64
-   Apps Script necesita base64 para procesar el archivo
+   SUBIR FOTOS A SUPABASE STORAGE
+   Ya NO necesitamos convertir a base64.
+   Subimos el File directamente.
 ══════════════════════════════════════════════════ */
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload  = () => {
-      // result = "data:image/jpeg;base64,/9j/4AAQ..."
-      // solo queremos la parte después de la coma
-      const base64 = reader.result.split(',')[1];
-      resolve(base64);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+async function subirFotos(nombre) {
+  const fotosConArchivo = images.filter(Boolean);
+  const urls = [];
 
-function getExtension(file) {
-  return file.name.split('.').pop().toLowerCase() || 'jpg';
+  for (let i = 0; i < fotosConArchivo.length; i++) {
+    const { file } = fotosConArchivo[i];
+    const ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+    // Nombre único: nombre_mascota + timestamp + índice
+    const path = `${nombre.replace(/\s+/g, '_')}_${Date.now()}_${i}.${ext}`;
+    const url  = await sb.uploadFile('fotos-mascotas', path, file);
+    urls.push(url);
+  }
+
+  return urls; // array de URLs públicas
 }
 
 
 /* ══════════════════════════════════════════════════
-   VALIDACIÓN
+   VALIDACIÓN (igual que antes)
 ══════════════════════════════════════════════════ */
 function validarFormulario() {
   const errores = [];
@@ -142,7 +137,7 @@ function validarFormulario() {
 
 
 /* ══════════════════════════════════════════════════
-   FEEDBACK VISUAL
+   FEEDBACK VISUAL (igual que antes)
 ══════════════════════════════════════════════════ */
 function getFeedbackEl() {
   let el = document.getElementById('publish-feedback');
@@ -150,14 +145,9 @@ function getFeedbackEl() {
     el = document.createElement('div');
     el.id = 'publish-feedback';
     el.style.cssText = `
-      margin-top: 12px;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-family: var(--font-onest, sans-serif);
-      font-weight: 600;
-      display: none;
-    `;
+      margin-top:12px;padding:12px 16px;border-radius:12px;
+      font-size:14px;font-family:var(--font-onest,sans-serif);
+      font-weight:600;display:none;`;
     document.querySelector('.btn-publish').insertAdjacentElement('afterend', el);
   }
   return el;
@@ -172,15 +162,13 @@ function mostrarFeedback(tipo, mensaje) {
     cargando: { bg: '#fef9e7', color: '#7d6608', border: '#f9e79f' },
   };
   const s = estilos[tipo] || estilos.cargando;
-  el.style.background   = s.bg;
-  el.style.color        = s.color;
-  el.style.border       = `1px solid ${s.border}`;
-  el.textContent        = mensaje;
+  el.style.background = s.bg;
+  el.style.color      = s.color;
+  el.style.border     = `1px solid ${s.border}`;
+  el.textContent      = mensaje;
 }
 
-function ocultarFeedback() {
-  getFeedbackEl().style.display = 'none';
-}
+function ocultarFeedback() { getFeedbackEl().style.display = 'none'; }
 
 function setBtnLoading(loading) {
   const btn = document.querySelector('.btn-publish');
@@ -199,49 +187,38 @@ function setBtnLoading(loading) {
    LEER DATOS DEL FORMULARIO
 ══════════════════════════════════════════════════ */
 function leerDatos() {
-  // Sesión del usuario logueado (la guarda auth.js en localStorage)
-  // Si no hay sesión, autor/autor_correo quedan vacíos y la
-  // publicación simplemente no tendrá dueño asignado.
   let usuario = null;
-  try {
-    const raw = localStorage.getItem('alertaPatitas_usuario');
-    usuario = raw ? JSON.parse(raw) : null;
-  } catch (err) {
-    usuario = null;
-  }
+  try { usuario = JSON.parse(localStorage.getItem('alertaPatitas_usuario') || 'null'); }
+  catch { usuario = null; }
 
   return {
-    nombre:        document.getElementById('petName').value.trim(),
-    mascota:       document.getElementById('petType').value,
-    sexo:          document.getElementById('petSex').value,
-    edad:          document.getElementById('petAge')?.value || '',
-    tamano:        document.getElementById('petSize').value,
-    estado:        document.getElementById('estado-mascota').checked ? 'extraviado' : 'buscando',
-    descripcion:   document.getElementById('pet-description').value.trim(),
-    contacto:      document.querySelector('.text-area')?.value.trim() || '',
-    autor:         usuario?.nombre || '',
-    autor_correo:  usuario?.correo || '',
+    nombre:       document.getElementById('petName').value.trim(),
+    mascota:      document.getElementById('petType').value,
+    sexo:         document.getElementById('petSex').value,
+    edad:         document.getElementById('petAge')?.value || '',
+    tamano:       document.getElementById('petSize').value,
+    estado:       document.getElementById('estado-mascota').checked ? 'perdido' : 'buscando',
+    descripcion:  document.getElementById('pet-description').value.trim(),
+    contacto:     document.querySelector('.text-area')?.value.trim() || '',
+    autor_id:     usuario?.id    || null,
+    autor_correo: usuario?.email || '',
   };
 }
 
 
 /* ══════════════════════════════════════════════════
    MODO EDICIÓN
-   Si la URL tiene ?id=XXXX, este formulario edita una
-   publicación existente en vez de crear una nueva.
 ══════════════════════════════════════════════════ */
-const params         = new URLSearchParams(window.location.search);
+const params          = new URLSearchParams(window.location.search);
 const idEdicion       = params.get('id');
-let publicacionOriginal = null; // se llena si estamos editando
+let   publicacionOriginal = null;
 
 async function cargarPublicacionParaEditar() {
   if (!idEdicion) return;
 
-  // Verificar sesión: solo usuarios logueados pueden editar
   let usuario = null;
-  try {
-    usuario = JSON.parse(localStorage.getItem('alertaPatitas_usuario') || 'null');
-  } catch (err) { /* noop */ }
+  try { usuario = JSON.parse(localStorage.getItem('alertaPatitas_usuario') || 'null'); }
+  catch { usuario = null; }
 
   if (!usuario) {
     alert('Debes iniciar sesión para editar una publicación.');
@@ -250,19 +227,17 @@ async function cargarPublicacionParaEditar() {
   }
 
   try {
-    const res  = await fetch(API_URL);
-    const json = await res.json();
-    if (!json.ok || !Array.isArray(json.data)) throw new Error('No se pudo cargar la publicación.');
+    const resultados = await sb.from('mascotas').select('*').eq('id', idEdicion).get();
 
-    const item = json.data.find(m => String(m.id) === String(idEdicion));
-    if (!item) {
+    if (!resultados || resultados.length === 0) {
       alert('No se encontró la publicación que intentas editar.');
       return;
     }
 
-    // Verificar que el usuario logueado sea el autor
-    const correoAutor = String(item.autor_correo || '').trim().toLowerCase();
-    if (!correoAutor || correoAutor !== usuario.correo.trim().toLowerCase()) {
+    const item = resultados[0];
+
+    // Verificar que el usuario sea el autor
+    if (!item.autor_correo || item.autor_correo.toLowerCase() !== usuario.email.toLowerCase()) {
       alert('No tienes permiso para editar esta publicación.');
       window.location.href = 'home.html';
       return;
@@ -270,26 +245,20 @@ async function cargarPublicacionParaEditar() {
 
     publicacionOriginal = item;
 
-    // Precargar formulario con los datos existentes
-    document.getElementById('petName').value         = item.nombre || '';
+    // Precargar el formulario
+    document.getElementById('petName').value         = item.nombre  || '';
     document.getElementById('petType').value         = item.mascota || '';
-    document.getElementById('petSex').value          = item.sexo || '';
-    document.getElementById('petSize').value         = item.tamano || item['tamaño'] || '';
-    if (document.getElementById('petAge')) {
+    document.getElementById('petSex').value          = item.sexo    || '';
+    document.getElementById('petSize').value         = item.tamano  || '';
+    if (document.getElementById('petAge'))
       document.getElementById('petAge').value = item.edad || '';
-    }
     document.getElementById('pet-description').value = item.descripcion || '';
-    document.getElementById('estado-mascota').checked = (item.estado === 'extraviado' || item.estado === 'perdido');
+    document.getElementById('estado-mascota').checked = (item.estado === 'perdido' || item.estado === 'extraviado');
     const ta = document.querySelector('.text-area');
     if (ta) ta.value = item.contacto || '';
 
-    // Cambiar texto del botón a modo edición
     const btn = document.querySelector('.btn-publish');
     if (btn) btn.textContent = 'GUARDAR CAMBIOS 🐾';
-
-    // Las fotos existentes no se recargan en los slots (son archivos,
-    // no URLs) — si el usuario no sube fotos nuevas, se conservan las
-    // que ya tenía la publicación.
 
   } catch (err) {
     console.error('Error cargando publicación para editar:', err);
@@ -301,103 +270,54 @@ cargarPublicacionParaEditar();
 
 
 /* ══════════════════════════════════════════════════
-   PUBLICAR — flujo completo
+   PUBLICAR — flujo completo con Supabase
 ══════════════════════════════════════════════════ */
 async function publicar() {
   ocultarFeedback();
 
-  // 1. Validar campos
   const errores = validarFormulario();
   if (errores.length > 0) {
     mostrarFeedback('error', '⚠️ ' + errores[0]);
     return;
   }
 
-  // 2. Verificar URL configurada
-  if (!API_URL || API_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') {
-    mostrarFeedback('error', '⚙️ Falta configurar la URL de Apps Script en editor.js (constante API_URL).');
-    return;
-  }
-
   setBtnLoading(true);
-
-  // 3. Convertir imágenes a base64 (solo si el usuario subió fotos nuevas)
-  mostrarFeedback('cargando', '🖼️ Preparando imágenes…');
-
-  const fotosConArchivo = images.filter(Boolean); // slots con imagen
-  let fotosBase64 = [];
-
-  try {
-    fotosBase64 = await Promise.all(
-      fotosConArchivo.map(async (item) => ({
-        data:      await fileToBase64(item.file),
-        tipo:      item.file.type,       // ej: "image/jpeg"
-        extension: getExtension(item.file),
-      }))
-    );
-  } catch (err) {
-    console.error('Error convirtiendo imágenes:', err);
-    mostrarFeedback('error', '❌ Error al procesar las imágenes. Intenta de nuevo.');
-    setBtnLoading(false);
-    return;
-  }
-
-  // 4. Enviar a Apps Script (crear o editar según el modo)
-  mostrarFeedback('cargando', idEdicion ? '⏳ Guardando cambios…' : '⏳ Guardando publicación…');
 
   try {
     const datos = leerDatos();
 
-    let payload;
-    if (idEdicion) {
-      payload = {
-        action: 'editar_mascota',
-        id: idEdicion,
-        ...datos,
-      };
-      // Nota: si el usuario sube fotos nuevas en modo edición, el
-      // backend actual de "editar_mascota" no las reemplaza — solo
-      // actualiza los datos de texto. Si más adelante quieres permitir
-      // cambiar fotos al editar, hay que ampliar editarPublicacion()
-      // en el .gs para procesarlas igual que en crearPublicacion().
-    } else {
-      payload = {
-        ...datos,
-        fotos: fotosBase64,  // array de { data, tipo, extension }
-      };
+    // 1. Subir fotos al Storage de Supabase
+    let fotoUrls = publicacionOriginal?.fotos || []; // conservar fotos existentes al editar
+
+    if (images.some(Boolean)) {
+      mostrarFeedback('cargando', '🖼️ Subiendo imágenes…');
+      fotoUrls = await subirFotos(datos.nombre);
     }
 
-    // IMPORTANTE: sin "mode: no-cors" para poder leer la respuesta real.
-    // Apps Script con ContentService responde con headers compatibles
-    // siempre que NO se envíen headers personalizados además de
-    // 'Content-Type: text/plain' (cualquier otro header dispara un
-    // preflight OPTIONS que Apps Script no maneja).
-    const res = await fetch(API_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body:    JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const json = await res.json();
-
-    if (!json.ok) {
-      throw new Error(json.error || 'El servidor rechazó la publicación.');
-    }
+    mostrarFeedback('cargando', idEdicion ? '⏳ Guardando cambios…' : '⏳ Guardando publicación…');
 
     if (idEdicion) {
+      // ── EDITAR ──
+      await sb.from('mascotas').update(
+        { ...datos, fotos: fotoUrls },
+        'id',
+        idEdicion
+      );
       mostrarFeedback('exito', '✅ ¡Cambios guardados correctamente!');
+
     } else {
-      mostrarFeedback('exito', '✅ ¡Publicación guardada! Las fotos pueden tardar unos segundos en aparecer.');
+      // ── CREAR ──
+      await sb.from('mascotas').insert({
+        ...datos,
+        fotos: fotoUrls,
+      });
+      mostrarFeedback('exito', '✅ ¡Publicación guardada correctamente!');
       limpiarFormulario();
     }
 
   } catch (err) {
     console.error('Error al publicar:', err);
-    mostrarFeedback('error', '❌ ' + (err.message || 'Error al guardar. Revisa tu conexión e intenta de nuevo.'));
+    mostrarFeedback('error', '❌ ' + (err.message || 'Error al guardar. Revisa tu conexión.'));
   } finally {
     setBtnLoading(false);
   }
@@ -429,8 +349,4 @@ function limpiarFormulario() {
   rebuildSlides();
 }
 
-
-/* ══════════════════════════════════════════════════
-   EVENTO PRINCIPAL
-══════════════════════════════════════════════════ */
 document.querySelector('.btn-publish').addEventListener('click', publicar);
