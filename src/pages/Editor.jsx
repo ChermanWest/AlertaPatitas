@@ -36,6 +36,7 @@ const FORM_INICIAL = {
   tamano: '',
   edad: '',
   estado: false, // false = "buscando", true = "perdido/extraviado"
+  ubicacion: '',
   descripcion: '',
   contacto: '',
 };
@@ -47,6 +48,8 @@ export default function Editor() {
   const idEdicion = searchParams.get('id');
 
   const [form, setForm] = useState(FORM_INICIAL);
+  const [sugerenciasUbicacion, setSugerenciasUbicacion] = useState([]);
+  const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
   const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
@@ -83,6 +86,7 @@ export default function Editor() {
         tamano: data.tamano || data['tamaño'] || '',
         edad: data.edad || '',
         estado: data.estado === 'perdido' || data.estado === 'extraviado',
+        ubicacion: data.zona || data.ubicacion || data.lugar || '',
         descripcion: data.descripcion || '',
         contacto: data.contacto || '',
       });
@@ -98,6 +102,44 @@ export default function Editor() {
     cargarParaEditar();
   }, [cargarParaEditar]);
 
+  useEffect(() => {
+    const consulta = form.ubicacion.trim();
+
+    if (!consulta) {
+      setSugerenciasUbicacion([]);
+      setCargandoUbicacion(false);
+      return;
+    }
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        setCargandoUbicacion(true);
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&accept-language=es&countrycodes=cl&viewbox=-70.8,-17.4,-68.7,-19.3&bounded=1&q=${encodeURIComponent(`${consulta}, Arica y Parinacota, Chile`)}`,
+        );
+
+        if (!response.ok) {
+          throw new Error('No se pudieron cargar las sugerencias.');
+        }
+
+        const results = await response.json();
+        setSugerenciasUbicacion(
+          results.map((item) => ({
+            id: item.place_id,
+            label: item.display_name,
+          })),
+        );
+      } catch (err) {
+        console.error('Error obteniendo sugerencias de ubicación:', err);
+        setSugerenciasUbicacion([]);
+      } finally {
+        setCargandoUbicacion(false);
+      }
+    }, 350);
+
+    return () => clearTimeout(timeoutId);
+  }, [form.ubicacion]);
+
   function actualizarCampo(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
@@ -108,6 +150,7 @@ export default function Editor() {
     if (!form.mascota) errores.push('Selecciona el tipo de mascota.');
     if (!form.sexo) errores.push('Selecciona el sexo.');
     if (!form.tamano) errores.push('Selecciona el tamaño.');
+    if (!form.ubicacion.trim()) errores.push('Agrega una ubicación de avistamiento.');
     if (!form.descripcion.trim()) errores.push('Agrega una descripción de la mascota.');
     return errores;
   }
@@ -169,6 +212,9 @@ export default function Editor() {
         tamano: form.tamano,
         edad: form.edad,
         estado: form.estado ? 'perdido' : 'buscando',
+        zona: form.ubicacion.trim(),
+        ubicacion: form.ubicacion.trim(),
+        lugar: form.ubicacion.trim(),
         descripcion: form.descripcion.trim(),
         contacto: form.contacto.trim(),
         autor_id: usuario.id,
@@ -307,18 +353,44 @@ export default function Editor() {
             <h2 className="report-title">SECTOR DE EXTRAVÍO</h2>
 
             <div className="location-options">
-              <button type="button" className="btn btn-location">
-                📍 ÚLTIMA UBICACIÓN DE AVISTAMIENTO
-              </button>
-              <button type="button" className="btn btn-location">
-                ✏️ INGRESAR DIRECCIÓN MANUALMENTE
-              </button>
-            </div>
+              <h3 className="btn-location">ÚLTIMA UBICACIÓN DE AVISTAMIENTO</h3>
 
-            <div className="accordion">
-              <div className="accordion-header">
-                <div className="accordion-info">📍 11 de Septiembre (El Roble)</div>
-                <span className="icon-chevron">⌄</span>
+              <div className="location-search-box">
+                <label className="location-search-label" htmlFor="locationSearch">
+                  Buscar ubicación
+                </label>
+                <input
+                  id="locationSearch"
+                  type="text"
+                  className="location-search-input"
+                  placeholder="Escribe la ubicación del avistamiento"
+                  autoComplete="off"
+                  value={form.ubicacion}
+                  onChange={(e) => actualizarCampo('ubicacion', e.target.value)}
+                />
+              </div>
+
+              {cargandoUbicacion && <div className="location-suggestions-status">Buscando sugerencias…</div>}
+
+              {!cargandoUbicacion && sugerenciasUbicacion.length > 0 && (
+                <div className="location-suggestions" role="listbox" aria-label="Sugerencias de ubicación">
+                  {sugerenciasUbicacion.map((sugerencia) => (
+                    <button
+                      key={sugerencia.id}
+                      type="button"
+                      className="location-suggestion"
+                      onClick={() => actualizarCampo('ubicacion', sugerencia.label)}
+                    >
+                      {sugerencia.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="accordion">
+                <div className="accordion-header">
+                  <div className="accordion-info">📍 {form.ubicacion || 'Ubicación del avistamiento'}</div>
+                </div>
               </div>
             </div>
 
@@ -345,7 +417,7 @@ export default function Editor() {
             </div>
 
             <button type="button" className="btn-publish" onClick={publicar} disabled={publicando}>
-              {publicando ? 'Publicando…' : idEdicion ? 'GUARDAR CAMBIOS 🐾' : 'PUBLICAR 🐾'}
+              {publicando ? 'Publicando…' : idEdicion ? 'GUARDAR CAMBIOS ' : 'PUBLICAR '}
             </button>
 
             {feedback && (
