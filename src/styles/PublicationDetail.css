@@ -1,0 +1,267 @@
+/* ============================================================
+   ALERTA PATITAS — PublicationDetail.css
+   ============================================================ */
+
+.pub-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+  background: #F4EFE7;
+  min-height: 100vh;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  color: #3A2E26;
+}
+
+/* Back link */
+.pub-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #B5601F;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.pub-back:hover {
+  color: #8F4A17;
+  transform: translateX(-3px);
+}
+
+/* Card */
+.pub-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(58, 46, 38, 0.08);
+}
+
+/* Loading / empty / error states */
+.pub-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  gap: 8px;
+}
+
+.pub-error span {
+  font-size: 2.4rem;
+}
+
+.pub-error p {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.pub-error small {
+  color: #9A8C7E;
+}
+
+/* Edit bar */
+.pub-edit-bar {
+  padding: 14px 20px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-pub-edit {
+  background: #FBEFE2;
+  color: #B5601F;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.btn-pub-edit:hover {
+  background: #F3DFC4;
+}
+
+/* Hero image */
+.pub-hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  background: #EDE7DC;
+}
+
+.pub-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pub-hero-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #B4A796;
+}
+
+.pub-hero-placeholder span {
+  font-size: 2.2rem;
+}
+
+/* Status badge over hero */
+.pub-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.pub-badge--search {
+  background: #4CAF7D;
+}
+
+.pub-badge--lost {
+  background: #D9534F;
+}
+
+/* Thumbnails */
+.pub-thumbs {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #FBF8F2;
+}
+
+.pub-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.pub-thumb:hover {
+  opacity: 0.9;
+}
+
+.pub-thumb.active {
+  opacity: 1;
+  border-color: #D9863A;
+}
+
+/* Body */
+.pub-body {
+  padding: 26px 24px 32px;
+}
+
+.pub-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2B2118;
+  margin: 0 0 14px;
+}
+
+/* Tags */
+.pub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.pub-tag {
+  background: #F3E4CE;
+  color: #8A5A2B;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pub-tag--estado-buscando {
+  background: #DCF2E4;
+  color: #2F8B5B;
+}
+
+.pub-tag--estado-perdido {
+  background: #FBE1DF;
+  color: #C24741;
+}
+
+/* Info grid */
+.pub-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.pub-info-item {
+  background: #FBF6EE;
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+.pub-info-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #C08A4E;
+  margin-bottom: 4px;
+}
+
+.pub-info-value {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #2B2118;
+}
+
+/* Dividers & sections */
+.pub-divider {
+  border: none;
+  border-top: 1px solid #ECE3D5;
+  margin: 24px 0 18px;
+}
+
+.pub-section-title {
+  font-weight: 800;
+  color: #B5601F;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  margin: 0 0 12px;
+}
+
+.pub-desc {
+  color: #6B5F52;
+  line-height: 1.65;
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 560px) {
+  .pub-title {
+    font-size: 1.6rem;
+  }
+
+  .pub-body {
+    padding: 20px 18px 26px;
+  }
+}
