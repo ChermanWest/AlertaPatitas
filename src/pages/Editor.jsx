@@ -180,7 +180,7 @@ export default function Editor() {
         tamano: form.tamano,
         edad: form.edad,
         estado: form.estado ? 'perdido' : 'buscando',
-        zona: form.zona, // 🟢 Mapeo de zona real para salvar en Supabase/Django
+        // zona: form.zona, // 🟡 COMENTADO: No guardar zona de momento
         descripcion: form.descripcion.trim(),
         contacto: form.contacto.trim(),
         autor_id: usuario.id,
