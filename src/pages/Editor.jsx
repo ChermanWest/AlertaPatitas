@@ -20,6 +20,8 @@ import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import Gallery from '../components/Gallery';
 
+const API_URL = 'http://127.0.0.1:8000/api/Publicaciones/';
+
 /* Estilos inline para el aviso de feedback (igual criterio que
    mostrarFeedback() en editor.js, que también armaba los colores
    a mano en vez de depender de clases CSS que no existían). */
@@ -55,43 +57,35 @@ export default function Editor() {
 
   const cargarParaEditar = useCallback(async () => {
     if (!idEdicion) return;
-
-    if (!usuario) {
-      navigate('/login');
-      return;
-    }
+    if (!usuario) { navigate('/login'); return; }
 
     try {
-      const { data, error } = await supabase.from('mascotas').select('*').eq('id', idEdicion).single();
+        const res = await fetch(`${API_URL}${idEdicion}/`);
+        if (!res.ok) throw new Error('No se encontró la publicación.');
+        const data = await res.json();
 
-      if (error || !data) {
-        setFeedback({ tipo: 'error', mensaje: 'No se encontró la publicación que intentas editar.' });
-        return;
+        if (data.autor_id !== usuario.id) {
+          setFeedback({ tipo: 'error', mensaje: 'No tienes permiso para editar.' });
+          setTimeout(() => navigate('/'), 1800);
+          return;
+        }
+
+        setPublicacionOriginal(data);
+        setForm({
+          nombre: data.nombre || '',
+          mascota: data.mascota || '',
+          sexo: data.sexo || '',
+          tamano: data.tamano || '',
+          edad: data.edad || '',
+          estado: data.estado === 'perdido' || data.estado === 'extraviado',
+          descripcion: data.descripcion || '',
+          contacto: data.contacto || '',
+        });
+      } catch (err) {
+        setFeedback({ tipo: 'error', mensaje: 'Error al cargar la publicación.' });
+      } finally {
+        setCargandoInicial(false);
       }
-
-      if (data.autor_id !== usuario.id) {
-        setFeedback({ tipo: 'error', mensaje: 'No tienes permiso para editar esta publicación.' });
-        setTimeout(() => navigate('/'), 1800);
-        return;
-      }
-
-      setPublicacionOriginal(data);
-      setForm({
-        nombre: data.nombre || '',
-        mascota: data.mascota || '',
-        sexo: data.sexo || '',
-        tamano: data.tamano || data['tamaño'] || '',
-        edad: data.edad || '',
-        estado: data.estado === 'perdido' || data.estado === 'extraviado',
-        descripcion: data.descripcion || '',
-        contacto: data.contacto || '',
-      });
-    } catch (err) {
-      console.error('Error cargando publicación para editar:', err);
-      setFeedback({ tipo: 'error', mensaje: 'Ocurrió un error al cargar la publicación.' });
-    } finally {
-      setCargandoInicial(false);
-    }
   }, [idEdicion, usuario, navigate]);
 
   useEffect(() => {
@@ -153,47 +147,59 @@ export default function Editor() {
     setPublicando(true);
 
     try {
-      let fotoUrls = publicacionOriginal?.fotos || [];
+        let fotoUrls = publicacionOriginal?.fotos || [];
 
-      if (images.some(Boolean)) {
-        setFeedback({ tipo: 'cargando', mensaje: '🖼️ Subiendo imágenes…' });
-        fotoUrls = await subirFotos();
-      }
+        if (images.some(Boolean)) {
+            setFeedback({ tipo: 'cargando', mensaje: '🖼️ Subiendo imágenes…' });
+            fotoUrls = await subirFotos();
+        }
 
-      setFeedback({ tipo: 'cargando', mensaje: idEdicion ? '⏳ Guardando cambios…' : '⏳ Guardando publicación…' });
+        setFeedback({ tipo: 'cargando', mensaje: idEdicion ? '⏳ Guardando cambios…' : '⏳ Guardando publicación…' });
 
-      const datos = {
-        nombre: form.nombre.trim(),
-        mascota: form.mascota,
-        sexo: form.sexo,
-        tamano: form.tamano,
-        edad: form.edad,
-        estado: form.estado ? 'perdido' : 'buscando',
-        descripcion: form.descripcion.trim(),
-        contacto: form.contacto.trim(),
-        autor_id: usuario.id,
-        autor_correo: usuario.email,
-        fotos: fotoUrls,
-      };
+        const datos = {
+            nombre: form.nombre.trim(),
+            mascota: form.mascota,
+            sexo: form.sexo,
+            tamano: form.tamano,
+            edad: form.edad,
+            estado: form.estado ? 'perdido' : 'buscando',
+            descripcion: form.descripcion.trim(),
+            contacto: form.contacto.trim(),
+            autor_id: usuario.id,
+            autor_correo: usuario.email,
+            fotos: fotoUrls,
+                };
 
-      if (idEdicion) {
-        const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
-        if (error) throw error;
-        setFeedback({ tipo: 'exito', mensaje: '✅ ¡Cambios guardados correctamente!' });
-      } else {
-        const { error } = await supabase.from('mascotas').insert(datos);
-        if (error) throw error;
-        setFeedback({ tipo: 'exito', mensaje: '✅ ¡Publicación guardada correctamente!' });
-        setForm(FORM_INICIAL);
-        setImages([null, null, null]);
-      }
+        const url = idEdicion ? `${API_URL}${idEdicion}/` : API_URL;
+        const method = idEdicion ? 'PUT' : 'POST';
+
+        // 1. Enviamos ÚNICAMENTE a Django
+        const res = await fetch(url, {
+            method,
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos),
+        });
+        
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        // 2. Si Django responde OK, mostramos éxito
+        if (idEdicion) {
+            setFeedback({ tipo: 'exito', mensaje: '✅ ¡Cambios guardados correctamente!' });
+        } else {
+            setFeedback({ tipo: 'exito', mensaje: '✅ ¡Publicación guardada correctamente!' });
+            setForm(FORM_INICIAL);
+            setImages([null, null, null]);
+        }
+        
     } catch (err) {
-      console.error('Error al publicar:', err);
-      setFeedback({ tipo: 'error', mensaje: '❌ ' + (err.message || 'Error al guardar. Revisa tu conexión.') });
+        console.error('Error al publicar:', err);
+        setFeedback({ tipo: 'error', mensaje: '❌ ' + (err.message || 'Error al guardar.') });
     } finally {
-      setPublicando(false);
-    }
+        setPublicando(false);
   }
+}
 
   if (cargandoInicial) {
     return <p style={{ textAlign: 'center', padding: '4rem 1rem' }}>Cargando publicación…</p>;

@@ -1,15 +1,6 @@
-/* ============================================================
-   ALERTA PATITAS — useMascotas.js
-
-   Reemplaza la carga de datos que antes vivía duplicada en
-   loader.js Y filters.js (home.html en realidad solo cargaba
-   filters.js — loader.js había quedado huérfano, sin <script>
-   que lo referenciara). Este hook es la única fuente de verdad
-   para traer publicaciones desde Supabase.
-   ============================================================ */
-
 import { useCallback, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+
+const API_URL = 'http://127.0.0.1:8000/api/Publicaciones/';
 
 export function useMascotas() {
   const [mascotas, setMascotas] = useState([]);
@@ -20,13 +11,10 @@ export function useMascotas() {
     setLoading(true);
     setError(null);
     try {
-      const { data, error: sbError } = await supabase
-        .from('mascotas')
-        .select('*')
-        .order('fecha', { ascending: false });
-
-      if (sbError) throw sbError;
-      setMascotas(data || []);
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setMascotas(data);
     } catch (err) {
       console.error('Error cargando mascotas:', err);
       setError('No se pudieron cargar las publicaciones.');
