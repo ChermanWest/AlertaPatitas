@@ -3,7 +3,9 @@
 -- Ejecuta esto en el SQL Editor de tu proyecto (supabase.com)
 -- ============================================================
 
-
+-- ── 1. Tabla "mascotas" ──
+-- (autor_id ahora referencia a auth.users, generado por Supabase Auth,
+--  en vez de un id numérico de la vieja tabla "usuarios")
 create table if not exists public.mascotas (
   id            uuid primary key default gen_random_uuid(),
   nombre        text not null,
@@ -47,6 +49,10 @@ create policy "mascotas_delete_propio"
   to authenticated
   using (auth.uid() = autor_id);
 
+-- ── 3. Storage: bucket de fotos ──
+-- Crea el bucket "fotos-mascotas" desde el Dashboard
+-- (Storage → New bucket → márcalo como "Public bucket")
+-- y luego aplica estas políticas sobre storage.objects:
 
 create policy "fotos_select_publico"
   on storage.objects for select

@@ -36,9 +36,9 @@ const FORM_INICIAL = {
   tamano: '',
   edad: '',
   estado: false, // false = "buscando", true = "perdido/extraviado"
-  ubicacion: '',
   descripcion: '',
   contacto: '',
+  zona: '11 de Septiembre', // 🟢 Valor por defecto para el acordeón de sectores
 };
 
 export default function Editor() {
@@ -48,13 +48,22 @@ export default function Editor() {
   const idEdicion = searchParams.get('id');
 
   const [form, setForm] = useState(FORM_INICIAL);
-  const [sugerenciasUbicacion, setSugerenciasUbicacion] = useState([]);
-  const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
   const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
+
+  //  Estados añadidos para el Acordeón Interactivo de Sectores
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  const SECTORES_ARICA = [
+    'Centro',
+    'Chinchorro',
+    'Mall Plaza',
+    '11 de Septiembre',
+    'Industriales',
+    'Azapa'
+  ];
 
   const cargarParaEditar = useCallback(async () => {
     if (!idEdicion) return;
@@ -86,9 +95,9 @@ export default function Editor() {
         tamano: data.tamano || data['tamaño'] || '',
         edad: data.edad || '',
         estado: data.estado === 'perdido' || data.estado === 'extraviado',
-        ubicacion: data.zona || data.ubicacion || data.lugar || '',
         descripcion: data.descripcion || '',
         contacto: data.contacto || '',
+        zona: data.zona || '11 de Septiembre',
       });
     } catch (err) {
       console.error('Error cargando publicación para editar:', err);
@@ -102,44 +111,6 @@ export default function Editor() {
     cargarParaEditar();
   }, [cargarParaEditar]);
 
-  useEffect(() => {
-    const consulta = form.ubicacion.trim();
-
-    if (!consulta) {
-      setSugerenciasUbicacion([]);
-      setCargandoUbicacion(false);
-      return;
-    }
-
-    const timeoutId = setTimeout(async () => {
-      try {
-        setCargandoUbicacion(true);
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&accept-language=es&countrycodes=cl&viewbox=-70.8,-17.4,-68.7,-19.3&bounded=1&q=${encodeURIComponent(`${consulta}, Arica y Parinacota, Chile`)}`,
-        );
-
-        if (!response.ok) {
-          throw new Error('No se pudieron cargar las sugerencias.');
-        }
-
-        const results = await response.json();
-        setSugerenciasUbicacion(
-          results.map((item) => ({
-            id: item.place_id,
-            label: item.display_name,
-          })),
-        );
-      } catch (err) {
-        console.error('Error obteniendo sugerencias de ubicación:', err);
-        setSugerenciasUbicacion([]);
-      } finally {
-        setCargandoUbicacion(false);
-      }
-    }, 350);
-
-    return () => clearTimeout(timeoutId);
-  }, [form.ubicacion]);
-
   function actualizarCampo(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
@@ -150,7 +121,6 @@ export default function Editor() {
     if (!form.mascota) errores.push('Selecciona el tipo de mascota.');
     if (!form.sexo) errores.push('Selecciona el sexo.');
     if (!form.tamano) errores.push('Selecciona el tamaño.');
-    if (!form.ubicacion.trim()) errores.push('Agrega una ubicación de avistamiento.');
     if (!form.descripcion.trim()) errores.push('Agrega una descripción de la mascota.');
     return errores;
   }
@@ -162,8 +132,6 @@ export default function Editor() {
     for (let i = 0; i < archivos.length; i++) {
       const { file } = archivos[i];
       const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
-      // Prefijar con el uuid del usuario ordena el bucket por dueño
-      // y es lo que espera la policy de Storage (ver README).
       const path = `${usuario.id}/${form.nombre.replace(/\s+/g, '_')}_${Date.now()}_${i}.${ext}`;
 
       const { error: uploadError } = await supabase.storage.from('fotos-mascotas').upload(path, file, {
@@ -212,9 +180,7 @@ export default function Editor() {
         tamano: form.tamano,
         edad: form.edad,
         estado: form.estado ? 'perdido' : 'buscando',
-        zona: form.ubicacion.trim(),
-        ubicacion: form.ubicacion.trim(),
-        lugar: form.ubicacion.trim(),
+        zona: form.zona, // 🟢 Mapeo de zona real para salvar en Supabase/Django
         descripcion: form.descripcion.trim(),
         contacto: form.contacto.trim(),
         autor_id: usuario.id,
@@ -353,45 +319,64 @@ export default function Editor() {
             <h2 className="report-title">SECTOR DE EXTRAVÍO</h2>
 
             <div className="location-options">
-              <h3 className="btn-location">ÚLTIMA UBICACIÓN DE AVISTAMIENTO</h3>
+              <button type="button" className="btn btn-location">
+                📍 ÚLTIMA UBICACIÓN DE AVISTAMIENTO
+              </button>
+              <button type="button" className="btn btn-location">
+                ✏️ INGRESAR DIRECCIÓN MANUALMENTE
+              </button>
+            </div>
 
-              <div className="location-search-box">
-                <label className="location-search-label" htmlFor="locationSearch">
-                  Buscar ubicación
-                </label>
-                <input
-                  id="locationSearch"
-                  type="text"
-                  className="location-search-input"
-                  placeholder="Escribe la ubicación del avistamiento"
-                  autoComplete="off"
-                  value={form.ubicacion}
-                  onChange={(e) => actualizarCampo('ubicacion', e.target.value)}
-                />
+            {/* 🟢 NUEVO ACCORDEÓN COMPLETAMENTE DINÁMICO E INTERACTIVO POR MATÍAS */}
+            <div className="accordion" style={{ position: 'relative' }}>
+              <div 
+                className="accordion-header" 
+                onClick={() => setMenuAbierto(!menuAbierto)}
+                style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
+                <div className="accordion-info">📍 {form.zona || 'Seleccionar sector...'}</div>
+                <span className="icon-chevron" style={{ transform: menuAbierto ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>⌄</span>
               </div>
 
-              {cargandoUbicacion && <div className="location-suggestions-status">Buscando sugerencias…</div>}
-
-              {!cargandoUbicacion && sugerenciasUbicacion.length > 0 && (
-                <div className="location-suggestions" role="listbox" aria-label="Sugerencias de ubicación">
-                  {sugerenciasUbicacion.map((sugerencia) => (
-                    <button
-                      key={sugerencia.id}
-                      type="button"
-                      className="location-suggestion"
-                      onClick={() => actualizarCampo('ubicacion', sugerencia.label)}
+              {menuAbierto && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  background: '#ffffff',
+                  border: '1px solid #ebdcd0',
+                  borderRadius: '12px',
+                  marginTop: '5px',
+                  zIndex: 100,
+                  boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+                  maxHeight: '180px',
+                  overflowY: 'auto'
+                }}>
+                  {SECTORES_ARICA.map((sector) => (
+                    <div
+                      key={sector}
+                      onClick={() => {
+                        actualizarCampo('zona', sector);
+                        setMenuAbierto(false);
+                      }}
+                      style={{
+                        padding: '12px 16px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f7f4f0',
+                        color: '#4a3c3c',
+                        fontSize: '14px',
+                        textAlign: 'left',
+                        background: form.zona === sector ? '#fdfaf6' : 'transparent'
+                      }}
+                      onMouseEnter={(e) => e.target.style.background = '#fdfaf6'}
+                      onMouseLeave={(e) => e.target.style.background = form.zona === sector ? '#fdfaf6' : 'transparent'}
                     >
-                      {sugerencia.label}
-                    </button>
+                      {sector}
+                    </div>
                   ))}
                 </div>
               )}
-
-              <div className="accordion">
-                <div className="accordion-header">
-                  <div className="accordion-info">📍 {form.ubicacion || 'Ubicación del avistamiento'}</div>
-                </div>
-              </div>
             </div>
 
             <div className="contact-card">
@@ -417,7 +402,7 @@ export default function Editor() {
             </div>
 
             <button type="button" className="btn-publish" onClick={publicar} disabled={publicando}>
-              {publicando ? 'Publicando…' : idEdicion ? 'GUARDAR CAMBIOS ' : 'PUBLICAR '}
+              {publicando ? 'Publicando…' : idEdicion ? 'GUARDAR CAMBIOS 🐾' : 'PUBLICAR 🐾'}
             </button>
 
             {feedback && (
@@ -436,7 +421,7 @@ export default function Editor() {
             )}
 
             {!usuario && (
-              <p className="auth-switch">
+              <p className="auth-switch" style={{ marginTop: '10px', color: '#c0392b', fontWeight: '600' }}>
                 Debes <Link to="/login">iniciar sesión</Link> para publicar.
               </p>
             )}

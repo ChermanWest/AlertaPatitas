@@ -1,22 +1,28 @@
 /* ============================================================
    ALERTA PATITAS — PublicationDetail.jsx
+
+   Antes, publicacion.html leía todo el registro codificado como
+   JSON en ?datos=..., lo que rompía con descripciones largas o
+   caracteres especiales y generaba URLs enormes e infeaces de
+   compartir. Ahora la ruta es /publicacion/:id y el componente
+   pide el registro directo a Supabase — más robusto y con links
+   cortos y compartibles.
+
+   El escapado manual de HTML (la función esc() del original) ya
+   no hace falta: React escapa automáticamente todo lo que se
+   renderiza como texto.
    ============================================================ */
 
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
-import '../styles/PublicationDetail.css';
+
 
 const EDAD_LABELS = { cachorro: 'Cachorro', corta: 'De corta edad', adulto: 'Adulto', senior: 'Senior' };
 
 function capitalize(str) {
   return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
-}
-
-function formatDate(value) {
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleDateString('es-CL');
 }
 
 export default function PublicationDetail() {
@@ -171,7 +177,7 @@ export default function PublicationDetail() {
             {item.fecha && (
               <div className="pub-info-item">
                 <div className="pub-info-label">Fecha</div>
-                <div className="pub-info-value">{formatDate(item.fecha)}</div>
+                <div className="pub-info-value">{new Date(item.fecha).toLocaleDateString('es-CL')}</div>
               </div>
             )}
           </div>
