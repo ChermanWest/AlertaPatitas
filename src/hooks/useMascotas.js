@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const API_URL = 'http://127.0.0.1:8000/api/Publicaciones/';
+// Apuntamos directo al puerto e IP donde Django está activo
+const API_URL = 'http://127.0.0.1:8000/api/mascotas/';
 
 export function useMascotas() {
   const [mascotas, setMascotas] = useState([]);

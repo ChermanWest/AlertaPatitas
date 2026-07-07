@@ -17,5 +17,9 @@ class Publicacion(models.Model):
     autor_correo = models.EmailField(blank=True)
     fecha = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table = 'publicaciones_alertapatitas'  # <- Nueva tabla limpia
+        managed = True                             # <- Permite que Django la gestione
+
     def __str__(self):
         return self.nombre

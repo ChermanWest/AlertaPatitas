@@ -36,7 +36,7 @@ export default function Home() {
 
   const visibles = useMemo(() => {
     return mascotas.filter((m) => {
-      const mascota = normalizar('mascota', m.mascota);
+      const mascota = normalizar('mascota', m.tipo_mascota);
       const genero = normalizar('sexo', m.sexo);
       const edad = normalizar('edad', m.edad);
       const tamano = normalizar('tamano', m.tamano || m['tamaño']);

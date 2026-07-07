@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Publicacion
+from .models import Publicacion # <- Cambiado
 from .serializers import PublicacionSerializer
-# Create your views here.
 
 class PublicacionViewSet(viewsets.ModelViewSet):
     queryset = Publicacion.objects.all()
