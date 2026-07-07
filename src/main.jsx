@@ -1,41 +1,18 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
-import FeedPrincipal from './components/FeedPrincipal';
-import FormularioReporte from './components/FormularioReporte';
-import Login from './components/Login'; 
-import Registro from './components/Registro'; 
-import DetallePublicacion from './components/DetallePublicacion'; 
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import { AuthProvider } from './context/AuthContext';
+import './styles/home.css';
+import './styles/auth.css';
+import './styles/editor1.css';
 
-import '../home.css'; 
-
-function MainApp() {
-  const [vista, setVista] = useState('feed'); 
-
-  return (
-    <div className="app-container">
-      {/* 🔴 CONTROL DE LA BARRA: Solo se muestra si estamos en el 'feed', 'formulario' o 'detalle' */}
-      {(vista === 'feed' || vista === 'formulario' || vista === 'detalle') && (
-        <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 10000, display: 'flex', gap: '8px', background: 'rgba(255,255,255,0.95)', padding: '10px', borderRadius: '50px', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
-          <button onClick={() => setVista('feed')} style={{ padding: '10px 14px', background: '#8b4513', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>🐾 Feed</button>
-          <button onClick={() => setVista('formulario')} style={{ padding: '10px 14px', background: '#3cb371', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>📝 Reportar</button>
-          <button onClick={() => setVista('login')} style={{ padding: '10px 14px', background: '#c8a040', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>🔑 Login</button>
-          <button onClick={() => setVista('registro')} style={{ padding: '10px 14px', background: '#20b2aa', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>✍️ Registro</button>
-          <button onClick={() => setVista('detalle')} style={{ padding: '10px 14px', background: '#ff7f50', color: '#fff', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold' }}>🔍 Detalle</button>
-        </div>
-      )}
-
-      {/* 🔴 ARREGLADO: Ahora todos los componentes reciben setVista */}
-      {vista === 'feed' && <FeedPrincipal setVista={setVista} />}
-      {vista === 'formulario' && <FormularioReporte setVista={setVista} />}
-      {vista === 'login' && <Login setVista={setVista} />}
-      {vista === 'registro' && <Registro setVista={setVista} />}
-      {vista === 'detalle' && <DetallePublicacion setVista={setVista} />}
-    </div>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <MainApp />
-  </React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
+  </StrictMode>
 );
