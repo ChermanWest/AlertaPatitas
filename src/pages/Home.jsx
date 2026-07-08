@@ -59,7 +59,8 @@ export default function Home() {
   // cambian las 'mascotas' traídas del servidor o los 'filtrosAplicados'.
   const visibles = useMemo(() => {
     return mascotas.filter((m) => {
-const mascota = normalizar('mascota', m.mascota || m.tipo_mascota);
+      // Normalizamos los datos de la mascota actual para poder compararlos con los filtros
+      const mascota = normalizar('mascota', m.mascota);
       const genero = normalizar('sexo', m.sexo);
       const edad = normalizar('edad', m.edad);
       const tamano = normalizar('tamano', m.tamano || m['tamaño']); // Prevención por diferentes nombres de propiedad
