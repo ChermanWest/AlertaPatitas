@@ -4,7 +4,6 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import '../styles/PublicationDetail.css';
 
@@ -33,20 +32,25 @@ export default function PublicationDetail() {
     async function cargar() {
       setEstadoCarga('cargando');
       try {
-        const { data, error } = await supabase.from('mascotas').select('*').eq('id', id).single();
+        // 🔄 CAMBIO: Reemplazamos Supabase por fetch a tu backend de Django
+        const respuesta = await fetch(`http://127.0.0.1:8000/api/mascotas/${id}/`);
+        
         if (cancelado) return;
 
-        if (error || !data) {
+        // Si Django devuelve un 404 u otro error
+        if (!respuesta.ok) {
           setEstadoCarga('vacio');
           return;
         }
+
+        const data = await respuesta.json();
 
         setItem(data);
         const fotos = Array.isArray(data.fotos) ? data.fotos : [];
         setFotoActiva(fotos[0] || null);
         setEstadoCarga('ok');
       } catch (err) {
-        console.error('Error cargando publicación:', err);
+        console.error('Error cargando publicación desde Django:', err);
         if (!cancelado) setEstadoCarga('error');
       }
     }
