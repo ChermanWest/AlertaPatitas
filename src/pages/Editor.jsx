@@ -53,7 +53,7 @@ export default function Editor() {
   const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
-  const [feedback, setFeedback] = useState(null); 
+  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
 
