@@ -1,5 +1,17 @@
 /* ============================================================
-   ALERTA PATITAS — Editor.jsx (crear / editar publicación)
+   ALERTA PATITAS — Editor.jsx  (crear / editar publicación)
+
+   Cambios de fondo respecto a editor.js:
+     - subirFotos() ahora usa supabase.storage.from(bucket).upload()
+       del SDK en vez de fetch() manual al endpoint de Storage.
+     - autor_id ahora es el uuid real de Supabase Auth
+       (session.user.id), no un id numérico de la vieja tabla
+       "usuarios". Esto es lo que permite que las políticas RLS
+       (auth.uid() = autor_id) funcionen tanto en la tabla
+       "mascotas" como en el bucket de Storage.
+     - Publicar ahora EXIGE sesión iniciada (antes se podía crear
+       una publicación sin login y quedaba "huérfana", sin dueño
+       real que luego pudiera editarla).
    ============================================================ */
 
 import { useCallback, useEffect, useState } from 'react';
@@ -8,6 +20,9 @@ import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import Gallery from '../components/Gallery';
 
+/* Estilos inline para el aviso de feedback (igual criterio que
+   mostrarFeedback() en editor.js, que también armaba los colores
+   a mano en vez de depender de clases CSS que no existían). */
 const ESTILOS_FEEDBACK = {
   error: { background: '#fdecea', color: '#c0392b', border: '1px solid #f5c6c6' },
   exito: { background: '#eafaf1', color: '#1e8449', border: '1px solid #a9dfbf' },
@@ -38,8 +53,7 @@ export default function Editor() {
   const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
-  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
-  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
+  const [feedback, setFeedback] = useState(null); 
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
 
@@ -52,14 +66,12 @@ export default function Editor() {
     }
 
     try {
-      const respuesta = await fetch(`http://127.0.0.1:8000/api/mascotas/${idEdicion}/`);
+      const { data, error } = await supabase.from('mascotas').select('*').eq('id', idEdicion).single();
 
-      if (!respuesta.ok) {
+      if (error || !data) {
         setFeedback({ tipo: 'error', mensaje: 'No se encontró la publicación que intentas editar.' });
         return;
       }
-
-      const data = await respuesta.json();
 
       if (data.autor_id !== usuario.id) {
         setFeedback({ tipo: 'error', mensaje: 'No tienes permiso para editar esta publicación.' });
@@ -116,7 +128,7 @@ export default function Editor() {
           results.map((item) => ({
             id: item.place_id,
             label: item.display_name,
-          }))
+          })),
         );
       } catch (err) {
         console.error('Error obteniendo sugerencias de ubicación:', err);
@@ -202,7 +214,9 @@ export default function Editor() {
         tamano: form.tamano,
         edad: form.edad,
         estado: form.estado ? 'perdido' : 'buscando',
-        zona: form.ubicacion.trim(), 
+        zona: form.ubicacion.trim(),
+        ubicacion: form.ubicacion.trim(),
+        lugar: form.ubicacion.trim(),
         descripcion: form.descripcion.trim(),
         contacto: form.contacto.trim(),
         autor_id: usuario.id,
@@ -210,36 +224,17 @@ export default function Editor() {
         fotos: fotoUrls,
       };
 
-      let urlApi = 'http://127.0.0.1:8000/api/mascotas/';
-      let metodo = 'POST';
-
       if (idEdicion) {
-        urlApi = `http://127.0.0.1:8000/api/mascotas/${idEdicion}/`;
-        metodo = 'PUT';
-      }
-
-      const resBackend = await fetch(urlApi, {
-        method: metodo,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datos),
-      });
-
-      if (!resBackend.ok) {
-        throw new Error(`Error en el servidor de Django (Status: ${resBackend.status})`);
-      }
-
-      if (idEdicion) {
+        const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
+        if (error) throw error;
         setFeedback({ tipo: 'exito', mensaje: '✅ ¡Cambios guardados correctamente!' });
       } else {
+        const { error } = await supabase.from('mascotas').insert(datos);
+        if (error) throw error;
         setFeedback({ tipo: 'exito', mensaje: '✅ ¡Publicación guardada correctamente!' });
         setForm(FORM_INICIAL);
         setImages([null, null, null]);
       }
-
-      setTimeout(() => navigate('/'), 1000);
-
     } catch (err) {
       console.error('Error al publicar:', err);
       setFeedback({ tipo: 'error', mensaje: '❌ ' + (err.message || 'Error al guardar. Revisa tu conexión.') });
@@ -479,4 +474,3 @@ export default function Editor() {
     </div>
   );
 }
-
