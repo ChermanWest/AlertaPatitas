@@ -1,17 +1,7 @@
 /* ============================================================
    ALERTA PATITAS — PublicationDetail.jsx
 
-   Antes, publicacion.html leía todo el registro codificado como
-   JSON en ?datos=..., lo que rompía con descripciones largas o
-   caracteres especiales y generaba URLs enormes e infeaces de
-   compartir. Ahora la ruta es /publicacion/:id y el componente
-   pide el registro directo a Supabase — más robusto y con links
-   cortos y compartibles.
-
-   El escapado manual de HTML (la función esc() del original) ya
-   no hace falta: React escapa automáticamente todo lo que se
-   renderiza como texto.
-   ============================================================ */
+====================================== */
 
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
