@@ -29,6 +29,7 @@ const ESTILOS_FEEDBACK = {
   cargando: { background: '#fef9e7', color: '#7d6608', border: '1px solid #f9e79f' },
 };
 
+// Estado inicial del formulario para crear una publicación en blanco
 const FORM_INICIAL = {
   nombre: '',
   mascota: '',
@@ -42,23 +43,27 @@ const FORM_INICIAL = {
 };
 
 export default function Editor() {
+  // Autenticación y navegación
   const { usuario } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const idEdicion = searchParams.get('id');
+  const idEdicion = searchParams.get('id'); // Determina si es una creación nueva o una edición
 
+  // Estados del componente
   const [form, setForm] = useState(FORM_INICIAL);
   const [sugerenciasUbicacion, setSugerenciasUbicacion] = useState([]);
   const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
-  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
+  const [feedback, setFeedback] = useState(null); // Maneja los mensajes de error/éxito
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
 
+  // Función para obtener los datos de la publicación si estamos en modo "edición"
   const cargarParaEditar = useCallback(async () => {
     if (!idEdicion) return;
 
+    // Redirige al login si intenta editar sin estar autenticado
     if (!usuario) {
       navigate('/login');
       return;
@@ -72,12 +77,14 @@ export default function Editor() {
         return;
       }
 
+      // Verificación de seguridad: solo el autor puede editar
       if (data.autor_id !== usuario.id) {
         setFeedback({ tipo: 'error', mensaje: 'No tienes permiso para editar esta publicación.' });
         setTimeout(() => navigate('/'), 1800);
         return;
       }
 
+      // Rellena el formulario con los datos recuperados de la BD
       setPublicacionOriginal(data);
       setForm({
         nombre: data.nombre || '',
@@ -98,22 +105,27 @@ export default function Editor() {
     }
   }, [idEdicion, usuario, navigate]);
 
+  // Se ejecuta al montar el componente para verificar si hay que cargar datos
   useEffect(() => {
     cargarParaEditar();
   }, [cargarParaEditar]);
 
+  // Efecto para buscar sugerencias de autocompletado para la ubicación
   useEffect(() => {
     const consulta = form.ubicacion.trim();
 
+    // Limpia las sugerencias si el campo está vacío
     if (!consulta) {
       setSugerenciasUbicacion([]);
       setCargandoUbicacion(false);
       return;
     }
 
+    // Usamos un debounce (350ms) para no saturar la API con cada tecla pulsada
     const timeoutId = setTimeout(async () => {
       try {
         setCargandoUbicacion(true);
+        // Petición a la API de Nominatim (OpenStreetMap) restringida a Chile (Arica y Parinacota)
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&accept-language=es&countrycodes=cl&viewbox=-70.8,-17.4,-68.7,-19.3&bounded=1&q=${encodeURIComponent(`${consulta}, Arica y Parinacota, Chile`)}`,
         );
@@ -140,10 +152,12 @@ export default function Editor() {
     return () => clearTimeout(timeoutId);
   }, [form.ubicacion]);
 
+  // Helper genérico para actualizar el estado del formulario de forma limpia
   function actualizarCampo(campo, valor) {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
 
+  // Comprueba que los campos obligatorios no estén vacíos antes de enviar
   function validar() {
     const errores = [];
     if (!form.nombre.trim()) errores.push('El nombre de la mascota es obligatorio.');
@@ -155,23 +169,27 @@ export default function Editor() {
     return errores;
   }
 
+  // Sube las imágenes seleccionadas a Supabase Storage y retorna sus URLs públicas
   async function subirFotos() {
-    const archivos = images.filter(Boolean);
+    const archivos = images.filter(Boolean); // Filtra los slots vacíos (null)
     const urls = [];
 
     for (let i = 0; i < archivos.length; i++) {
       const { file } = archivos[i];
       const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+      
       // Prefijar con el uuid del usuario ordena el bucket por dueño
       // y es lo que espera la policy de Storage (ver README).
       const path = `${usuario.id}/${form.nombre.replace(/\s+/g, '_')}_${Date.now()}_${i}.${ext}`;
 
+      // Sube el archivo
       const { error: uploadError } = await supabase.storage.from('fotos-mascotas').upload(path, file, {
         upsert: true,
         contentType: file.type || 'image/jpeg',
       });
       if (uploadError) throw uploadError;
 
+      // Obtiene la URL pública para guardarla en la base de datos
       const { data } = supabase.storage.from('fotos-mascotas').getPublicUrl(path);
       urls.push(data.publicUrl);
     }
@@ -179,14 +197,17 @@ export default function Editor() {
     return urls;
   }
 
+  // Función principal para guardar o actualizar la publicación
   async function publicar() {
     setFeedback(null);
 
+    // Valida sesión
     if (!usuario) {
       setFeedback({ tipo: 'error', mensaje: 'Debes iniciar sesión para publicar.' });
       return;
     }
 
+    // Ejecuta validaciones locales
     const errores = validar();
     if (errores.length > 0) {
       setFeedback({ tipo: 'error', mensaje: '⚠️ ' + errores[0] });
@@ -198,6 +219,7 @@ export default function Editor() {
     try {
       let fotoUrls = publicacionOriginal?.fotos || [];
 
+      // Si el usuario seleccionó nuevas imágenes, súbelas
       if (images.some(Boolean)) {
         setFeedback({ tipo: 'cargando', mensaje: '🖼️ Subiendo imágenes…' });
         fotoUrls = await subirFotos();
@@ -205,6 +227,7 @@ export default function Editor() {
 
       setFeedback({ tipo: 'cargando', mensaje: idEdicion ? '⏳ Guardando cambios…' : '⏳ Guardando publicación…' });
 
+      // Prepara el objeto con los datos normalizados para la BD
       const datos = {
         nombre: form.nombre.trim(),
         mascota: form.mascota,
@@ -222,6 +245,7 @@ export default function Editor() {
         fotos: fotoUrls,
       };
 
+      // Si existe 'idEdicion', actualiza; de lo contrario, inserta una nueva fila
       if (idEdicion) {
         const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
         if (error) throw error;
@@ -230,6 +254,8 @@ export default function Editor() {
         const { error } = await supabase.from('mascotas').insert(datos);
         if (error) throw error;
         setFeedback({ tipo: 'exito', mensaje: '✅ ¡Publicación guardada correctamente!' });
+        
+        // Limpia el formulario tras el éxito
         setForm(FORM_INICIAL);
         setImages([null, null, null]);
       }
@@ -241,12 +267,14 @@ export default function Editor() {
     }
   }
 
+  // Muestra pantalla de carga mientras obtiene datos de edición
   if (cargandoInicial) {
     return <p style={{ textAlign: 'center', padding: '4rem 1rem' }}>Cargando publicación…</p>;
   }
 
   return (
     <div className="editor">
+      {/* Encabezado */}
       <section className="container7">
         <div className="background43">
           <div className="background44"></div>
@@ -255,6 +283,7 @@ export default function Editor() {
       </section>
 
       <main className="main-content">
+        {/* Toggle para definir el estado: Buscando a mi mascota vs Encontré una mascota */}
         <section className="pet-info-panel3">
           <div className="tipo-de-busqueda">TIPO DE BÚSQUEDA</div>
           <div className="toggle-wrapper">
@@ -271,6 +300,7 @@ export default function Editor() {
         </section>
 
         <div className="form-main-row2">
+          {/* Lado izquierdo: Formularios básicos de la mascota */}
           <div className="left-pet-details">
             <div className="field-group">
               <label className="field-label" htmlFor="petName">
@@ -288,10 +318,9 @@ export default function Editor() {
               </div>
             </div>
 
+            {/* Selectores de atributos (Mascota, Sexo, Tamaño, Edad) */}
             <div className="field-group">
-              <label className="field-label" htmlFor="petType">
-                TIPO DE MASCOTA:
-              </label>
+              <label className="field-label" htmlFor="petType">TIPO DE MASCOTA:</label>
               <div className="input-box">
                 <select id="petType" value={form.mascota} onChange={(e) => actualizarCampo('mascota', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -304,9 +333,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petSex">
-                SEXO:
-              </label>
+              <label className="field-label" htmlFor="petSex">SEXO:</label>
               <div className="input-box">
                 <select id="petSex" value={form.sexo} onChange={(e) => actualizarCampo('sexo', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -318,9 +345,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petSize">
-                TAMAÑO:
-              </label>
+              <label className="field-label" htmlFor="petSize">TAMAÑO:</label>
               <div className="input-box">
                 <select id="petSize" value={form.tamano} onChange={(e) => actualizarCampo('tamano', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -332,9 +357,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petAge">
-                EDAD:
-              </label>
+              <label className="field-label" htmlFor="petAge">EDAD:</label>
               <div className="input-box">
                 <select id="petAge" value={form.edad} onChange={(e) => actualizarCampo('edad', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -347,14 +370,17 @@ export default function Editor() {
             </div>
           </div>
 
+          {/* Componente externo encargado de gestionar la selección y previsualización de las imágenes */}
           <Gallery images={images} setImages={setImages} />
 
+          {/* Lado derecho/Inferior: Detalles de Extravío y Contacto */}
           <section className="report-container">
             <h2 className="report-title">SECTOR DE EXTRAVÍO</h2>
 
             <div className="location-options">
               <h3 className="btn-location">ÚLTIMA UBICACIÓN DE AVISTAMIENTO</h3>
 
+              {/* Autocompletado de dirección */}
               <div className="location-search-box">
                 <label className="location-search-label" htmlFor="locationSearch">
                   Buscar ubicación
@@ -370,8 +396,10 @@ export default function Editor() {
                 />
               </div>
 
+              {/* Feedback visual de la búsqueda en la API de Nominatim */}
               {cargandoUbicacion && <div className="location-suggestions-status">Buscando sugerencias…</div>}
 
+              {/* Lista desplegable de resultados de la ubicación */}
               {!cargandoUbicacion && sugerenciasUbicacion.length > 0 && (
                 <div className="location-suggestions" role="listbox" aria-label="Sugerencias de ubicación">
                   {sugerenciasUbicacion.map((sugerencia) => (
@@ -394,6 +422,7 @@ export default function Editor() {
               </div>
             </div>
 
+            {/* Ficha de contacto */}
             <div className="contact-card">
               <div className="contact-header">
                 <h3>📞 DATOS DE CONTACTO</h3>
@@ -416,10 +445,12 @@ export default function Editor() {
               </div>
             </div>
 
+            {/* Botón final de envío. Bloqueado mientras guarda */}
             <button type="button" className="btn-publish" onClick={publicar} disabled={publicando}>
               {publicando ? 'Publicando…' : idEdicion ? 'GUARDAR CAMBIOS ' : 'PUBLICAR '}
             </button>
 
+            {/* Renderizado de alertas (éxito, error, carga) */}
             {feedback && (
               <div
                 style={{
@@ -435,6 +466,7 @@ export default function Editor() {
               </div>
             )}
 
+            {/* Advertencia si entró al formulario sin cuenta */}
             {!usuario && (
               <p className="auth-switch">
                 Debes <Link to="/login">iniciar sesión</Link> para publicar.
@@ -443,6 +475,7 @@ export default function Editor() {
           </section>
         </div>
 
+        {/* Sección inferior completa: Textarea de descripción */}
         <section className="description-section">
           <label htmlFor="pet-description" className="descripcion-label">
             DESCRIPCIÓN DE LA MASCOTA:
