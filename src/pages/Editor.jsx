@@ -31,12 +31,14 @@ export default function Editor() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const idEdicion = searchParams.get('id');
+  const idEdicion = searchParams.get('id');
 
   const [form, setForm] = useState(FORM_INICIAL);
   const [sugerenciasUbicacion, setSugerenciasUbicacion] = useState([]);
   const [cargandoUbicacion, setCargandoUbicacion] = useState(false);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
+  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
   const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
@@ -143,6 +145,7 @@ export default function Editor() {
   }
 
   async function subirFotos() {
+    const archivos = images.filter(Boolean);
     const archivos = images.filter(Boolean);
     const urls = [];
 
@@ -296,6 +299,9 @@ export default function Editor() {
               <label className="field-label" htmlFor="petType">
                 TIPO DE MASCOTA:
               </label>
+              <label className="field-label" htmlFor="petType">
+                TIPO DE MASCOTA:
+              </label>
               <div className="input-box">
                 <select id="petType" value={form.mascota} onChange={(e) => actualizarCampo('mascota', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -308,6 +314,9 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
+              <label className="field-label" htmlFor="petSex">
+                SEXO:
+              </label>
               <label className="field-label" htmlFor="petSex">
                 SEXO:
               </label>
@@ -325,6 +334,9 @@ export default function Editor() {
               <label className="field-label" htmlFor="petSize">
                 TAMAÑO:
               </label>
+              <label className="field-label" htmlFor="petSize">
+                TAMAÑO:
+              </label>
               <div className="input-box">
                 <select id="petSize" value={form.tamano} onChange={(e) => actualizarCampo('tamano', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -336,6 +348,9 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
+              <label className="field-label" htmlFor="petAge">
+                EDAD:
+              </label>
               <label className="field-label" htmlFor="petAge">
                 EDAD:
               </label>
@@ -464,3 +479,4 @@ export default function Editor() {
     </div>
   );
 }
+
