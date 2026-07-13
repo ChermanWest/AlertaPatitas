@@ -1,11 +1,6 @@
 /* ============================================================
    ALERTA PATITAS — useMascotas.js
 
-   Reemplaza la carga de datos que antes vivía duplicada en
-   loader.js Y filters.js (home.html en realidad solo cargaba
-   filters.js — loader.js había quedado huérfano, sin <script>
-   que lo referenciara). Este hook es la única fuente de verdad
-   para traer publicaciones desde Supabase.
    ============================================================ */
 
 import { useCallback, useEffect, useState } from 'react';
