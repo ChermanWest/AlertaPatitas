@@ -124,3 +124,13 @@ CREATE POLICY "fotos_insert_public"
 SELECT 'usuarios' AS tabla, COUNT(*) FROM usuarios
 UNION ALL
 SELECT 'mascotas', COUNT(*) FROM mascotas;
+
+ALTER TABLE mascotas ADD COLUMN IF NOT EXISTS zona TEXT;
+ALTER TABLE mascotas ADD COLUMN IF NOT EXISTS comentarios JSONB NOT NULL DEFAULT '[]'::jsonb;
+
+CREATE INDEX IF NOT EXISTS idx_mascotas_zona ON mascotas (zona);
+
+DROP POLICY IF EXISTS "mascotas_update" ON mascotas;
+
+CREATE POLICY "mascotas_update" ON mascotas
+  FOR UPDATE USING (true);

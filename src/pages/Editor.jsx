@@ -1,7 +1,5 @@
 /* ============================================================
    ALERTA PATITAS — Editor.jsx  (crear / editar publicación)
-
-   
    ============================================================ */
 
 import { useCallback, useEffect, useState } from 'react';
@@ -26,7 +24,7 @@ const FORM_INICIAL = {
   estado: false, // false = "buscando", true = "perdido/extraviado"
   descripcion: '',
   contacto: '',
-  zona: '11 de Septiembre', // 🟢 Valor por defecto para el acordeón de sectores
+  zona: '11 de Septiembre',
 };
 
 export default function Editor() {
@@ -38,11 +36,10 @@ export default function Editor() {
   const [form, setForm] = useState(FORM_INICIAL);
   const [images, setImages] = useState([null, null, null]);
   const [publicacionOriginal, setPublicacionOriginal] = useState(null);
-  const [feedback, setFeedback] = useState(null); // { tipo: 'error'|'exito'|'cargando', mensaje }
+  const [feedback, setFeedback] = useState(null);
   const [publicando, setPublicando] = useState(false);
   const [cargandoInicial, setCargandoInicial] = useState(Boolean(idEdicion));
 
-  //  Estados añadidos para el Acordeón Interactivo de Sectores
   const [menuAbierto, setMenuAbierto] = useState(false);
   const SECTORES_ARICA = [
     'Centro',
@@ -168,13 +165,16 @@ export default function Editor() {
         tamano: form.tamano,
         edad: form.edad,
         estado: form.estado ? 'perdido' : 'buscando',
-        // zona: form.zona, // 🟡 COMENTADO: No guardar zona de momento
+        zona: form.zona, // 🟢 ahora sí se guarda el sector
         descripcion: form.descripcion.trim(),
         contacto: form.contacto.trim(),
         autor_id: usuario.id,
         autor_correo: usuario.email,
         fotos: fotoUrls,
       };
+
+      // Al crear (no editar), inicializamos comentarios vacíos
+      if (!idEdicion) datos.comentarios = [];
 
       if (idEdicion) {
         const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
@@ -227,9 +227,7 @@ export default function Editor() {
         <div className="form-main-row2">
           <div className="left-pet-details">
             <div className="field-group">
-              <label className="field-label" htmlFor="petName">
-                NOMBRE:
-              </label>
+              <label className="field-label" htmlFor="petName">NOMBRE:</label>
               <div className="input-box">
                 <input
                   type="text"
@@ -243,9 +241,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petType">
-                TIPO DE MASCOTA:
-              </label>
+              <label className="field-label" htmlFor="petType">TIPO DE MASCOTA:</label>
               <div className="input-box">
                 <select id="petType" value={form.mascota} onChange={(e) => actualizarCampo('mascota', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -258,9 +254,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petSex">
-                SEXO:
-              </label>
+              <label className="field-label" htmlFor="petSex">SEXO:</label>
               <div className="input-box">
                 <select id="petSex" value={form.sexo} onChange={(e) => actualizarCampo('sexo', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -272,9 +266,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petSize">
-                TAMAÑO:
-              </label>
+              <label className="field-label" htmlFor="petSize">TAMAÑO:</label>
               <div className="input-box">
                 <select id="petSize" value={form.tamano} onChange={(e) => actualizarCampo('tamano', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -286,9 +278,7 @@ export default function Editor() {
             </div>
 
             <div className="field-group">
-              <label className="field-label" htmlFor="petAge">
-                EDAD:
-              </label>
+              <label className="field-label" htmlFor="petAge">EDAD:</label>
               <div className="input-box">
                 <select id="petAge" value={form.edad} onChange={(e) => actualizarCampo('edad', e.target.value)}>
                   <option value="">Seleccionar…</option>
@@ -306,19 +296,10 @@ export default function Editor() {
           <section className="report-container">
             <h2 className="report-title">SECTOR DE EXTRAVÍO</h2>
 
-            <div className="location-options">
-              <button type="button" className="btn btn-location">
-                📍 ÚLTIMA UBICACIÓN DE AVISTAMIENTO
-              </button>
-              <button type="button" className="btn btn-location">
-                ✏️ INGRESAR DIRECCIÓN MANUALMENTE
-              </button>
-            </div>
-
-            {/* 🟢 NUEVO ACCORDEÓN COMPLETAMENTE DINÁMICO E INTERACTIVO POR MATÍAS */}
-            <div className="accordion" style={{ position: 'relative' }}>
-              <div 
-                className="accordion-header" 
+            {/* 🟤 Acordeón de sectores — ahora es el único selector de ubicación, estilo café */}
+            <div className="accordion accordion--cafe" style={{ position: 'relative' }}>
+              <div
+                className="accordion-header"
                 onClick={() => setMenuAbierto(!menuAbierto)}
                 style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
               >
@@ -327,38 +308,15 @@ export default function Editor() {
               </div>
 
               {menuAbierto && (
-                <div style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  right: 0,
-                  background: '#ffffff',
-                  border: '1px solid #ebdcd0',
-                  borderRadius: '12px',
-                  marginTop: '5px',
-                  zIndex: 100,
-                  boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-                  maxHeight: '180px',
-                  overflowY: 'auto'
-                }}>
+                <div className="accordion-dropdown">
                   {SECTORES_ARICA.map((sector) => (
                     <div
                       key={sector}
+                      className={`accordion-dropdown-item${form.zona === sector ? ' active' : ''}`}
                       onClick={() => {
                         actualizarCampo('zona', sector);
                         setMenuAbierto(false);
                       }}
-                      style={{
-                        padding: '12px 16px',
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #f7f4f0',
-                        color: '#4a3c3c',
-                        fontSize: '14px',
-                        textAlign: 'left',
-                        background: form.zona === sector ? '#fdfaf6' : 'transparent'
-                      }}
-                      onMouseEnter={(e) => e.target.style.background = '#fdfaf6'}
-                      onMouseLeave={(e) => e.target.style.background = form.zona === sector ? '#fdfaf6' : 'transparent'}
                     >
                       {sector}
                     </div>
@@ -383,9 +341,7 @@ export default function Editor() {
                   value={form.contacto}
                   onChange={(e) => actualizarCampo('contacto', e.target.value)}
                 ></textarea>
-                <button type="button" className="btn-save">
-                  Guardar
-                </button>
+                <button type="button" className="btn-save">Guardar</button>
               </div>
             </div>
 
@@ -409,7 +365,7 @@ export default function Editor() {
             )}
 
             {!usuario && (
-              <p className="auth-switch" style={{ marginTop: '10px', color: '#c0392b', fontWeight: '600' }}>
+              <p className="auth-switch">
                 Debes <Link to="/login">iniciar sesión</Link> para publicar.
               </p>
             )}
@@ -417,9 +373,7 @@ export default function Editor() {
         </div>
 
         <section className="description-section">
-          <label htmlFor="pet-description" className="descripcion-label">
-            DESCRIPCIÓN DE LA MASCOTA:
-          </label>
+          <label htmlFor="pet-description" className="descripcion-label">DESCRIPCIÓN DE LA MASCOTA:</label>
           <textarea
             id="pet-description"
             className="input-descripcion"

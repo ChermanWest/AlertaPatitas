@@ -69,31 +69,32 @@ body {
 }
 
 /* EL CONTENEDOR CON LA IMAGEN */
+/* EL CONTENEDOR CON LA IMAGEN */
 .background43 {
-  position: relative; 
-  width: 100%; /* Le dice que ocupe todo el ancho del container7 */
-  
-  /* Usa min-height: 100vh si quieres que el fondo ocupe siempre toda la pantalla de alto, 
-     independientemente de si el menú y el título son pequeños. */
-  min-height: 100vh; 
-  
+  position: relative;
+  width: 100%;
+
+  /* 🔽 Antes era 100vh (toda la pantalla). Ahora es una altura fija y más chica */
+  min-height: 260px;
+  height: 260px;
+
   background-image: url('./public/Background@3x.png');
-  background-size: cover; 
-  background-position: center; 
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  
-  /* Para que el contenido interno (el menú, el título) se organice bien */
+
   display: flex;
   flex-direction: column;
+  justify-content: center; /* centra el título verticalmente en el nuevo alto */
 }
 
-/* LA CAPA OSCURA (Se mantiene igual, ¡está perfecta!) */
+/* LA CAPA OSCURA (igual, no cambia) */
 .background44 {
   position: absolute;
-  inset: 0; /* Esto es un atajo para top:0, right:0, bottom:0, left:0 */
-  background-color: rgba(0, 0, 0, 0.6); 
-  backdrop-filter: blur(4px); 
-  -webkit-backdrop-filter: blur(4px); 
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 0;
 }
 

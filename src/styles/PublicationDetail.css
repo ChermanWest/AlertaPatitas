@@ -329,3 +329,139 @@
     padding: 20px 18px 26px;
   }
 }
+.pub-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media screen and (max-width: 900px) {
+  .pub-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================
+   PANEL DE COMENTARIOS
+   ============================================================ */
+.comments-panel {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #ebdcd0;
+  padding: 18px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.comments-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a3c3c;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comments-empty {
+  font-size: 13px;
+  color: #888888;
+  font-style: italic;
+}
+
+.comment-item {
+  background: #faf6f1;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.comment-autor {
+  font-weight: 700;
+  font-size: 13px;
+  color: #8b4513;
+}
+
+.comment-fecha {
+  font-size: 11px;
+  color: #888888;
+}
+
+.comment-texto {
+  margin: 0;
+  font-size: 13.5px;
+  color: #444444;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid #ebdcd0;
+  padding-top: 12px;
+}
+
+.comment-textarea {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.comment-textarea:focus {
+  border-color: #8b4513;
+}
+
+.comment-submit {
+  align-self: flex-end;
+  background-color: #8b4513;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comment-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-error {
+  color: #c0392b;
+  font-size: 12px;
+  margin: 0;
+}
+
+.comments-login-notice {
+  border-top: 1px solid #ebdcd0;
+  padding-top: 12px;
+  font-size: 13px;
+  color: #c0392b;
+  font-weight: 600;
+  margin: 0;
+}
