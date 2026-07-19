@@ -73,11 +73,7 @@ export default function Home() {
               Crea una publicación!
             </Link>
 
-            <div className="hero-dots">
-              <span className="dot dot--active"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-            </div>
+
           </div>
 
           <img src="/dist/img8@2x.png" alt="Mascotas" className="hero-img" />
