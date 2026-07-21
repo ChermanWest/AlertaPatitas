@@ -8,7 +8,7 @@ const CORREO_RECORDADO_KEY = 'alertaPatitas_correoRecordado';
 
 export default function Login() {
   // Función del contexto de autenticación que hace el llamado real de login (API/backend)
-  const { iniciarSesion } = useAuth();
+  const { iniciarSesion, iniciarSesionConGoogle } = useAuth();
   // Hook de react-router para redirigir al usuario luego de iniciar sesión
   const navigate = useNavigate();
 
@@ -57,6 +57,16 @@ export default function Login() {
     } finally {
       // Se ejecuta siempre, haya éxito o error, para quitar el estado de "cargando"
       setCargando(false);
+    }
+  }
+
+  async function handleLoginGoogle() {
+    setError('');
+    try {
+      await iniciarSesionConGoogle();
+      // No hace falta redirigir manualmente: Google se encarga de volver a tu sitio
+    } catch (err) {
+      setError(err.message || 'No se pudo iniciar sesión con Google.');
     }
   }
 
@@ -114,6 +124,10 @@ export default function Login() {
           {/* Botón de envío: se deshabilita y cambia de texto mientras `cargando` es true */}
           <button type="submit" className="btn-auth-submit" disabled={cargando}>
             {cargando ? 'Verificando…' : 'Iniciar Sesión'}
+          </button>
+
+          <button type="button" className="btn-auth-google" onClick={handleLoginGoogle}>
+            Continuar con Google
           </button>
 
           {/* Enlace de recuperación de contraseña (sin funcionalidad implementada aún, href="#") */}
