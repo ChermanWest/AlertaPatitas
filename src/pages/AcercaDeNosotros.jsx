@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 // TODO: reemplazar con los datos reales del equipo (nombre, rol y foto)
 const EQUIPO = [
-  { id: 1, nombre: '', rol: '' },
-  { id: 2, nombre: '', rol: '' },
-  { id: 3, nombre: '', rol: '' },
-  { id: 4, nombre: '', rol: '' },
+  { id: 1, nombre: 'Matias Sagredo ', rol: 'Desarrollador' },
+  { id: 2, nombre: 'German Castro', rol: 'jefe de equipo' },
+  { id: 3, nombre: 'Javier Echeverria', rol: 'Desarrollador' },
+ 
 ];
 
 export default function AcercaDeNosotros() {
@@ -23,10 +23,10 @@ export default function AcercaDeNosotros() {
           <p className="about-eyebrow">Nuestro equipo</p>
           <h1 className="about-title">
             {/* TODO: nombre real del grupo */}
-            Nombre del Grupo
+            Alerta Patitas
           </h1>
           <p className="about-subtitle">
-            Las personas detrás de Alerta Patitas, trabajando para reunir mascotas con sus familias.
+Conoce a las personas detrás de Alerta Patitas, quienes trabajan con dedicación para reunir a las mascotas con sus familias y brindar un hogar a quienes aún no lo tienen.
           </p>
         </div>
       </section>

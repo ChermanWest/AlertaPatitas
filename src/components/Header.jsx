@@ -111,24 +111,8 @@ export default function Header() {
         </Link>
 
         <ul className="nav-links">
-          <li className="nav-item has-dropdown">
-            <span>Inicio</span>
-            <span className="chevron">⌄</span>
-            <div className="dropdown">
-              <Link to="/">Inicio</Link>
-              <a href="#">Novedades</a>
-            </div>
-          </li>
           <li className="nav-item">
             <Link to="/acerca-de-nosotros">Acerca de nosotros</Link>
-          </li>
-          <li className="nav-item has-dropdown">
-            <span>Páginas</span>
-            <span className="chevron">⌄</span>
-            <div className="dropdown">
-              <a href="#">Repositorio</a>
-              <Link to="/editor">Crear publicación</Link>
-            </div>
           </li>
         </ul>
 
