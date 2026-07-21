@@ -19,7 +19,7 @@ export default function PetCard({ mascota }) {
   const tamano = mascota.tamano || mascota['tamaño'] || '';
   const perdido = mascota.estado === 'perdido' || mascota.estado === 'extraviado';
   const badgeClass = perdido ? 'pet-badge--lost' : 'pet-badge--search';
-  const badgeText = perdido ? 'Perdido' : 'Buscando';
+  const badgeText = perdido ? 'Sin Hogar/Extraviado' : 'Buscando';
 
   return (
     <Link to={`/publicacion/${mascota.id}`} className="pet-card-link">
