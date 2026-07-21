@@ -120,7 +120,7 @@ export default function Header() {
             </div>
           </li>
           <li className="nav-item">
-            <a href="#">Acerca de nosotros</a>
+            <Link to="/acerca-de-nosotros">Acerca de nosotros</Link>
           </li>
           <li className="nav-item has-dropdown">
             <span>Páginas</span>
