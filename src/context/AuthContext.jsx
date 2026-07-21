@@ -80,12 +80,24 @@ export function AuthProvider({ children }) {
     return data.user;
   }
 
+  /* ── Login con Google ── */
+  async function iniciarSesionConGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/',
+      },
+    });
+    if (error) throw new Error(traducirError(error));
+    return data;
+  }
+
   /* ── Logout ── */
   async function cerrarSesion() {
     await supabase.auth.signOut();
   }
 
-  const value = { usuario, session, loading, registrar, iniciarSesion, cerrarSesion };
+  const value = { usuario, session, loading, registrar, iniciarSesion, iniciarSesionConGoogle, cerrarSesion };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
