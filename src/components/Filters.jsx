@@ -8,7 +8,10 @@
    apenas cargaba, sin que el usuario tocara nada. Aquí el estado
    inicial no filtra nada (se muestran todas las mascotas) hasta que
    la persona elige un filtro a propósito.
+
    ============================================================ */
+
+import { useState } from 'react';
 
 export const FILTROS_INICIALES = {
   mascotas: [],
@@ -16,8 +19,20 @@ export const FILTROS_INICIALES = {
   edad: null,
   tamano: null,
   estado: null,
-  radio: 10,
+  zona: null,
 };
+
+
+const SECTORES_ARICA = [
+  'Centro',
+  'Playa Chinchorro',
+  'Cerro La Cruz',
+  'Población Cardenal Caro',
+  'El Boro',
+  'Población Cavancha',
+  'Alto Ramírez',
+  'Azapa',
+];
 
 const OPCIONES_MASCOTA = ['perro', 'gato', 'ave', 'otros'];
 const OPCIONES_GENERO = ['macho', 'hembra'];
@@ -29,6 +44,8 @@ function Capitalizada(v) {
 }
 
 export default function Filters({ filtros, setFiltros, onAplicar, onLimpiar }) {
+  const [zonaAbierta, setZonaAbierta] = useState(false);
+
   function toggleMascota(valor) {
     setFiltros((f) => {
       const set = new Set(f.mascotas);
@@ -119,18 +136,49 @@ export default function Filters({ filtros, setFiltros, onAplicar, onLimpiar }) {
         </label>
       </div>
 
+      {/* ── Reemplazo del slider de km: selector de zona ── */}
       <div className="filter-group">
-        <p className="filter-label">Área de búsqueda</p>
-        <div className="range-wrap">
-          <input
-            type="range"
-            min="0"
-            max="50"
-            value={filtros.radio}
-            onChange={(e) => setFiltros((f) => ({ ...f, radio: Number(e.target.value) }))}
-            className="range-input"
-          />
-          <span className="range-value">{filtros.radio} km</span>
+        <p className="filter-label">Zona</p>
+        <div className="accordion-wrap">
+          <div
+            className="accordion-header"
+            onClick={() => setZonaAbierta(!zonaAbierta)}
+            style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <div className="accordion-info">📍 {filtros.zona || 'Todas las zonas'}</div>
+            <span
+              className="icon-chevron"
+              style={{ transform: zonaAbierta ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+            >
+              ⌄
+            </span>
+          </div>
+
+          {zonaAbierta && (
+            <div className="accordion-dropdown">
+              <div
+                className={`accordion-dropdown-item${filtros.zona === null ? ' active' : ''}`}
+                onClick={() => {
+                  setFiltros((f) => ({ ...f, zona: null }));
+                  setZonaAbierta(false);
+                }}
+              >
+                Todas las zonas
+              </div>
+              {SECTORES_ARICA.map((sector) => (
+                <div
+                  key={sector}
+                  className={`accordion-dropdown-item${filtros.zona === sector ? ' active' : ''}`}
+                  onClick={() => {
+                    setFiltros((f) => ({ ...f, zona: sector }));
+                    setZonaAbierta(false);
+                  }}
+                >
+                  {sector}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

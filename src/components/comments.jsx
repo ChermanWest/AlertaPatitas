@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 
+
 export default function Comments({ mascotaId }) {
   const { usuario } = useAuth();
   const [comentarios, setComentarios] = useState([]);
