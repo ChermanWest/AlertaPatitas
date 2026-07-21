@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Editor from './pages/Editor';
 import PublicationDetail from './pages/PublicationDetail';
+import AcercaDeNosotros from './pages/AcercaDeNosotros';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/registro" element={<Register />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/publicacion/:id" element={<PublicationDetail />} />
+        <Route path="/acerca-de-nosotros" element={<AcercaDeNosotros />} />
       </Routes>
       <Footer />
     </>

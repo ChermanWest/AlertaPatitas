@@ -41,12 +41,14 @@ export default function Home() {
       const edad = normalizar('edad', m.edad);
       const tamano = normalizar('tamano', m.tamano || m['tamaño']);
       const estado = normalizar('estado', m.estado);
+      const zona = String(m.zona || '').trim();
 
       if (filtrosAplicados.mascotas.length > 0 && !filtrosAplicados.mascotas.includes(mascota)) return false;
       if (filtrosAplicados.genero && genero !== filtrosAplicados.genero) return false;
       if (filtrosAplicados.edad && edad !== filtrosAplicados.edad) return false;
       if (filtrosAplicados.tamano && tamano !== filtrosAplicados.tamano) return false;
       if (filtrosAplicados.estado && estado !== filtrosAplicados.estado) return false;
+      if (filtrosAplicados.zona && zona !== filtrosAplicados.zona) return false;
       return true;
     });
   }, [mascotas, filtrosAplicados]);
@@ -73,11 +75,7 @@ export default function Home() {
               Crea una publicación!
             </Link>
 
-            <div className="hero-dots">
-              <span className="dot dot--active"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-            </div>
+
           </div>
 
           <img src="/dist/img8@2x.png" alt="Mascotas" className="hero-img" />
