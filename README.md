@@ -11,11 +11,7 @@ Aplicación web para reportar mascotas perdidas, recibir ayuda de la comunidad y
 - Vista detallada de cada publicación con URL compartible
 - Página “Acerca de nosotros” con los integrantes del equipo
 
-## Requisitos
 
-- Node.js 18 o superior
-- npm
-- Una cuenta activa en Supabase
 
 ## Instalación y ejecución
 
