@@ -2,9 +2,24 @@ import { Link } from 'react-router-dom';
 
 // TODO: reemplazar con los datos reales del equipo (nombre, rol y foto)
 const EQUIPO = [
-  { id: 1, nombre: 'Matias Sagredo ', rol: 'Desarrollador' },
-  { id: 2, nombre: 'German Castro', rol: 'jefe de equipo' },
-  { id: 3, nombre: 'Javier Echeverria', rol: 'Desarrollador' },
+  {
+    id: 1,
+    nombre: 'Matias Sagredo ',
+    rol: 'Desarrollador',
+    foto: '../public/fotos-perfil/matias.png',
+  },
+  {
+    id: 2,
+    nombre: 'German Castro',
+    rol: 'jefe de equipo',
+    foto: '../public/fotos-perfil/german.png',
+  },
+  {
+    id: 3,
+    nombre: 'Javier Echeverria',
+    rol: 'Desarrollador',
+    foto: '../public/fotos-perfil/javier.png',
+  },
  
 ];
 
@@ -36,7 +51,15 @@ Conoce a las personas detrás de Alerta Patitas, quienes trabajan con dedicació
           {EQUIPO.map((miembro) => (
             <div className="team-card" key={miembro.id}>
               <div className="team-card-photo">
-                <span className="team-card-photo-placeholder">🐾</span>
+                {miembro.foto ? (
+                  <img
+                    src={miembro.foto}
+                    alt={`Foto de ${miembro.nombre}`}
+                    className="team-card-photo-img"
+                  />
+                ) : (
+                  <span className="team-card-photo-placeholder">🐾</span>
+                )}
               </div>
               <div className="team-card-body">
                 <h3 className="team-card-name">{miembro.nombre || 'Nombre Apellido'}</h3>
