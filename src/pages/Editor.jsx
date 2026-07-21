@@ -173,8 +173,7 @@ export default function Editor() {
         fotos: fotoUrls,
       };
 
-      // Al crear (no editar), inicializamos comentarios vacíos
-      if (!idEdicion) datos.comentarios = [];
+
 
       if (idEdicion) {
         const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
