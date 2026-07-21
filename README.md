@@ -1,141 +1,98 @@
-# Alerta Patitas — versión React
+# Alerta Patitas
 
-Migración del sitio (HTML + JS suelto) a React + Vite, con Supabase arreglado de punta a punta.
+Aplicación web para reportar mascotas perdidas, recibir ayuda de la comunidad y facilitar su reencuentro con sus familias. El proyecto está desarrollado con React, Vite y Supabase.
 
-## 1. Instalar y correr
+## Qué incluye
+
+- Registro e inicio de sesión con Supabase Auth
+- Publicación y edición de mascotas perdidas
+- Subida de fotos a Supabase Storage
+- Filtros por tipo, sexo, edad, tamaño, estado y zona
+- Vista detallada de cada publicación con URL compartible
+- Página “Acerca de nosotros” con los integrantes del equipo
+
+## Requisitos
+
+- Node.js 18 o superior
+- npm
+- Una cuenta activa en Supabase
+
+## Instalación y ejecución
+
+1. Instala las dependencias:
 
 ```bash
 npm install
-cp .env.example .env      # y completa VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY
+```
+
+2. Crea un archivo `.env` en la raíz del proyecto con tus credenciales de Supabase:
+
+```env
+VITE_SUPABASE_URL=tu_project_url
+VITE_SUPABASE_ANON_KEY=tu_anon_key
+```
+
+3. Inicia el proyecto:
+
+```bash
 npm run dev
 ```
 
-Vas a encontrar las credenciales en tu proyecto de supabase.com → **Settings → API**
-("Project URL" y "anon public key").
+Las credenciales las encuentras en Supabase → Settings → API.
 
-## 2. Recuperar tus estilos e imágenes
+## Configuración de Supabase
 
-No se migró el CSS a propósito. Para que la app se vea igual que antes:
+Antes de usar la app, asegúrate de configurar lo siguiente:
 
-1. Copia `home.css`, `auth.css` (y los que uses) dentro de `src/styles/` e impórtalos en
-   `src/main.jsx` (ahí quedó el comentario indicando dónde).
-2. Copia el contenido de tu carpeta `dist/` (imágenes, íconos) dentro de `public/dist/`.
+1. Crear un bucket llamado `fotos-mascotas` y marcarlo como público.
+2. Ejecutar el script SQL de configuración en el SQL Editor de Supabase.
+3. Si quieres habilitar notificaciones relacionadas con comentarios, ejecutar también el script correspondiente.
 
-Todas las clases (`.pet-card`, `.auth-input`, `.btn-publish`, `.filters`, `.login-dropdown`,
-etc.) se dejaron **exactamente iguales** en los componentes para que tu CSS aplique sin tocar
-nada más.
+Si la confirmación de correo está activada en Auth → Providers → Email, los usuarios deberán confirmar su correo antes de iniciar sesión.
 
-## 3. Configurar Supabase
+## Estructura del proyecto
 
-Corre `supabase-setup.sql` en el **SQL Editor** de tu proyecto. Crea:
-
-- la tabla `mascotas` (con `autor_id` apuntando a `auth.users`, no a una tabla propia),
-- las políticas de RLS para que cada quien solo pueda editar/borrar sus propias publicaciones,
-- las políticas de Storage para el bucket `fotos-mascotas`.
-
-Antes de correr el script, crea el bucket desde el Dashboard: **Storage → New bucket →
-`fotos-mascotas` → marca "Public bucket"**.
-
-Si tu proyecto tiene activa la confirmación de correo (**Auth → Providers → Email → "Confirm
-email"**), quien se registre va a necesitar confirmar su correo antes de poder iniciar sesión
-— la app ya avisa eso en el mensaje de éxito del registro. Si prefieres que el login quede
-activo al toque, puedes desactivar esa opción mientras desarrollas.
-
-## 4. Qué se arregló respecto al código original
-
-### Autenticación (el cambio más importante)
-
-El `auth.js`/`supabase.js` original armaba su propio sistema de cuentas: guardaba
-`password_hash` + `salt` en una tabla `usuarios` propia, hasheando con SHA-256 **en el
-navegador**, y esa tabla se consultaba con la misma `anon key` pública que usa todo el sitio.
-Eso significa que, sin políticas de RLS muy cuidadosas, cualquiera con la anon key podía pedir
-`/rest/v1/usuarios?select=password_hash,salt` y quedarse con los hashes de todos los usuarios.
-
-Ahora se usa **Supabase Auth** (`supabase.auth.signUp` / `signInWithPassword` / `signOut`):
-las contraseñas nunca se guardan en una tabla tuya, la verificación pasa por el servidor de
-Supabase, y la sesión (JWT) es la que permite que las políticas de RLS (`auth.uid()`)
-funcionen tanto en `mascotas` como en Storage.
-
-### Registro estaba roto
-
-`registro.html` llamaba a `fetch(AUTH_API_URL, ...)`, pero `AUTH_API_URL` **no estaba definido
-en ningún archivo**, y además mandaba los campos como `{ nombre, correo, contrasena }` mientras
-que la función real `registrarUsuario({ nick, email, password })` de `auth.js` esperaba otros
-nombres. En la práctica, crear una cuenta nunca funcionó con ese HTML. Ya quedó resuelto:
-`Register.jsx` llama directo a `registrar()` del `AuthContext` con los nombres correctos.
-
-### Subida de fotos
-
-`editor.js` subía las fotos a Storage con `fetch()` manual al endpoint REST. Ahora se usa
-`supabase.storage.from('fotos-mascotas').upload(...)` del SDK oficial, con
-`getPublicUrl()` para armar la URL pública — menos código y con los mismos manejos de error
-que el resto del SDK.
-
-### Links de publicaciones
-
-`publicacion.html` recibía el registro completo codificado como JSON en la URL
-(`?datos=%7B...%7D`), lo que generaba URLs kilométricas y se rompía con descripciones largas
-o caracteres especiales. Ahora se navega a `/publicacion/:id` y `PublicationDetail.jsx` pide
-el registro directo a Supabase por su `id` — URLs cortas, compartibles, y que no dependen de
-lo que había en pantalla al hacer clic.
-
-### Filtro por defecto ocultaba casi todo
-
-En `home.html`, los checkboxes de "Perro", "Macho", "Mediano" y "Perdido" venían marcados de
-fábrica, y `filters.js` aplicaba esos filtros apenas cargaba la página — es decir, la mayoría
-de las publicaciones quedaban escondidas sin que nadie tocara nada. En `Filters.jsx` el estado
-inicial no filtra nada; se muestran todas las mascotas hasta que la persona elige un filtro a
-propósito.
-
-### HTML roto en el editor
-
-`editor1.html` tenía una etiqueta mal cerrada
-(`<div class="accordion-info" 11 de Septiembre (El Roble)</div>`) que un navegador puede llegar
-a "arreglar" solo de forma impredecible. Quedó corregida en `Editor.jsx`.
-
-### Otros
-
-- `loader.js` no estaba enlazado desde ningún HTML real (`home.html` solo cargaba
-  `filters.js`) y duplicaba casi toda su lógica; quedó consolidado en el hook
-  `useMascotas`.
-- `script-galeria.js` tampoco estaba enlazado desde ningún `.html` de los que revisamos;
-  su comportamiento (subir hasta 3 fotos, navegar con flechas) quedó consolidado en
-  `components/Gallery.jsx`, que además es el que usa `editor.js`.
-- Publicar una mascota ahora **exige sesión iniciada**. Antes se podía crear una publicación
-  sin loguearse, y quedaba sin dueño real — nadie podía editarla después porque no había forma
-  de emparejarla con ningún usuario.
-- El escape manual de HTML (`esc()` en `publicacion.html`) ya no hace falta: React escapa
-  automáticamente todo lo que se renderiza como texto.
-
-## 5. Estructura del proyecto
-
-```
+```text
 src/
-  lib/supabaseClient.js     → cliente oficial de Supabase (createClient)
-  context/AuthContext.jsx   → sesión + signUp/signIn/signOut
-  hooks/useMascotas.js      → trae publicaciones desde la tabla "mascotas"
-  components/
-    Header.jsx, Footer.jsx, Popup.jsx
-    PetCard.jsx             → tarjeta de una publicación
-    Filters.jsx             → filtros de la home
-    Gallery.jsx             → galería de fotos del editor (hasta 3 fotos)
-  pages/
-    Home.jsx                → antes home.html + filters.js/loader.js
-    Login.jsx                → antes login.html
-    Register.jsx             → antes registro.html
-    Editor.jsx                → antes index.html/editor1.html + editor.js
-    PublicationDetail.jsx     → antes publicacion.html
-  App.jsx, main.jsx
-supabase-setup.sql          → esquema + políticas RLS + Storage
+  components/         → Header, Footer, Filters, Gallery, PetCard, Popup
+  context/            → AuthContext para sesión y autenticación
+  hooks/              → useMascotas para consultar publicaciones
+  lib/                → cliente de Supabase
+  pages/              → Home, Login, Register, Editor, PublicationDetail, AcercaDeNosotros
+public/               → assets estáticos y recursos públicos
 ```
 
-## 6. Rutas
+## Rutas principales
 
-| Ruta                     | Página              |
-|---------------------------|---------------------|
-| `/`                        | Home                |
-| `/login`                   | Iniciar sesión      |
-| `/registro`                | Crear cuenta        |
-| `/editor`                  | Crear publicación   |
-| `/editor?id=<uuid>`         | Editar publicación  |
-| `/publicacion/:id`          | Detalle de mascota  |
+- `/` → Inicio
+- `/login` → Iniciar sesión
+- `/registro` → Crear cuenta
+- `/editor` → Crear o editar publicación
+- `/publicacion/:id` → Detalle de una mascota
+- `/acerca-de-nosotros` → Página del equipo
+
+## Archivos de apoyo
+
+- `supabase configuracion completa.sql` → estructura de la base de datos y políticas de acceso
+- `supabase notificacion de comentario.sql` → lógica adicional para notificaciones
+- `readme-descripcion/` → capturas del proyecto para referencia visual
+
+## Notas importantes
+
+- Las imágenes de la app se sirven desde la carpeta `public/`.
+- Las fotos del equipo pueden guardarse en una carpeta como `public/fotos-perfil/` y referenciarlas desde la página de Acerca de nosotros.
+- La app usa React Router para la navegación y Supabase para autenticación, almacenamiento y consulta de datos.
+
+## Prototipo y diseño
+
+Prototipo base en Figma:
+
+https://www.figma.com/design/yYHQuBHclo9Xzv5OayxkaA/Alerta-Patitas?node-id=0-1&p=f&t=K9AdaX3WKwzLHbZB-0
+
+Capturas del diseño:
+
+- Inicio: [home.png](readme-descripcion/home.png)
+- Iniciar sesión: [inicar sesion.png](readme-descripcion/inicar%20sesion.png)
+- Editor: [editor.png](readme-descripcion/editor.png)
+- Repositorio: [repositorio .png](readme-descripcion/repositorio%20.png)
+
