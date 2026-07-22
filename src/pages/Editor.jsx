@@ -48,6 +48,7 @@ export default function Editor() {
     '11 de Septiembre',
     'Industriales',
     'Azapa'
+    
   ];
 
   const cargarParaEditar = useCallback(async () => {
@@ -173,7 +174,8 @@ export default function Editor() {
         fotos: fotoUrls,
       };
 
-
+      // Al crear (no editar), inicializamos comentarios vacíos
+      if (!idEdicion) datos.comentarios = [];
 
       if (idEdicion) {
         const { error } = await supabase.from('mascotas').update(datos).eq('id', idEdicion);
@@ -327,11 +329,6 @@ export default function Editor() {
             <div className="contact-card">
               <div className="contact-header">
                 <h3>📞 DATOS DE CONTACTO</h3>
-              </div>
-              <div className="accordion">
-                <div className="accordion-header">
-                  <input type="text" className="contact-name-input" placeholder="(nombre del contacto)" autoComplete="off" />
-                </div>
               </div>
               <div className="input-group">
                 <textarea
